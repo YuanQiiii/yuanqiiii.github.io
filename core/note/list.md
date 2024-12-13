@@ -1,4 +1,3 @@
-::: v-pre
 ---
 layout: home
 
@@ -17,5 +16,4 @@ hero:
     - theme: brand
       text: list
       link: note/list.md
-
 ---

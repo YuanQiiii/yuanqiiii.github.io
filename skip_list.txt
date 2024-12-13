@@ -1,6 +1,3 @@
-内容.md
-朋友.md
+list.md
 index.md
-作者.md
-log.md
-output.md
+about.md

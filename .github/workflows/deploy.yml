@@ -1,13 +1,8 @@
-# 构建 VitePress 站点并将其部署到 GitHub Pages 的示例工作流程
-#
 name: Deploy VitePress site to Pages
 
 on:
-  # 在针对 `main` 分支的推送上运行。如果你
-  # 使用 `master` 分支作为默认分支，请将其更改为 `master`
   push:
     branches: [main]
-
   # 允许你从 Actions 选项卡手动运行此工作流程
   workflow_dispatch:
 
@@ -33,6 +28,17 @@ jobs:
         with:
           fetch-depth: 0 
 
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+
+      - name: Run Python Preprocess Script
+        run: python preprocess.py
+
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -56,6 +62,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: core/.vitepress/dist
+          
 
   # 部署工作
   deploy:
