@@ -1,3 +1,4 @@
+::: v-pre
 ---
 layout: home
 hero:
@@ -17,5 +18,7 @@ hero:
 ::: details 联系我
 
 - shihuaidexianyu@gmail.com
+
+:::
 
 :::
