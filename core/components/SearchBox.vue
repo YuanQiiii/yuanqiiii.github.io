@@ -1,4 +1,3 @@
-
 <template>
     <div class="search-container">
         <div class="search-box">
@@ -9,14 +8,10 @@
                 </div>
             </div>
 
-            <input type="text"
-                   v-model="searchQuery"
-                   @keyup.enter="handleSearch(searchQuery)"
-                   :placeholder="placeholder"
-                   class="search-input" />
+            <input type="text" v-model="searchQuery" @keyup.enter="handleSearch(searchQuery)" :placeholder="placeholder"
+                class="search-input" />
 
-            <button @click="handleSearch(searchQuery)"
-                    class="search-button">
+            <button @click="handleSearch(searchQuery)" class="search-button">
                 <svg class="search-icon" viewBox="0 0 24 24">
                     <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 
                              16 11.11 16 9.5 16 5.91 13.09 3 9.5 
@@ -24,7 +19,7 @@
                              0 3.09-.59 4.23-1.57l.27.28v.79l5 
                              4.99L20.49 19l-4.99-5zm-6 0C7.01 
                              14 5 11.99 5 9.5S7.01 5 9.5 5 14 
-                             7.01 14 9.5 11.99 14 9.5 14z"/>
+                             7.01 14 9.5 11.99 14 9.5 14z" />
                 </svg>
             </button>
         </div>
@@ -78,12 +73,13 @@ const handleSearch = (query) => {
     window.open(searchUrl, '_blank')
 }
 
-// 更新引擎状态并选择可用引擎
 const updateEngineStatus = async () => {
-    const googleStatus = await checkSearchEngine('google')
-    engineStatus.value.google = googleStatus
-    engineStatus.value.currentEngine = googleStatus ? 'google' : 'bing'
-}
+    const googleStatus = await checkSearchEngine('google');
+    const bingStatus = await checkSearchEngine('bing');
+    engineStatus.value.google = googleStatus;
+    engineStatus.value.bing = bingStatus;
+    engineStatus.value.currentEngine = googleStatus ? 'google' : (bingStatus ? 'bing' : null);
+};
 
 onMounted(() => {
     updateEngineStatus()
@@ -193,20 +189,20 @@ onMounted(() => {
         border-color: var(--search-border-dark);
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
     }
-    
+
     .search-box:hover {
         border-color: rgba(255, 255, 255, 0.15);
         box-shadow: 0 12px 48px rgba(0, 0, 0, 0.45);
     }
-    
+
     .search-input::placeholder {
         color: rgba(255, 255, 255, 0.4);
     }
-    
+
     .engine-indicator {
         background: rgba(255, 255, 255, 0.05);
     }
-    
+
     .status-dot {
         opacity: 0.8;
     }
@@ -216,16 +212,16 @@ onMounted(() => {
     .search-container {
         padding: 0.5rem;
     }
-    
+
     .search-box {
         padding: 0.5rem;
     }
-    
+
     .search-input {
         font-size: 0.9rem;
         padding: 0.4rem 0.75rem;
     }
-    
+
     .engine-indicator {
         padding: 0.25rem 0.6rem;
     }
@@ -235,7 +231,7 @@ onMounted(() => {
     .search-input {
         font-size: 0.875rem;
     }
-    
+
     .engine-indicator {
         padding: 0.2rem 0.5rem;
     }
