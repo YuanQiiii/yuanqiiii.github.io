@@ -73,12 +73,18 @@ const handleSearch = (query) => {
     window.open(searchUrl, '_blank')
 }
 
+// 添加调试日志
 const updateEngineStatus = async () => {
+    console.log('开始检查引擎状态');
     const googleStatus = await checkSearchEngine('google');
     const bingStatus = await checkSearchEngine('bing');
+    console.log('检查结果:', { google: googleStatus, bing: bingStatus });
+    
     engineStatus.value.google = googleStatus;
     engineStatus.value.bing = bingStatus;
     engineStatus.value.currentEngine = googleStatus ? 'google' : (bingStatus ? 'bing' : null);
+    
+    console.log('更新后的状态:', engineStatus.value);
 };
 
 onMounted(() => {
@@ -166,25 +172,28 @@ onMounted(() => {
     z-index: 10;
 }
 
+/* 调整样式优先级和可见性 */
 .engine-status {
-    display: flex;
+    display: flex !important;
     flex-direction: column;
     gap: 4px;
     align-items: center;
+    min-height: 20px; /* 确保有最小高度 */
 }
 
 .status-dot {
-    width: 6px;
-    height: 6px;
+    width: 8px !important; /* 增大点的尺寸 */
+    height: 8px !important;
     border-radius: 50%;
-    background-color: var(--status-inactive);
+    background-color: var(--status-inactive) !important;
     transition: background-color 0.3s ease;
+    display: block !important;
     position: relative;
-    z-index: 10;
+    z-index: 999; /* 提高层级 */
 }
 
 .status-dot.active {
-    background-color: var(--status-active);
+    background-color: var(--status-active) !important;
 }
 
 @media (prefers-color-scheme: dark) {
