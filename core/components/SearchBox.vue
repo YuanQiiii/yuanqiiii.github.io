@@ -30,7 +30,7 @@
 import { ref, onMounted } from 'vue'
 
 const searchQuery = ref('')
-const placeholder = ref('搜索...')
+const placeholder = ref('input...')
 
 const SEARCH_URLS = {
     google: 'https://www.google.com/search?q=',
