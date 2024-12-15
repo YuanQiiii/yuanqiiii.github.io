@@ -15,4 +15,11 @@ hero:
       link: /note/about.md
 
 ---
+<script setup>
+import SearchBox from './components/SearchBox.vue'
+</script>
 
+
+<ClientOnly>
+   <SearchBox/>
+</ClientOnly>
