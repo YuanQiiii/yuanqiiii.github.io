@@ -5,7 +5,6 @@ layout: home
 hero:
   name: "Home"
   text: "a place to place my soul"
-  tagline: My great project tagline
   actions:
     - theme: brand
       text: list

@@ -66,7 +66,6 @@ onMounted(() => {
                     <span class="status-dot" :class="{ active: engineStatus.google }" title="Google"></span>
                     <span class="status-dot" :class="{ active: engineStatus.bing }" title="Bing"></span>
                 </div>
-                {{ engineStatus.currentEngine === 'google' ? 'G' : 'B' }}
             </div>
 
             <input type="text" 
@@ -155,35 +154,38 @@ onMounted(() => {
 }
 
 .engine-indicator {
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: var(--vp-c-text-2);
-  padding: 0.3rem 0.8rem;
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.1);
-  margin-right: 0.75rem;
-  user-select: none;
-  transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    margin-right: 0.75rem;
+    user-select: none;
 }
 
 .engine-status {
-    display: inline-flex;
-    gap: 4px;
+    display: flex;
+    gap: 6px;
     align-items: center;
-    margin-right: 6px;
 }
 
 .status-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  display: inline-block;
-  background-color: var(--status-inactive);
-  transition: background-color 0.3s ease;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    background-color: var(--status-inactive);
+    transition: all 0.3s ease;
+    cursor: help;
 }
 
 .status-dot.active {
-  background-color: var(--status-active);
+    background-color: var(--status-active);
+    transform: scale(1.1);
+}
+
+.status-dot:hover {
+    transform: scale(1.2);
 }
 
 .engine-status {

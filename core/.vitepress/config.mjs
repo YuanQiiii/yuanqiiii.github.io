@@ -18,15 +18,7 @@ export default defineConfig({
     }
   },
   description: "a place to place my soul",
-  // head: [['link', { rel: 'icon', href: '/web/favicon.ico' }]], // 网站图标
   themeConfig: {
-    search: {
-      provider: 'local'
-    },
-    // nav: [
-    //   { text: 'Home', link: '/' },
-    //   { text: 'Examples', link: '/markdown-examples' }
-    // ],
     sidebar: [
       ...sidebarItems // 合并生成的侧边栏
     ],
