@@ -1,0 +1,3 @@
+index.md.ZSsKBb-9.lean.js:1 开始检查引擎状态
+index.md.ZSsKBb-9.lean.js:1 检查结果: {google: true, bing: true}bing: truegoogle: true[[Prototype]]: Object
+index.md.ZSsKBb-9.lean.js:1 更新后的状态: Proxy(Object) {google: true, bing: true, currentEngine: 'google'}[[Handler]]: ci[[Target]]: Object[[IsRevoked]]: false

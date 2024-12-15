@@ -3,8 +3,8 @@
         <div class="search-box">
             <div class="engine-indicator">
                 <div class="engine-status">
-                    <span class="status-dot" :class="{ active: engineStatus.google }"></span>
-                    <span class="status-dot" :class="{ active: engineStatus.bing }"></span>
+                    <div class="status-dot" :class="{ active: engineStatus.google }"></div>
+                    <div class="status-dot" :class="{ active: engineStatus.bing }"></div>
                 </div>
             </div>
 
@@ -161,39 +161,35 @@ onMounted(() => {
     fill: var(--vp-c-text-2);
 }
 
+/* 简化状态点样式 */
 .engine-indicator {
+    width: 24px;
+    height: 40px;
     display: flex;
+    justify-content: center;
     align-items: center;
-    padding: 0.4rem;
-    border-radius: 6px;
-    background: rgba(255, 255, 255, 0.1);
-    margin-right: 0.75rem;
-    position: relative;
-    z-index: 10;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    margin-right: 8px;
 }
 
-/* 调整样式优先级和可见性 */
 .engine-status {
-    display: flex !important;
+    display: flex;
     flex-direction: column;
-    gap: 4px;
-    align-items: center;
-    min-height: 20px; /* 确保有最小高度 */
+    gap: 6px;
+    padding: 4px;
 }
 
 .status-dot {
-    width: 8px !important; /* 增大点的尺寸 */
-    height: 8px !important;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
-    background-color: var(--status-inactive) !important;
-    transition: background-color 0.3s ease;
-    display: block !important;
-    position: relative;
-    z-index: 999; /* 提高层级 */
+    background-color: #ef4444;
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .status-dot.active {
-    background-color: var(--status-active) !important;
+    background-color: #10b981;
 }
 
 @media (prefers-color-scheme: dark) {
