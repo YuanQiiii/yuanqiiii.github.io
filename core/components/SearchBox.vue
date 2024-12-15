@@ -62,6 +62,10 @@ onMounted(() => {
     <div class="search-container">
         <div class="search-box">
             <div class="engine-indicator">
+                <div class="engine-status">
+                    <span class="status-dot" :class="{ active: engineStatus.google }" title="Google"></span>
+                    <span class="status-dot" :class="{ active: engineStatus.bing }" title="Bing"></span>
+                </div>
                 {{ engineStatus.currentEngine === 'google' ? 'G' : 'B' }}
             </div>
 
@@ -83,11 +87,12 @@ onMounted(() => {
 
 <style scoped>
 :root {
-  --search-bg-light: rgba(255, 255, 255, 0.7);
-  --search-bg-dark: rgba(29, 29, 29, 0.7);
-  --search-border-light: rgba(255, 255, 255, 0.18);
-  --search-border-dark: rgba(255, 255, 255, 0.08);
-  --search-shadow: rgba(0, 0, 0, 0.1);
+  --search-bg-light: rgba(255, 255, 255, 0.6);
+  --search-bg-dark: rgba(29, 29, 29, 0.6);
+  --search-border-light: rgba(255, 255, 255, 0.3);
+  --search-border-dark: rgba(255, 255, 255, 0.1);
+  --search-shadow: rgba(0, 0, 0, 0.15);
+  --search-shadow-hover: rgba(0, 0, 0, 0.25);
   --status-active: #10b981;
   --status-inactive: #ef4444;
 }
@@ -104,18 +109,19 @@ onMounted(() => {
   display: flex;
   align-items: center;
   background: var(--search-bg-light);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
   border: 1px solid var(--search-border-light);
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 0.75rem;
   box-shadow: 0 8px 32px var(--search-shadow);
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .search-box:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 36px var(--search-shadow);
+  box-shadow: 0 12px 48px var(--search-shadow-hover);
+  border-color: rgba(255, 255, 255, 0.4);
 }
 
 .search-input {
@@ -160,12 +166,18 @@ onMounted(() => {
   transition: all 0.2s ease;
 }
 
+.engine-status {
+    display: inline-flex;
+    gap: 4px;
+    align-items: center;
+    margin-right: 6px;
+}
+
 .status-dot {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   display: inline-block;
-  margin-right: 4px;
   background-color: var(--status-inactive);
   transition: background-color 0.3s ease;
 }
@@ -199,6 +211,12 @@ onMounted(() => {
   .search-box {
     background: var(--search-bg-dark);
     border-color: var(--search-border-dark);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  }
+  
+  .search-box:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.45);
   }
   
   .search-input::placeholder {
@@ -213,9 +231,6 @@ onMounted(() => {
     opacity: 0.8;
   }
   
-  .status-item {
-    background: rgba(255, 255, 255, 0.03);
-  }
 }
 
 @media (max-width: 768px) {
