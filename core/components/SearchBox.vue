@@ -162,6 +162,8 @@ onMounted(() => {
     border-radius: 6px;
     background: rgba(255, 255, 255, 0.1);
     margin-right: 0.75rem;
+    position: relative;
+    z-index: 10;
 }
 
 .engine-status {
@@ -177,6 +179,8 @@ onMounted(() => {
     border-radius: 50%;
     background-color: var(--status-inactive);
     transition: background-color 0.3s ease;
+    position: relative;
+    z-index: 10;
 }
 
 .status-dot.active {
