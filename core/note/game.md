@@ -2,7 +2,7 @@
 layout: home
 ---
 <script setup>
-import SearchBox from '../components/Maze.vue'
+import Maze from '../components/Maze.vue'
 </script>
 
 
