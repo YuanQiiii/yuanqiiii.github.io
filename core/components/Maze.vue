@@ -1,5 +1,5 @@
 <template>
-  <div class="maze-game">
+  <div class="maze-game" tabindex="0" @keydown="handleInput">
     <canvas ref="canvas" :width="canvasWidth" :height="canvasHeight"></canvas>
     <div class="game-info">
       <p>用时: {{ gameTime }} 秒</p>
@@ -11,11 +11,6 @@
       <p>尝试次数: {{ attempts }}</p>
       <button @click="resetGame">继续</button>
     </div>
-    <div v-if="gameState === 'lost'" class="game-over">
-      <p>游戏失败！</p>
-      <p>请再试一次。</p>
-      <button @click="resetGame">重新开始</button>
-    </div>
   </div>
 </template>
 
@@ -26,12 +21,12 @@ export default {
     return {
       canvasWidth: 960,
       canvasHeight: 720,
-      cellSize: 20, // 增大格子大小
+      cellSize: 40, // 增大格子大小
       cols: 21, // 迷宫宽度（需为奇数）
       rows: 21, // 迷宫高度（需为奇数）
       maze: [],
       player: { x: 1, y: 1 },
-      playerViewRange: 3, // 玩家视野范围
+      playerViewRange: 5, // 玩家视野范围
       gameStartTime: null,
       gameTime: 0,
       attempts: 0,
@@ -194,9 +189,7 @@ export default {
       if (validMoves === 0 && !this.deadEnds.has(`${this.player.x},${this.player.y}`)) {
         this.deadEnds.add(`${this.player.x},${this.player.y}`);
         this.attempts += 1;
-        this.gameState = 'lost';
-        clearInterval(this.gameInterval);
-        window.removeEventListener('keydown', this.handleInput);
+        this.resetPlayer(); // 重置玩家到起始点
       }
     },
     checkDeadEnds() {
@@ -230,6 +223,11 @@ export default {
           }
         }
       }
+    }, resetPlayer() { // 新增方法: 重置玩家位置
+      this.player.x = 1;
+      this.player.y = 1;
+      this.updateVision();
+      this.render();
     },
     render() {
       const canvas = this.$refs.canvas;
