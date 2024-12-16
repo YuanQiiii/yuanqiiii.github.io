@@ -26,12 +26,12 @@ export default {
     return {
       canvasWidth: 960,
       canvasHeight: 720,
-      cellSize: 40, // 增大格子大小
+      cellSize: 20, // 增大格子大小
       cols: 21, // 迷宫宽度（需为奇数）
       rows: 21, // 迷宫高度（需为奇数）
       maze: [],
       player: { x: 1, y: 1 },
-      playerViewRange: 2, // 玩家视野范围
+      playerViewRange: 3, // 玩家视野范围
       gameStartTime: null,
       gameTime: 0,
       attempts: 0,
