@@ -233,19 +233,36 @@ export default {
       const canvas = this.$refs.canvas;
       const ctx = canvas.getContext('2d');
       ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+
+      // 计算偏移量使玩家始终在屏幕中心
       const offsetX = this.canvasWidth / 2 - this.player.x * this.cellSize - this.cellSize / 2;
       const offsetY = this.canvasHeight / 2 - this.player.y * this.cellSize - this.cellSize / 2;
-      // 绘制可见的迷宫部分
+
+      // 绘制迷宫
       for (let y = 0; y < this.rows; y++) {
         for (let x = 0; x < this.cols; x++) {
+          // 只绘制可见区域
           if (this.visibleArea && this.visibleArea[y][x]) {
-            const cell = this.maze[y][x];
-            if (cell === 1) {
-              ctx.fillStyle = '#000000'; // 墙
+            // 确定单元格颜色
+            if (this.maze[y][x] === 1) {
+              // 墙壁使用深灰色
+              ctx.fillStyle = '#404040';
             } else {
-              ctx.fillStyle = '#FFFFFF'; // 路径
+              // 通道使用浅灰色
+              ctx.fillStyle = '#808080';
             }
+
+            // 绘制单元格
             ctx.fillRect(
+              x * this.cellSize + offsetX,
+              y * this.cellSize + offsetY,
+              this.cellSize,
+              this.cellSize
+            );
+
+            // 给单元格添加边框
+            ctx.strokeStyle = '#000000';
+            ctx.strokeRect(
               x * this.cellSize + offsetX,
               y * this.cellSize + offsetY,
               this.cellSize,
@@ -254,7 +271,8 @@ export default {
           }
         }
       }
-      // 绘制玩家
+
+      // 绘制玩家（红色圆形）
       ctx.fillStyle = '#FF0000';
       ctx.beginPath();
       ctx.arc(
