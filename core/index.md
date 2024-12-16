@@ -12,9 +12,6 @@ hero:
     - theme: alt
       text: about
       link: /note/about.md
-    - theme: alt
-      text: game
-      link: /note/game.md
 
 ---
 <script setup>
