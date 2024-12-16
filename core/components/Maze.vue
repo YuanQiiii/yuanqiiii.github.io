@@ -31,7 +31,7 @@ export default {
       rows: 21, // 迷宫高度（需为奇数）
       maze: [],
       player: { x: 1, y: 1 },
-      playerViewRange: 1, // 玩家视野范围
+      playerViewRange: 2, // 玩家视野范围
       gameStartTime: null,
       gameTime: 0,
       attempts: 0,
