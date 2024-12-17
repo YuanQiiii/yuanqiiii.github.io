@@ -199,26 +199,26 @@ class Game:
             return
         
         # 记录当前位置为已访问
-        self.visited.add((self.player.x, self.player.y))
+        # self.visited.add((self.player.x, self.player.y))
         
-        # 检查是否进入死胡同
-        moves = [(0,1), (0,-1), (1,0), (-1,0)]
-        valid_moves = 0
-        for dx, dy in moves:
-            new_x = self.player.x + dx
-            new_y = self.player.y + dy
-            # 检查是否是可行且未访问的路径
-            if (0 <= new_x < self.width and 
-                0 <= new_y < self.height and 
-                self.maze[new_y][new_x] == 0 and 
-                (new_x, new_y) not in self.visited):
-                valid_moves += 1
+        # # 检查是否进入死胡同
+        # moves = [(0,1), (0,-1), (1,0), (-1,0)]
+        # valid_moves = 0
+        # for dx, dy in moves:
+        #     new_x = self.player.x + dx
+        #     new_y = self.player.y + dy
+        #     # 检查是否是可行且未访问的路径
+        #     if (0 <= new_x < self.width and 
+        #         0 <= new_y < self.height and 
+        #         self.maze[new_y][new_x] == 0 and 
+        #         (new_x, new_y) not in self.visited):
+        #         valid_moves += 1
                 
-        # 只有在没有未访问的可行路径时才算死胡同
-        if valid_moves == 0:
-            self.state = "lost"
-            self.reset_player()
-            self.visited.clear()  # 重置已访问记录
+        # # 只有在没有未访问的可行路径时才算死胡同
+        # if valid_moves == 0:
+        #     self.state = "lost"
+        #     self.reset_player()
+        #     self.visited.clear()  # 重置已访问记录
 
     def handle_input(self):
         for event in pygame.event.get():
@@ -409,7 +409,7 @@ class GameMenu:
                         settings = {
                             0: {'size': (10, 10), 'view': 1},
                             1: {'size': (15, 15), 'view': 1},
-                            2: {'size': (20, 20), 'view': 1}
+                            2: {'size': (80, 80), 'view': 1}
                         }[self.selected]
                         return (settings['size'][0], settings['size'][1], 
                                 settings['view'], self.seed if self.use_seed else None)
