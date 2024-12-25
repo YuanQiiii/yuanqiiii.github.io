@@ -7,10 +7,10 @@ hero:
   text: "a place to place my soul"
   actions:
     - theme: brand
-      text: list
+      text: List
       link: /note/list.md
     - theme: alt
-      text: about
+      text: About
       link: /note/about.md
 
 ---
