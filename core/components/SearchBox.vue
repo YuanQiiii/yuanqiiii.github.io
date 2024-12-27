@@ -112,156 +112,61 @@ onMounted(() => {
 </script>
 
 <style scoped>
-:root {
-    --search-bg-light: rgba(255, 255, 255, 0.6);
-    --search-bg-dark: rgba(29, 29, 29, 0.6);
-    --search-border-light: rgba(255, 255, 255, 0.3);
-    --search-border-dark: rgba(255, 255, 255, 0.1);
-    --search-shadow: rgba(0, 0, 0, 0.15);
-    --search-shadow-hover: rgba(0, 0, 0, 0.25);
-    --status-active: #10b981;
-    --status-inactive: #ef4444;
-}
-
-.search-container {
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 1rem;
-    transition: all 0.3s ease;
-}
-
+/* 搜索框主体样式 
+ * 使用flex布局实现水平居中对齐
+ * 通过backdrop-filter实现毛玻璃效果
+ * 使用var()函数实现主题切换
+ */
 .search-box {
-    display: flex;
-    align-items: center;
-    background: var(--search-bg-light);
+    display: flex;                /* 启用flex布局 */
+    align-items: center;         /* 垂直居中对齐 */
+    background: var(--search-bg-light);  /* 使用主题变量 */
+    /* 毛玻璃效果实现 */
     backdrop-filter: blur(12px) saturate(180%);
     -webkit-backdrop-filter: blur(12px) saturate(180%);
     border: 1px solid var(--search-border-light);
-    border-radius: 16px;
-    padding: 0.75rem;
-    box-shadow: 0 8px 32px var(--search-shadow);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 16px;         /* 圆角边框 */
+    padding: .75rem;             /* 内边距 */
+    box-shadow: 0 8px 32px var(--search-shadow);  /* 阴影效果 */
+    transition: .3s cubic-bezier(0.4, 0, 0.2, 1); /* 平滑过渡动画 */
 }
 
+/* 搜索框悬浮状态样式
+ * 实现上浮动画和阴影加深效果
+ */
 .search-box:hover {
-    transform: translateY(-2px);
+    transform: translateY(-2px);  /* 向上位移 */
     box-shadow: 0 12px 48px var(--search-shadow-hover);
-    border-color: rgba(255, 255, 255, 0.4);
+    border-color: #fff6;         /* 半透明边框 */
 }
 
-.search-input {
-    flex: 1;
-    border: none;
-    background: transparent;
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    color: var(--vp-c-text-1);
-    outline: none;
-}
-
+/* 输入框和按钮的共享样式
+ * 去除默认边框和背景
+ */
+.search-input,
 .search-button {
-    background: none;
-    border: none;
-    padding: 0.5rem;
-    cursor: pointer;
-    opacity: 0.7;
-    transition: all 0.2s ease;
+    border: 0;                   /* 移除边框 */
+    background: none;            /* 移除背景 */
+    padding: .5rem;              /* 统一内边距 */
 }
 
-.search-button:hover {
-    opacity: 1;
-    transform: scale(1.1);
+/* 输入框样式
+ * 使用flex: 1实现自适应宽度
+ */
+.search-input {
+    flex: 1;                     /* 占据剩余空间 */
+    padding-left: 1rem;          /* 左侧文本间距 */
+    font-size: 1rem;             /* 字体大小 */
+    color: var(--vp-c-text-1);   /* 文本颜色 */
+    outline: 0;                  /* 移除焦点轮廓 */
 }
 
-.search-icon {
-    width: 20px;
-    height: 20px;
-    fill: var(--vp-c-text-2);
-}
-
-/* 简化状态点样式 */
-.engine-indicator {
-    width: 24px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.1);
-    border-radius: 4px;
-    margin-right: 8px;
-}
-
-.engine-status {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    padding: 4px;
-}
-
-.status-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background-color: #ef4444;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.status-dot.active {
-    background-color: #10b981;
-}
-
-@media (prefers-color-scheme: dark) {
-    .search-box {
-        background: var(--search-bg-dark);
-        border-color: var(--search-border-dark);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
-    }
-
-    .search-box:hover {
-        border-color: rgba(255, 255, 255, 0.15);
-        box-shadow: 0 12px 48px rgba(0, 0, 0, 0.45);
-    }
-
-    .search-input::placeholder {
-        color: rgba(255, 255, 255, 0.4);
-    }
-
-    .engine-indicator {
-        background: rgba(255, 255, 255, 0.05);
-    }
-
-    .status-dot {
-        opacity: 0.8;
-    }
-}
-
-@media (max-width: 768px) {
-    .search-container {
-        padding: 0.5rem;
-    }
-
-    .search-box {
-        padding: 0.5rem;
-    }
-
-    .search-input {
-        font-size: 0.9rem;
-        padding: 0.4rem 0.75rem;
-    }
-
-    .engine-indicator {
-        padding: 0.25rem 0.6rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .search-input {
-        font-size: 0.875rem;
-    }
-
-    .engine-indicator {
-        padding: 0.2rem 0.5rem;
-    }
+/* 搜索按钮样式
+ * 实现悬浮渐变效果
+ */
+.search-button {
+    cursor: pointer;             /* 鼠标指针样式 */
+    opacity: .7;                 /* 默认透明度 */
+    transition: .2s ease;        /* 透明度过渡动画 */
 }
 </style>
