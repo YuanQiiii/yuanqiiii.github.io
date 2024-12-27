@@ -98,11 +98,11 @@ const updateEngineStatus = async () => {
     const googleStatus = await checkSearchEngine('google');
     const bingStatus = await checkSearchEngine('bing');
     console.log('检查结果:', { google: googleStatus, bing: bingStatus });
-    
+
     engineStatus.value.google = googleStatus;
     engineStatus.value.bing = bingStatus;
     engineStatus.value.currentEngine = googleStatus ? 'google' : (bingStatus ? 'bing' : null);
-    
+
     console.log('更新后的状态:', engineStatus.value);
 };
 
@@ -113,9 +113,9 @@ onMounted(() => {
 
 <style scoped>
 :root {
-    --search-bg-light: rgba(255, 255, 255, 0.6);
-    --search-bg-dark: rgba(29, 29, 29, 0.6);
-    --search-border-light: rgba(255, 255, 255, 0.3);
+    --search-bg-light: rgba(255, 255, 255, 0.85);
+    --search-bg-dark: rgba(29, 29, 29, 0.85);
+    --search-border-light: rgba(0, 0, 0, 0.1);
     --search-border-dark: rgba(255, 255, 255, 0.1);
     --search-shadow: rgba(0, 0, 0, 0.15);
     --search-shadow-hover: rgba(0, 0, 0, 0.25);
@@ -135,8 +135,8 @@ onMounted(() => {
     display: flex;
     align-items: center;
     background: var(--search-bg-light);
-    backdrop-filter: blur(12px) saturate(180%);
-    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    backdrop-filter: blur(8px) saturate(150%);
+    -webkit-backdrop-filter: blur(8px) saturate(150%);
     border: 1px solid var(--search-border-light);
     border-radius: 16px;
     padding: 0.75rem;
@@ -161,7 +161,8 @@ onMounted(() => {
 }
 
 .search-input::placeholder {
-    color: rgba(0, 0, 0, 0.4);  /* 添加亮色模式下的 placeholder 颜色 */
+    color: rgba(0, 0, 0, 0.4);
+    /* 添加亮色模式下的 placeholder 颜色 */
 }
 
 .search-button {
@@ -191,7 +192,8 @@ onMounted(() => {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(0, 0, 0, 0.05);  /* 修改为更明显的背景色 */
+    background: rgba(0, 0, 0, 0.05);
+    /* 修改为更明显的背景色 */
     border-radius: 4px;
     margin-right: 8px;
 }
@@ -220,7 +222,6 @@ onMounted(() => {
     .search-box {
         background: var(--search-bg-dark);
         border-color: var(--search-border-dark);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
     }
 
     .search-box:hover {
