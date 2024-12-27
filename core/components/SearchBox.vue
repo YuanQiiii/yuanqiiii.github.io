@@ -30,7 +30,7 @@
 import { ref, onMounted } from 'vue'
 
 const searchQuery = ref('')
-const placeholder = ref('')
+const placeholder = ref('input...')
 
 const SEARCH_URLS = {
     google: 'https://www.google.com/search?q=',
@@ -118,6 +118,9 @@ onMounted(() => {
     --search-border-light: rgba(255, 255, 255, 0.3);
     --search-border-dark: rgba(255, 255, 255, 0.1);
     --search-shadow: rgba(0, 0, 0, 0.15);
+    --search-shadow-hover: rgba(0, 0, 0, 0.25);
+    --status-active: #10b981;
+    --status-inactive: #ef4444;
 }
 
 .search-container {
@@ -125,6 +128,7 @@ onMounted(() => {
     max-width: 600px;
     margin: 0 auto;
     padding: 1rem;
+    transition: all 0.3s ease;
 }
 
 .search-box {
@@ -132,6 +136,7 @@ onMounted(() => {
     align-items: center;
     background: var(--search-bg-light);
     backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
     border: 1px solid var(--search-border-light);
     border-radius: 16px;
     padding: 0.75rem;
@@ -141,6 +146,7 @@ onMounted(() => {
 
 .search-box:hover {
     transform: translateY(-2px);
+    box-shadow: 0 12px 48px var(--search-shadow-hover);
     border-color: rgba(255, 255, 255, 0.4);
 }
 
@@ -155,18 +161,46 @@ onMounted(() => {
 }
 
 .search-input::placeholder {
-    color: rgba(0, 0, 0, 0.4);
+    color: rgba(0, 0, 0, 0.4);  /* 添加亮色模式下的 placeholder 颜色 */
 }
 
+.search-button {
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: all 0.2s ease;
+}
+
+.search-button:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.search-icon {
+    width: 20px;
+    height: 20px;
+    fill: var(--vp-c-text-2);
+}
+
+/* 简化状态点样式 */
 .engine-indicator {
     width: 24px;
     height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.05);  /* 修改为更明显的背景色 */
     border-radius: 4px;
     margin-right: 8px;
+}
+
+.engine-status {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 4px;
 }
 
 .status-dot {
@@ -174,24 +208,36 @@ onMounted(() => {
     height: 6px;
     border-radius: 50%;
     background-color: #ef4444;
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .status-dot.active {
     background-color: #10b981;
 }
 
+/* 保持暗色模式的现有样式 */
 @media (prefers-color-scheme: dark) {
     .search-box {
         background: var(--search-bg-dark);
         border-color: var(--search-border-dark);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
     }
-    
+
+    .search-box:hover {
+        border-color: rgba(255, 255, 255, 0.15);
+        box-shadow: 0 12px 48px rgba(0, 0, 0, 0.45);
+    }
+
     .search-input::placeholder {
         color: rgba(255, 255, 255, 0.4);
     }
-    
+
     .engine-indicator {
-        background: rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .status-dot {
+        opacity: 0.8;
     }
 }
 
@@ -199,10 +245,28 @@ onMounted(() => {
     .search-container {
         padding: 0.5rem;
     }
-    
+
+    .search-box {
+        padding: 0.5rem;
+    }
+
     .search-input {
         font-size: 0.9rem;
         padding: 0.4rem 0.75rem;
+    }
+
+    .engine-indicator {
+        padding: 0.25rem 0.6rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .search-input {
+        font-size: 0.875rem;
+    }
+
+    .engine-indicator {
+        padding: 0.2rem 0.5rem;
     }
 }
 </style>
