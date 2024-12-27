@@ -160,6 +160,10 @@ onMounted(() => {
     outline: none;
 }
 
+.search-input::placeholder {
+    color: rgba(0, 0, 0, 0.4);  /* 添加亮色模式下的 placeholder 颜色 */
+}
+
 .search-button {
     background: none;
     border: none;
@@ -187,7 +191,7 @@ onMounted(() => {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.05);  /* 修改为更明显的背景色 */
     border-radius: 4px;
     margin-right: 8px;
 }
@@ -211,6 +215,7 @@ onMounted(() => {
     background-color: #10b981;
 }
 
+/* 保持暗色模式的现有样式 */
 @media (prefers-color-scheme: dark) {
     .search-box {
         background: var(--search-bg-dark);
