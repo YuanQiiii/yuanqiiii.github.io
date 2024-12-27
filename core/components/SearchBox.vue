@@ -44,25 +44,44 @@ const engineStatus = ref({
 })
 
 // 检测搜索引擎可用性
-const checkSearchEngine = async (engine) => {
-    const url = `https://${engine}.com/favicon.ico`
-    try {
-        const timeout = new Promise((_, reject) =>
-            setTimeout(() => reject(new Error('Timeout')), 2000)
-        )
+const checkSearchEngine = async (engine, retries = 2) => {
+    // 为每个引擎定义多个检测端点
+    const checkUrls = {
+        google: ['https://www.google.com/favicon.ico', 'https://www.google.com/generate_204'],
+        bing: ['https://www.bing.com/favicon.ico', 'https://www.bing.com/ping'],
+    }[engine] || [`https://${engine}.com/favicon.ico`];
 
-        await Promise.race([
-            fetch(url, {
-                mode: 'no-cors',
-                cache: 'no-cache'
-            }),
-            timeout
-        ])
-        return true
-    } catch (error) {
-        console.warn(`${engine} is not accessible:`, error)
-        return false
+    for (let attempt = 0; attempt < retries; attempt++) {
+        for (const url of checkUrls) {
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 3000);
+
+                const response = await fetch(url, {
+                    mode: 'no-cors',
+                    cache: 'no-cache',
+                    signal: controller.signal
+                });
+
+                clearTimeout(timeoutId);
+                return true;
+            } catch (error) {
+                const errorType = error.name === 'AbortError' ? 'timeout' : 'network';
+                console.warn(
+                    `[Attempt ${attempt + 1}] ${engine} check failed:`,
+                    `\nURL: ${url}`,
+                    `\nType: ${errorType}`,
+                    `\nError: ${error.message}`
+                );
+                continue;
+            }
+        }
+        // 重试之间添加延迟
+        if (attempt < retries - 1) {
+            await new Promise(resolve => setTimeout(resolve, 1000));
+        }
     }
+    return false;
 }
 
 // 执行搜索
