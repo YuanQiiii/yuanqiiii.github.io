@@ -115,8 +115,6 @@ onMounted(() => {
 :root {
     --search-bg-light: rgba(255, 255, 255, 0.85);
     --search-bg-dark: rgba(29, 29, 29, 0.85);
-    --search-border-light: rgba(0, 0, 0, 0.1);
-    --search-border-dark: rgba(255, 255, 255, 0.1);
     --search-shadow: rgba(0, 0, 0, 0.15);
     --search-shadow-hover: rgba(0, 0, 0, 0.25);
     --status-active: #10b981;
@@ -137,7 +135,7 @@ onMounted(() => {
     background: var(--search-bg-light);
     backdrop-filter: blur(8px) saturate(150%);
     -webkit-backdrop-filter: blur(8px) saturate(150%);
-    border: 1px solid var(--search-border-light);
+    border: 1px solid var(--search-bg-light);
     border-radius: 16px;
     padding: 0.75rem;
     box-shadow: 0 8px 32px var(--search-shadow);
@@ -159,12 +157,6 @@ onMounted(() => {
     color: var(--vp-c-text-1);
     outline: none;
 }
-
-.search-input::placeholder {
-    color: rgba(0, 0, 0, 0.4);
-    /* 添加亮色模式下的 placeholder 颜色 */
-}
-
 .search-button {
     background: none;
     border: none;
@@ -183,19 +175,6 @@ onMounted(() => {
     width: 20px;
     height: 20px;
     fill: var(--vp-c-text-2);
-}
-
-/* 简化状态点样式 */
-.engine-indicator {
-    width: 24px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.05);
-    /* 修改为更明显的背景色 */
-    border-radius: 4px;
-    margin-right: 8px;
 }
 
 .engine-status {
@@ -221,20 +200,12 @@ onMounted(() => {
 @media (prefers-color-scheme: dark) {
     .search-box {
         background: var(--search-bg-dark);
-        border-color: var(--search-border-dark);
+        border-color: var(--search-bg-dark);
     }
 
     .search-box:hover {
         border-color: rgba(255, 255, 255, 0.15);
         box-shadow: 0 12px 48px rgba(0, 0, 0, 0.45);
-    }
-
-    .search-input::placeholder {
-        color: rgba(255, 255, 255, 0.4);
-    }
-
-    .engine-indicator {
-        background: rgba(255, 255, 255, 0.05);
     }
 
     .status-dot {
@@ -256,18 +227,11 @@ onMounted(() => {
         padding: 0.4rem 0.75rem;
     }
 
-    .engine-indicator {
-        padding: 0.25rem 0.6rem;
-    }
 }
 
 @media (max-width: 480px) {
     .search-input {
         font-size: 0.875rem;
-    }
-
-    .engine-indicator {
-        padding: 0.2rem 0.5rem;
     }
 }
 </style>
