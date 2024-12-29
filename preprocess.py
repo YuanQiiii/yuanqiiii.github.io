@@ -140,7 +140,7 @@ def process_markdown_files(directory_path, skip_files):
                             # 将HTML <img> 标签转换为Markdown图片语法
                             content = convert_img_tags_to_markdown(content)
                             # 将中文标点符号替换为英文标点符号
-                            content = convert_punctuations(content)
+                            # content = convert_punctuations(content)
                             # 替换HTML实体为普通字符
                             content = replace_html_entities(content)
                             # 添加v-pre保护标记
