@@ -3,8 +3,8 @@
 layout: home
 
 hero:
-  name: "Home"
-  text: "a place to place my soul"
+  name: "start"
+  text: "wondering"
   actions:
     - theme: brand
       text: List
