@@ -4,7 +4,7 @@ layout: home
 
 hero:
   name: "start"
-  text: "wondering"
+  text: "愿美好的事情即将发生"
   actions:
     - theme: brand
       text: List
