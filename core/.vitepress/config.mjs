@@ -17,6 +17,7 @@ export default defineConfig({
       lazyLoading: true
     }
   },
+  head: [['link', { rel: 'icon', href: 'favicon.ico' }]],
   description: "a place to place my soul",
   themeConfig: {
     sidebar: [

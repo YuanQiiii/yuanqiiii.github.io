@@ -157,6 +157,7 @@ onMounted(() => {
     color: var(--vp-c-text-1);
     outline: none;
 }
+
 .search-button {
     background: none;
     border: none;
