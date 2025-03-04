@@ -1,21 +1,23 @@
 <template>
   <div class="rotate-container">
-    <svg 
-      class="rotating-circle" 
-      viewBox="0 0 100 100"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <circle 
-        class="circle" 
-        cx="50" 
-        cy="50" 
-        r="40"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-dasharray="10, 5"
-      />
-    </svg>
+    <div class="rotating-wrapper">
+      <svg 
+        class="breathing-circle" 
+        viewBox="0 0 100 100"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle 
+          class="circle" 
+          cx="50" 
+          cy="50" 
+          r="40"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-dasharray="10, 5"
+        />
+      </svg>
+    </div>
   </div>
 </template>
 
@@ -33,11 +35,16 @@
   align-items: center;
 }
 
-.rotating-circle {
+.rotating-wrapper {
   width: 100%;
   height: 100%;
-  animation: rotate 10s linear infinite, 
-             breathe 8s ease-in-out infinite;
+  animation: rotate 10s linear infinite;
+}
+
+.breathing-circle {
+  width: 100%;
+  height: 100%;
+  animation: breathe 8s ease-in-out infinite;
 }
 
 .circle {
