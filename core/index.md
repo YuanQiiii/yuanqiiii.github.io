@@ -12,6 +12,9 @@ hero:
     - theme: alt
       text: About
       link: /note/about.md
+    - theme: alt
+      text: Friend
+      link: /note/friend.md
 
 ---
 <script setup>
@@ -20,5 +23,5 @@ import Rotate from './components/Rotate.vue'
 
 
 <ClientOnly>
-   <SearchBox/>
+   <Rotate/>
 </ClientOnly>
