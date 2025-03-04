@@ -15,7 +15,7 @@ hero:
 
 ---
 <script setup>
-import SearchBox from './components/SearchBox.vue'
+import Rotate from './components/Rotate.vue'
 </script>
 
 
