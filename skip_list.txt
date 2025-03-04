@@ -2,3 +2,4 @@ list.md
 index.md
 about.md
 game.md
+friend.md
