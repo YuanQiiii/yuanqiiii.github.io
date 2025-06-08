@@ -17,11 +17,3 @@ hero:
       link: /note/friend.md
 
 ---
-<script setup>
-import Rotate from './components/Rotate.vue'
-</script>
-
-
-<ClientOnly>
-   <Rotate/>
-</ClientOnly>
