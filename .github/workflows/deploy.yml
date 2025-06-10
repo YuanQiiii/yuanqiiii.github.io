@@ -39,7 +39,7 @@ jobs:
           pip install Pillow || echo "Pillow installation failed, skipping image compression"
 
       - name: Run Python Preprocess Script
-        run: |
+        run: python preprocess.py
           if [ -f "preprocess_new.py" ]; then
             python preprocess_new.py
           else

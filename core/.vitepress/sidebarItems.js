@@ -10,7 +10,7 @@ export default [
         "items": [
           {
             "text": "普通心理学.md",
-            "link": "/note/笔记/普通心理学.md"
+            "link": "/note/笔记/普通心理学"
           }
         ]
       },
@@ -20,15 +20,15 @@ export default [
         "items": [
           {
             "text": "随想01.md",
-            "link": "/note/想法/随想01.md"
+            "link": "/note/想法/随想01"
           },
           {
             "text": "love.md",
-            "link": "/note/想法/love.md"
+            "link": "/note/想法/love"
           },
           {
             "text": "年终总结.md",
-            "link": "/note/想法/年终总结.md"
+            "link": "/note/想法/年终总结"
           }
         ]
       }

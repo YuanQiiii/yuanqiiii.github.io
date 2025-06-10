@@ -21,11 +21,7 @@ npm install
 
 # 运行预处理脚本
 echo "🔧 运行预处理脚本..."
-if [ -f "preprocess_new.py" ]; then
-    python3 preprocess_new.py
-else
-    echo "⚠️  警告: 预处理脚本未找到，跳过预处理"
-fi
+python3 preprocess.py
 
 # 构建网站
 echo "🏗️  构建网站..."
