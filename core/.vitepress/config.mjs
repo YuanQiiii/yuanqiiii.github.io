@@ -1,5 +1,5 @@
 import { defineConfig } from 'vitepress'
-import sidebarItems from './sidebarItems'
+import sidebarArticles from './sidebarArticles'
 import { resolve } from 'path'
 
 // Vite 配置
@@ -78,7 +78,7 @@ export default defineConfig({
       }
     },
     sidebar: [
-      ...sidebarItems // 合并生成的侧边栏
+      ...sidebarArticles // 使用按文章分类的侧边栏
     ],
     socialLinks: [
       { icon: 'github', link: 'https://github.com/YuanQiiii' }
@@ -93,7 +93,7 @@ export default defineConfig({
     // 启用目录导航
     outline: {
       level: [2, 3],
-      label: '页面导航'
+      label: '文章目录'
     },
     // 添加编辑链接
     editLink: {

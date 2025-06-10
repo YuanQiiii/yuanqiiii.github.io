@@ -382,7 +382,7 @@ if __name__ == "__main__":
         print("开始预处理...")
         process_markdown_files(directory, skip_list)
         process_action_file()
-        generate_sidebar()
+        # generate_sidebar()  # 不再生成旧的侧边栏
         generate_articles_data()
         generate_sitemap()
         compress_images()

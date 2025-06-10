@@ -24,13 +24,7 @@ YuanQiiii 静态网站基于 VitePress 构建，集成了一系列现代化功�
 - **图片画廊**：`ImageGallery.vue` 支持批量展示与缩略图预览。
 - **RSS 订阅**：`RssSubscribe.vue` 与 `rss.xml` 文件支持多客户端订阅。
 
-### 2.4 首页与导航
-- **最新文章**：`RecentPosts.vue` 动态加载最新发布内容。
-- **分类导航卡片**：`CategoryCards.vue` 快速访问文章分类。
-- **Hero 区域**：自定义布局与操作按钮。
-- **特色功能展示区**：展示核心功能与服务亮点。
-
-### 2.5 技术架构与性能
+### 2.4 技术架构与性能
 - **预处理脚本**：`preprocess_new.py` 实现前端文档元数据提取、摘要与阅读时长估算、图片自动压缩（Pillow 支持）。
 - **SEO 优化**：自动生成 `sitemap.xml`、Open Graph 标签、语义化 HTML。
 - **性能**：组件与图片懒加载、代码分割、Webpack/Vite 优化配置。

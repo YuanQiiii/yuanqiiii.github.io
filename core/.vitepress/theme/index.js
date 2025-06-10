@@ -6,8 +6,6 @@ import './style.css'
 import ReadingProgress from '../../components/ReadingProgress.vue'
 import ArticleInfo from '../../components/ArticleInfo.vue'
 import ArticleTags from '../../components/ArticleTags.vue'
-import CategoryCards from '../../components/CategoryCards.vue'
-import RecentPosts from '../../components/RecentPosts.vue'
 import CodeBlock from '../../components/CodeBlock.vue'
 import ImageLightbox from '../../components/ImageLightbox.vue'
 import ThemeToggle from '../../components/ThemeToggle.vue'
@@ -21,8 +19,6 @@ export default {
         app.component('ReadingProgress', ReadingProgress)
         app.component('ArticleInfo', ArticleInfo)
         app.component('ArticleTags', ArticleTags)
-        app.component('CategoryCards', CategoryCards)
-        app.component('RecentPosts', RecentPosts)
         app.component('CodeBlock', CodeBlock)
         app.component('ImageLightbox', ImageLightbox)
         app.component('ThemeToggle', ThemeToggle)
