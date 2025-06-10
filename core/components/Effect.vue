@@ -1,6 +1,6 @@
 <!-- Effect.vue -->
 <script setup>
-import { onMounted, onBeforeUnmount, reactive } from 'vue'
+import { onMounted, onBeforeUnmounted, reactive } from 'vue'
 
 /* 集中状态管理 */
 const state = reactive({
@@ -8,10 +8,10 @@ const state = reactive({
   ctx: null,
   offscreenCanvas: null,
   offscreenCtx: null,
-  dpr: window.devicePixelRatio || 1,
+  dpr: typeof window !== 'undefined' ? (window.devicePixelRatio || 1) : 1, // SSR 安全
   particles: [],
   grid: {},
-  gridSize: 100, // 网格大小，可根据需要调整
+  gridSize: 100,
   particleCount: 50,
   maxDistance: 100,
   connectionProbability: 0.02,
@@ -22,13 +22,13 @@ const state = reactive({
   isAnimating: false,
   animationId: null,
   showPanel: false,
-  connectionColors: new Map(), // 存储连接的颜色
-  frameSkip: 0, // 跳帧计数
+  connectionColors: new Map(),
+  frameSkip: 0,
   targetFPS: 60,
   lastFrameTime: 0,
   deltaTime: 0,
-  useQuadTree: true, // 是否使用四叉树优化
-  renderMode: 'auto', // 'high', 'medium', 'low', 'auto'
+  useQuadTree: true,
+  renderMode: 'auto',
   particlePool: null,
   connectionPool: null,
 })
@@ -452,7 +452,7 @@ class ObjectPool {
 }
 
 
-/* 事件处理 */
+ /* 事件处理 */
 function handleResize() {
   setupCanvas()
   resetState()
@@ -493,6 +493,9 @@ function resetState() {
 
 /* 初始加载 */
 onMounted(() => {
+  // 确保在客户端环境下才执行
+  if (typeof window === 'undefined') return
+  
   // 创建 canvas
   state.canvas = document.createElement('canvas')
   state.canvas.style.position = 'fixed'
@@ -507,7 +510,7 @@ onMounted(() => {
   // 设置画布和粒子
   setupCanvas()
   resetState()
-
+  
   // 启动动画
   startAnimation()
 
@@ -517,7 +520,9 @@ onMounted(() => {
 })
 
 /* 组件销毁 */
-onBeforeUnmount(() => {
+onBeforeUnmounted(() => {
+  if (typeof window === 'undefined') return
+  
   // 事件解绑
   window.removeEventListener('resize', handleResize)
   document.removeEventListener('visibilitychange', handleVisibilityChange)
@@ -534,37 +539,37 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="effect-container">
-    <div class="control-panel" :class="{ 'expanded': state.showPanel }">
-      <div class="control-header" @click="state.showPanel = !state.showPanel">
-        <span class="control-title">⚙️</span>
+    <!-- 只在客户端渲染控制面板 -->
+    <ClientOnly>
+      <div class="control-panel" :class="{ 'expanded': state.showPanel }">
+        <div class="control-header" @click="state.showPanel = !state.showPanel">
+          <span class="control-title">⚙️</span>
+        </div>
 
+        <div class="control-content" v-if="state.showPanel">
+          <div class="control-item">
+            <label>Particle Count</label>
+            <input type="range" v-model.number="state.particleCount" min="30" max="150" @input="updateParticles" />
+            <span class="value">{{ state.particleCount }}</span>
+          </div>
+
+          <div class="control-item">
+            <label>Max Distance</label>
+            <input type="range" v-model.number="state.maxDistance" min="50" max="300" @input="updateConnections" />
+            <span class="value">{{ state.maxDistance }}</span>
+          </div>
+
+          <div class="control-item">
+            <label>Connection Probability</label>
+            <input type="range" v-model.number="state.connectionProbability" step="0.01" min="0" max="1" @input="updateConnections" />
+            <span class="value">{{ state.connectionProbability.toFixed(2) }}</span>
+          </div>
+        </div>
       </div>
-
-      <div class="control-content" v-if="state.showPanel">
-        <div class="control-item">
-          <label>Particle Count</label>
-          <input type="range" v-model.number="state.particleCount" min="30" max="150" @input="updateParticles" />
-          <span class="value">{{ state.particleCount }}</span>
-
-        </div>
-
-        <div class="control-item">
-          <label>Max Distance</label>
-          <input type="range" v-model.number="state.maxDistance" min="50" max="300" @input="updateConnections" />
-          <span class="value">{{ state.maxDistance }}</span>
-
-        </div>
-
-        <div class="control-item">
-          <label>Connection Probability</label>
-          <input type="range" v-model.number="state.connectionProbability" step="0.01" min="0" max="1"
-            @input="updateConnections" />
-          <span class="value">{{ state.connectionProbability.toFixed(2) }}</span>
-        </div>
-      </div>
-    </div>
+    </ClientOnly>
   </div>
 </template>
+
 <style scoped>
 .effect-container {
   position: relative;

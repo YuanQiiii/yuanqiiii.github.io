@@ -24,5 +24,7 @@ import RssSubscribe from './components/RssSubscribe.vue'
 import Effect from './components/Effect.vue'
 </script>
 
-<Effect />
+<ClientOnly>
+  <Effect />
+</ClientOnly>
 <RssSubscribe />
