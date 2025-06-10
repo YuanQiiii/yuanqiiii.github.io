@@ -3,5 +3,5 @@
 core/.vitepress/dist
 core/.vitepress/cache
 node_modules
-__pycache__
-/public
+__pycache__/
+public/
