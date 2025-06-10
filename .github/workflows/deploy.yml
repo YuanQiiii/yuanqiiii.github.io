@@ -1,4 +1,4 @@
-name: Deploy VitePress site to Pages
+name: Deploy Enhanced VitePress site to Pages
 
 on:
   push:
@@ -28,23 +28,29 @@ jobs:
         with:
           fetch-depth: 0 
 
-
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'
 
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install Pillow || echo "Pillow installation failed, skipping image compression"
 
       - name: Run Python Preprocess Script
-        run: python preprocess.py
-
+        run: |
+          if [ -f "preprocess_new.py" ]; then
+            python preprocess_new.py
+          else
+            python preprocess.py
+          fi
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm 
-
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

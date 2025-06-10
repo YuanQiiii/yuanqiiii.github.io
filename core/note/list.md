@@ -5,15 +5,16 @@ hero:
   name: "list"
   actions:
     - theme: alt
-      text: api-examples
-      link: api-examples.md
+      text: 普通心理学
+      link: /note/笔记/普通心理学.md
     - theme: brand
-      text: markdown-examples
-      link: markdown-examples.md
+      text: 随想01
+      link: /note/想法/随想01.md
     - theme: alt
-      text: about
-      link: note/about.md
+      text: love
+      link: /note/想法/love.md
     - theme: brand
-      text: list
-      link: note/list.md
+      text: 年终总结
+      link: /note/想法/年终总结.md
+
 ---
