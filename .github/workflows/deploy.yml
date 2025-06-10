@@ -40,11 +40,6 @@ jobs:
 
       - name: Run Python Preprocess Script
         run: python preprocess.py
-          if [ -f "preprocess_new.py" ]; then
-            python preprocess_new.py
-          else
-            python preprocess.py
-          fi
 
       - name: Setup Node
         uses: actions/setup-node@v4
