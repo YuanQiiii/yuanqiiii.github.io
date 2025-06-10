@@ -8,7 +8,6 @@ import ArticleInfo from '../../components/ArticleInfo.vue'
 import ArticleTags from '../../components/ArticleTags.vue'
 import CodeBlock from '../../components/CodeBlock.vue'
 import ImageLightbox from '../../components/ImageLightbox.vue'
-import ThemeToggle from '../../components/ThemeToggle.vue'
 import RssSubscribe from '../../components/RssSubscribe.vue'
 
 export default {
@@ -21,7 +20,6 @@ export default {
         app.component('ArticleTags', ArticleTags)
         app.component('CodeBlock', CodeBlock)
         app.component('ImageLightbox', ImageLightbox)
-        app.component('ThemeToggle', ThemeToggle)
         app.component('RssSubscribe', RssSubscribe)
 
         // 路由守卫

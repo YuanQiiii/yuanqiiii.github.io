@@ -76,7 +76,6 @@ import ReadingProgress from '../../components/ReadingProgress.vue'
 import ArticleInfo from '../../components/ArticleInfo.vue'
 import ArticleTags from '../../components/ArticleTags.vue'
 import ImageLightbox from '../../components/ImageLightbox.vue'
-import ThemeToggle from '../../components/ThemeToggle.vue'
 
 const { Layout } = DefaultTheme
 const route = useRoute()
