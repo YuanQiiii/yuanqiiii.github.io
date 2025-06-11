@@ -4,7 +4,6 @@ import re
 import json
 import time
 from datetime import datetime
-from collections import defaultdict
 
 def get_skip_markdown_files(file_path):
     '''得到不处理的文件的集合'''
@@ -120,27 +119,10 @@ def get_file_stats(file_path):
             'size': 0
         }
 
-def get_category_from_path(path):
-    '''从文件路径推断分类'''
-    if '笔记' in path:
-        return '学习笔记'
-    elif '想法' in path:
-        return '随想感悟'
-    elif 'about' in path.lower():
-        return '关于'
-    elif 'friend' in path.lower():
-        return '友链'
-    else:
-        return '其他'
-
-# 全局变量
-actions = ""
 themes = ['brand', 'alt']
-articles_data = []
 
 def process_markdown_files(directory_path, skip_files):
     '''处理Markdown文件'''
-    global actions, articles_data
     try:
         for root, dirs, files in os.walk(directory_path):
             for file in files:
@@ -154,32 +136,6 @@ def process_markdown_files(directory_path, skip_files):
                         metadata = extract_frontmatter(content)
                         file_stats = get_file_stats(file_path)
                         
-                        # 生成相对路径
-                        relative_path = os.path.relpath(file_path, directory_path).replace('\\', '/')
-                        if not relative_path.startswith('/'):
-                            relative_path = '/' + relative_path
-                        # 去除 .md 后缀，用于链接和 metadata
-                        link_path = relative_path[:-3] if relative_path.lower().endswith('.md') else relative_path
-                        
-                        # 生成文章数据
-                        tags = metadata.get('tags', [])
-                        if isinstance(tags, str):
-                            tags = [tag.strip() for tag in tags.split(',') if tag.strip()]
-                        
-                        article_data = {
-                            'title': metadata.get('title', os.path.splitext(file)[0]),
-                            'path': link_path,
-                            'category': metadata.get('category', get_category_from_path(relative_path)),
-                            'author': metadata.get('author', 'YuanQiiii'),
-                            'excerpt': metadata.get('description', generate_excerpt(content)),
-                            'tags': tags,
-                            'created': metadata.get('date', file_stats['created'].isoformat()),
-                            'modified': file_stats['modified'].isoformat(),
-                            'reading_time': estimate_reading_time(content),
-                            'word_count': len(re.findall(r'[\u4e00-\u9fff]', content)) + len(re.findall(r'\b[a-zA-Z]+\b', content))
-                        }
-                        articles_data.append(article_data)
-                        
                         # 处理内容
                         content = convert_img_tags_to_markdown(content)
                         content = replace_html_entities(content)
@@ -190,112 +146,12 @@ def process_markdown_files(directory_path, skip_files):
                             f.write(content)
                         
                         print(f"处理文件: {file_path}")
-                        
-                        # 生成actions内容
-                        file_name = os.path.splitext(file)[0]
-                        theme = themes[len(actions.split('\n')) % len(themes)]
-                        new_content = f'    - theme: {theme}\n      text: {file_name}\n      link: {link_path}\n'
-                        actions += new_content
 
                     except Exception as e:
                         print(f"处理文件 {file_path} 时出错: {e}")
                         
     except Exception as e:
         print(f"遍历目录 {directory_path} 时出错: {e}")
-
-def process_action_file():
-    '''处理action文件'''
-    actions_target_file = os.path.join('core', 'note', 'list.md')
-    try:
-        if not os.path.exists(actions_target_file):
-            print(f'目标文件未找到: {actions_target_file}')
-            return
-            
-        with open(actions_target_file, 'r', encoding='utf-8') as file:
-            data = file.read()
-            
-        actions_index = data.find('actions:')
-        if actions_index == -1:
-            print(f'在文件 {actions_target_file} 中未找到 actions: 标记')
-            return
-            
-        header = data[:actions_index + len('actions:')]
-        updated_content = f'{header}\n{actions}\n---'
-        
-        with open(actions_target_file, 'w', encoding='utf-8') as file:
-            file.write(updated_content)
-            
-        print('Actions 更新成功')
-    except Exception as e:
-        print(f'处理文件时出错: {e}')
-
-def get_items(dir_path, base_path=''):
-    '''生成侧边栏项目'''
-    items = []
-    try:
-        entries = os.listdir(dir_path)
-        for entry in entries:
-            full_path = os.path.join(dir_path, entry)
-            if os.path.isdir(full_path):
-                sub_items = get_items(full_path, os.path.join(base_path, entry).replace(os.sep, '/'))
-                if sub_items:
-                    items.append({
-                        'text': entry,
-                        'collapsed': False,
-                        'items': sub_items
-                    })
-            elif os.path.isfile(full_path) and entry.endswith('.md'):
-                name = entry
-                if name.lower() not in skip_list:
-                    raw_link = os.path.join('/', base_path, name).replace(os.sep, '/')
-                    link = raw_link[:-3] if raw_link.lower().endswith('.md') else raw_link
-                    items.append({
-                        'text': name,
-                        'link': link
-                    })
-    except Exception as e:
-        print(f"生成侧边栏项目时出错: {e}")
-    return items
-
-def generate_sidebar():
-    '''生成侧边栏'''
-    docs_dir = os.path.join(os.path.dirname(__file__), 'core')
-    sidebar_items_file = os.path.join(docs_dir, '.vitepress', 'sidebarItems.js')
-    
-    sidebar_items = get_items(docs_dir)
-    
-    sidebar_code = f"""// 此文件由 preprocess 自动生成，请勿手动修改
-export default {json.dumps(sidebar_items, ensure_ascii=False, indent=2)};
-"""
-    
-    vitepress_dir = os.path.join(docs_dir, '.vitepress')
-    if not os.path.exists(vitepress_dir):
-        os.makedirs(vitepress_dir)
-    
-    with open(sidebar_items_file, 'w', encoding='utf-8') as f:
-        f.write(sidebar_code)
-    
-    print('sidebarItems.js 生成成功')
-
-def generate_articles_data():
-    '''生成文章数据文件'''
-    docs_dir = os.path.join(os.path.dirname(__file__), 'core')
-    articles_data_file = os.path.join(docs_dir, '.vitepress', 'articlesData.js')
-    
-    sorted_articles = sorted(articles_data, key=lambda x: x['modified'], reverse=True)
-    
-    articles_code = f"""// 此文件由 preprocess 自动生成，请勿手动修改
-export default {json.dumps(sorted_articles, ensure_ascii=False, indent=2)};
-"""
-    
-    vitepress_dir = os.path.join(docs_dir, '.vitepress')
-    if not os.path.exists(vitepress_dir):
-        os.makedirs(vitepress_dir)
-    
-    with open(articles_data_file, 'w', encoding='utf-8') as f:
-        f.write(articles_code)
-    
-    print('articlesData.js 生成成功')
 
 def generate_sitemap():
     '''生成站点地图'''
@@ -381,10 +237,7 @@ if __name__ == "__main__":
         
         print("开始预处理...")
         process_markdown_files(directory, skip_list)
-        process_action_file()
-        # generate_sidebar()  # 不再生成旧的侧边栏
-        generate_articles_data()
-        generate_sitemap()
+        # generate_sitemap()  # Assuming this is handled by VitePress sitemap config or needs review
         compress_images()
         print('文档预处理完成')
         
