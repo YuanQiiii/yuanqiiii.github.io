@@ -20,11 +20,9 @@ hero:
 ---
 
 <script setup>
-import RssSubscribe from './components/RssSubscribe.vue'
 import Effect from './components/Effect.vue'
 </script>
 
 <ClientOnly>
   <Effect />
 </ClientOnly>
-<RssSubscribe />

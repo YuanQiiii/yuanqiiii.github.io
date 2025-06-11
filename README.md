@@ -22,7 +22,6 @@ YuanQiiii 静态网站基于 VitePress 构建，集成了一系列现代化功�
 - **相关文章推荐**：基于标签和分类的智能算法。
 - **代码块增强**：`CodeBlock.vue` 提供一键复制功能。
 - **图片画廊**：`ImageGallery.vue` 支持批量展示与缩略图预览。
-- **RSS 订阅**：`RssSubscribe.vue` 与 `rss.xml` 文件支持多客户端订阅。
 
 ### 2.4 技术架构与性能
 - **预处理脚本**：`preprocess_new.py` 实现前端文档元数据提取、摘要与阅读时长估算、图片自动压缩（Pillow 支持）。

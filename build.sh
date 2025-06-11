@@ -45,7 +45,6 @@ if [ -d "core/.vitepress/dist" ]; then
     echo "🔍 检查重要文件:"
     [ -f "core/.vitepress/dist/index.html" ] && echo "   ✅ index.html"
     [ -f "core/.vitepress/dist/sitemap.xml" ] && echo "   ✅ sitemap.xml"
-    [ -f "core/.vitepress/dist/rss.xml" ] && echo "   ✅ rss.xml"
     
 else
     echo "❌ 构建失败！"

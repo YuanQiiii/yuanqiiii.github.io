@@ -110,9 +110,6 @@ export default defineConfig({
         ['meta', { name: 'author', content: 'YuanQiiii' }],
         ['meta', { name: 'keywords', content: '博客,技术,编程,前端,Vue,JavaScript' }],
 
-        // RSS 订阅
-        ['link', { rel: 'alternate', type: 'application/rss+xml', title: 'YuanQiiii 的博客', href: '/rss.xml' }],
-
         // PWA 配置
         ['meta', { name: 'theme-color', content: '#646cff' }],
         ['link', { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
