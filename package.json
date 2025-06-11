@@ -7,15 +7,15 @@
     "docs:build": "vitepress build core",
     "docs:preview": "vitepress preview core",
     "preprocess": "python3 preprocess.py",
-    "build": "npm run preprocess && npm run docs:build"
+    "build": "npm run preprocess && npm run docs:build",
+    "clean": "rm -rf core/.vitepress/dist core/.vitepress/cache",
+    "serve": "npm run docs:preview"
   },
   "devDependencies": {
-    "vitepress": "^1.0.0-rc.44",
+    "vitepress": "^1.3.4",
+    "vue": "^3.4.38",
     "markdown-it-mathjax3": "^4.3.2",
-    "vue": "^3.4.21"
-  },
-  "optionalDependencies": {
-    "pillow": "^0.0.0"
+    "@types/node": "^20.14.0"
   },
   "keywords": [
     "blog",

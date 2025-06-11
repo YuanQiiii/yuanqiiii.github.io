@@ -16,5 +16,11 @@ hero:
     - theme: brand
       text: 年终总结
       link: /note/想法/年终总结
+    - theme: alt
+      text: 随想02
+      link: /note/想法/随想02
+    - theme: brand
+      text: 谈谈对于git设计的理解
+      link: /note/想法/谈谈对于git设计的理解
 
 ---

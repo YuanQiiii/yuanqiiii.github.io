@@ -1,5 +1,7 @@
 ---
-layout: page
+layout: home
+hero:
+  name: "Friend" 
 ---
 <script setup>
 import {

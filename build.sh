@@ -15,6 +15,10 @@ if ! command -v python3 &> /dev/null; then
     exit 1
 fi
 
+# 清理旧的构建产物和缓存
+echo "🧹 清理旧的构建产物和缓存..."
+npm run clean
+
 # 安装依赖
 echo "📦 安装依赖..."
 npm install
