@@ -8,7 +8,6 @@ import ArticleInfo from '../../components/ArticleInfo.vue'
 import ArticleTags from '../../components/ArticleTags.vue'
 import CodeBlock from '../../components/CodeBlock.vue'
 import ImageLightbox from '../../components/ImageLightbox.vue'
-// import RssSubscribe from '../../components/RssSubscribe.vue'
 
 export default {
     extends: DefaultTheme,
@@ -20,7 +19,6 @@ export default {
         app.component('ArticleTags', ArticleTags)
         app.component('CodeBlock', CodeBlock)
         app.component('ImageLightbox', ImageLightbox)
-        // app.component('RssSubscribe', RssSubscribe)
 
         // 路由守卫
         if (router && typeof router.beforeEach === 'function') {

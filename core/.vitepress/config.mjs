@@ -56,10 +56,7 @@ export default defineConfig({
     ['meta', { charset: 'utf-8' }],
     ['meta', { name: 'viewport', content: 'width=device-width, initial-scale=1' }],
     ['meta', { name: 'author', content: 'YuanQiiii' }],
-    ['meta', { name: 'keywords', content: '博客,技术,编程,前端,Vue,JavaScript' }],
-
-    // RSS 订阅
-    ['link', { rel: 'alternate', type: 'application/rss+xml', title: 'YuanQiiii 的博客', href: '/rss.xml' }],
+    ['meta', { name: 'keywords', content: '博客,技术,编程,人工智能,心理学,经济学,网站开发' }],
 
     // PWA 配置
     ['meta', { name: 'theme-color', content: '#646cff' }],
