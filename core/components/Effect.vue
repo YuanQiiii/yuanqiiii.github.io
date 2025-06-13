@@ -12,25 +12,21 @@ const state = reactive({
   particles: [],
   grid: {},
   gridSize: 100, // 网格大小，可根据需要调整
-  particleCount: 50,
-  maxDistance: 100,
-  connectionProbability: 0.02,
+  particleCount: 60, // 默认粒子数量
+  maxDistance: 100, // 默认最大连接距离
+  connectionProbability: 0.05, // 默认连接概率
   bounds: {
     width: 0,
     height: 0
   },
   isAnimating: false,
   animationId: null,
-  showPanel: false,
-  connectionColors: new Map(), // 存储连接的颜色
   frameSkip: 0, // 跳帧计数
   targetFPS: 60,
   lastFrameTime: 0,
   deltaTime: 0,
   useQuadTree: true, // 是否使用四叉树优化
   renderMode: 'auto', // 'high', 'medium', 'low', 'auto'
-  particlePool: null,
-  connectionPool: null,
 })
 
 
@@ -41,14 +37,11 @@ class Particle {
     this.y = Math.random() * state.bounds.height
     this.vx = (Math.random() * 2 - 1) * 2
     this.vy = (Math.random() * 2 - 1) * 2
-    this.radius = (2 + Math.random() * 3) * state.dpr // 随机大小
+    this.radius = (2 + Math.random() * 2) * state.dpr // 随机大小
     this.baseRadius = this.radius
     this.pulse = Math.random() * Math.PI * 2 // 脉冲相位
     this.pulseSpeed = 0.02 + Math.random() * 0.03
-    this.opacity = 0.3 + Math.random() * 0.7
-    this.color = this.generateParticleColor()
-    this.trail = [] // 粒子轨迹
-    this.energy = 0.5 + Math.random() * 0.5 // 能量值影响连接
+    this.opacity = 0.5 + Math.random() * 0.5
   }
 
   update() {
@@ -68,58 +61,15 @@ class Particle {
     // 脉冲动画
     this.pulse += this.pulseSpeed
     this.radius = this.baseRadius + Math.sin(this.pulse) * 0.5
-
-    // 更新轨迹
-    this.trail.push({ x: this.x, y: this.y })
-    if (this.trail.length > 5) {
-      this.trail.shift()
-    }
   }
 
   draw(ctx) {
-    // 绘制轨迹
-    if (this.trail.length > 1) {
-      ctx.strokeStyle = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, 0.2)`
-      ctx.lineWidth = 1
-      ctx.beginPath()
-      ctx.moveTo(this.trail[0].x, this.trail[0].y)
-      for (let i = 1; i < this.trail.length; i++) {
-        ctx.lineTo(this.trail[i].x, this.trail[i].y)
-      }
-      ctx.stroke()
-    }
-
-    // 绘制粒子光晕
-    const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius * 3)
-    gradient.addColorStop(0, `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.opacity})`)
-    gradient.addColorStop(0.7, `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.opacity * 0.3})`)
-    gradient.addColorStop(1, 'rgba(0, 0, 0, 0)')
-    
-    ctx.fillStyle = gradient
-    ctx.beginPath()
-    ctx.arc(this.x, this.y, this.radius * 3, 0, Math.PI * 2)
-    ctx.fill()
-
-    // 绘制粒子核心
+    // 绘制简单空心小圆
     ctx.beginPath()
     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2)
-    ctx.fillStyle = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.opacity})`
-    ctx.fill()
-    
-    // 添加边框
-    ctx.strokeStyle = `rgba(255, 255, 255, ${this.opacity * 0.8})`
-    ctx.lineWidth = 0.5 * state.dpr
+    ctx.strokeStyle = `rgba(255, 255, 255, ${this.opacity})`
+    ctx.lineWidth = 0.2 * state.dpr
     ctx.stroke()
-  }
-
-  generateParticleColor() {
-    const colors = [
-      { r: 100, g: 150, b: 255 }, // 蓝色
-      { r: 150, g: 100, b: 255 }, // 紫色
-      { r: 100, g: 255, b: 150 }, // 绿色
-      { r: 255, g: 150, b: 100 }, // 橙色
-    ]
-    return colors[Math.floor(Math.random() * colors.length)]
   }
 }
 
@@ -195,10 +145,9 @@ function render() {
   updateGrid()
 
   // 批量绘制连接线
-
   const newConnections = []
   const maxDistanceSquared = state.maxDistance ** 2
-  state.offscreenCtx.lineWidth = 0.2 * state.dpr
+  state.offscreenCtx.lineWidth = 0.3 * state.dpr
 
   // 遍历网格检查连接
   for (let col in state.grid) {
@@ -213,24 +162,14 @@ function render() {
               const dy = particle.y - other.y
               const distanceSquared = dx * dx + dy * dy
 
-              if (distanceSquared < maxDistanceSquared) {
-                const connectionId = getConnectionId(particle, other)
-
-                // 使用缓存的颜色或生成新颜色
-                if (!state.connectionColors.has(connectionId) && Math.random() < state.connectionProbability) {
-                  state.connectionColors.set(connectionId, getRandomColor())
-                }
-
-                if (state.connectionColors.has(connectionId)) {
-                  newConnections.push({
-                    id: connectionId,
-                    x1: particle.x,
-                    y1: particle.y,
-                    x2: other.x,
-                    y2: other.y,
-                    distance: Math.sqrt(distanceSquared)
-                  })
-                }
+              if (distanceSquared < maxDistanceSquared && Math.random() < state.connectionProbability) {
+                newConnections.push({
+                  x1: particle.x,
+                  y1: particle.y,
+                  x2: other.x,
+                  y2: other.y,
+                  distance: Math.sqrt(distanceSquared)
+                })
               }
             }
           })
@@ -239,25 +178,22 @@ function render() {
     }
   }
 
-  // 清理断开的连接
-  for (const [id, _] of state.connectionColors) {
-    if (!newConnections.some(conn => conn.id === id)) {
-      state.connectionColors.delete(id)
-    }
-  }
-
-  // 绘制连接线
-  newConnections.forEach(conn => {
-    const alpha = Math.max(0.1, 1 - conn.distance / state.maxDistance)
+  // 绘制连接线 - 单色线条
+  state.offscreenCtx.strokeStyle = 'rgba(255, 255, 255, 1)' // 统一使用白色半透明线条
+  state.offscreenCtx.lineWidth = 0.5 * state.dpr
+  state.offscreenCtx.lineCap = 'round'
+  state.offscreenCtx.lineJoin = 'round'
+    newConnections.forEach(conn => {
+    const alpha = Math.max(0.3, 0.8 * (1 - conn.distance / state.maxDistance))
     state.offscreenCtx.beginPath()
-    state.offscreenCtx.strokeStyle = state.connectionColors.get(conn.id)
-    state.offscreenCtx.lineWidth = 0.2 * state.dpr  // 线条宽度
-    state.offscreenCtx.lineCap = 'round'  // 设置线条端点为圆形
-    state.offscreenCtx.lineJoin = 'round' // 设置线条连接处为圆形
+    state.offscreenCtx.globalAlpha = alpha
     state.offscreenCtx.moveTo(conn.x1, conn.y1)
     state.offscreenCtx.lineTo(conn.x2, conn.y2)
     state.offscreenCtx.stroke()
   })
+  
+  // 重置透明度
+  state.offscreenCtx.globalAlpha = 1
 
   // 批量绘制粒子
   state.particles.forEach(particle => {
@@ -359,7 +295,6 @@ class QuadTree {
     this.nodes[2] = new QuadTree({ x, y: y + subHeight, width: subWidth, height: subHeight }, this.level + 1, this.maxLevel, this.maxObjects)
     this.nodes[3] = new QuadTree({ x: x + subWidth, y: y + subHeight, width: subWidth, height: subHeight }, this.level + 1, this.maxLevel, this.maxObjects)
   }
-
   insert(particle) {
     if (this.nodes.length > 0) {
       const index = this.getIndex(particle)
@@ -487,8 +422,6 @@ function pauseAnimation() {
 function resetState() {
   initializeParticles()
   initializeGrid()
-  // 重置状态时清理连接缓存
-  state.connectionColors.clear()
 }
 
 /* 初始加载 */
@@ -533,162 +466,12 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="effect-container">
-    <div class="control-panel" :class="{ 'expanded': state.showPanel }">
-      <div class="control-header" @click="state.showPanel = !state.showPanel">
-        <span class="control-title">⚙️</span>
-
-      </div>
-
-      <div class="control-content" v-if="state.showPanel">
-        <div class="control-item">
-          <label>Particle Count</label>
-          <input type="range" v-model.number="state.particleCount" min="30" max="150" @input="updateParticles" />
-          <span class="value">{{ state.particleCount }}</span>
-
-        </div>
-
-        <div class="control-item">
-          <label>Max Distance</label>
-          <input type="range" v-model.number="state.maxDistance" min="50" max="300" @input="updateConnections" />
-          <span class="value">{{ state.maxDistance }}</span>
-
-        </div>
-
-        <div class="control-item">
-          <label>Connection Probability</label>
-          <input type="range" v-model.number="state.connectionProbability" step="0.01" min="0" max="1"
-            @input="updateConnections" />
-          <span class="value">{{ state.connectionProbability.toFixed(2) }}</span>
-        </div>
-      </div>
-    </div>
-  </div>
+  <div class="effect-container"></div>
 </template>
 <style scoped>
 .effect-container {
   position: relative;
   width: 100%;
   height: 100%;
-}
-
-.control-panel {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 36px;
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 8px;
-  overflow: hidden;
-  z-index: 1000;
-  color: #000;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: pointer;
-}
-
-.control-panel:hover {
-  background: rgba(255, 255, 255, 0.5);
-}
-
-.control-panel.expanded {
-  width: 260px;
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
-}
-
-.control-header {
-  height: 36px;
-  width: 36px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.control-toggle {
-  font-size: 18px;
-  color: #333;
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.expanded .control-toggle {
-  transform: rotate(180deg);
-}
-
-.control-content {
-  padding: 16px;
-  transform-origin: top;
-  transform: scaleY(0);
-  opacity: 0;
-  transition:
-    transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-    opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.content-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  transform-origin: top;
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.expanded .control-content {
-  transform: scaleY(1);
-  opacity: 1;
-}
-
-.control-item {
-  width: 100%;
-  margin-bottom: 16px;
-  display: flex;
-  flex-direction: column;
-  color: #000;
-  opacity: 0;
-  transform: translateY(10px);
-  transition:
-    opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-    transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.expanded .control-item {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.expanded .control-item:nth-child(1) {
-  transition-delay: 0.1s;
-}
-
-.expanded .control-item:nth-child(2) {
-  transition-delay: 0.15s;
-}
-
-.expanded .control-item:nth-child(3) {
-  transition-delay: 0.2s;
-}
-
-.control-item label {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  font-weight: 500;
-}
-
-.control-item input[type="range"] {
-  width: 100%;
-  margin-bottom: 4px;
-  accent-color: #007f1c;
-}
-
-.control-item .value {
-  font-size: 12px;
-  color: #333;
-  font-weight: 500;
-  transition: color 0.3s ease;
-}
-
-.control-item:hover .value {
-  color: #000;
 }
 </style>
