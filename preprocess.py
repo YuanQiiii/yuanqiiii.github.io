@@ -230,6 +230,18 @@ def compress_images():
     except Exception as e:
         print(f"图片压缩过程中出错: {e}")
 
+def generate_articles_data():
+    '''生成文章数据文件'''
+    try:
+        import subprocess
+        print("正在生成文章数据...")
+        subprocess.run(['node', 'generateArticlesData.js'], check=True)
+        print("文章数据生成完成")
+    except Exception as e:
+        print(f"生成文章数据时出错: {e}")
+        import traceback
+        traceback.print_exc()
+
 if __name__ == "__main__":
     try:
         directory = 'core'
@@ -237,7 +249,7 @@ if __name__ == "__main__":
         
         print("开始预处理...")
         process_markdown_files(directory, skip_list)
-        # generate_sitemap()  # Assuming this is handled by VitePress sitemap config or needs review
+        generate_articles_data()  # 生成文章数据
         compress_images()
         print('文档预处理完成')
         

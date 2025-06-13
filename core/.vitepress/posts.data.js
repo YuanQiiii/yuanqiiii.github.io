@@ -1,4 +1,5 @@
 import { createContentLoader } from 'vitepress'
+import articlesData from './articlesData'
 
 // Skip pages by base filename (without extension)
 const skipBaseNames = ['list', 'about', 'friend'];
@@ -7,6 +8,14 @@ export default createContentLoader('note/**/*.md', {
     // The glob pattern is relative to the VitePress source directory (srcDir),
     // which is 'core' in this project setup.
     transform(rawData) {
+        // 将 articlesData 中的信息合并到 rawData 中
+        const articlesMap = new Map();
+
+        // 创建文章路径到文章数据的映射
+        articlesData.forEach(article => {
+            articlesMap.set(article.path, article);
+        });
+
         return rawData
             .map((page) => {
                 // Extract base filename (without extension) and skip certain files
@@ -17,43 +26,53 @@ export default createContentLoader('note/**/*.md', {
                     return null; // Mark for removal
                 }
 
-                const date = page.frontmatter.date ? new Date(page.frontmatter.date) : new Date(0);
+                const date = page.frontmatter.date ? new Date(page.frontmatter.date) : new Date();
+
+                // 查找对应的文章数据
+                const articlePath = page.url.replace(/\.html$/, '');
+                const articleData = articlesMap.get(articlePath);
+
+                // 如果找到对应的文章数据，合并到 frontmatter 中
+                let frontmatterWithArticleData = { ...page.frontmatter };
+                if (articleData) {
+                    frontmatterWithArticleData = {
+                        ...frontmatterWithArticleData,
+                        title: articleData.title || frontmatterWithArticleData.title,
+                        category: articleData.category || frontmatterWithArticleData.category,
+                        author: articleData.author || frontmatterWithArticleData.author,
+                        excerpt: articleData.excerpt || frontmatterWithArticleData.excerpt,
+                        tags: articleData.tags || frontmatterWithArticleData.tags || [],
+                        reading_time: articleData.reading_time,
+                        word_count: articleData.word_count,
+                        date: new Date(articleData.modified) // 使用修改日期作为文章日期
+                    };
+                }
 
                 // Determine category from the parent directory
-                // page.url is like '/note/想法/随想01.html' or '/笔记/普通心理学.html'
-                // We want to extract '想法' or '笔记'
-                const pathParts = page.url.split('/').filter(part => part !== '');
-                let category = 'General'; // Default category
-                if (pathParts.length > 1) {
-                    // Check if the second to last part is a category folder like '想法' or '笔记'
-                    // This assumes structure like /category/filename.md or /note/category/filename.md
-                    // Adjust logic if structure is different, e.g. if all posts are under 'note'
-                    // For urls like '/note/想法/file.html', pathParts would be ['note', '想法', 'file.html']
-                    // For urls like '/笔记/file.html', pathParts would be ['笔记', 'file.html']
-                    // The category is the segment before the filename if it's not 'note' itself.
-                    if (pathParts.length > 1 && pathParts[pathParts.length - 2] !== 'note') {
-                        category = pathParts[pathParts.length - 2];
-                    } else if (pathParts.length > 2 && pathParts[pathParts.length - 2] === 'note') {
-                        category = pathParts[pathParts.length - 3]; // e.g. /note/category/file -> category
-                    } else if (pathParts.length === 2 && pathParts[0] !== 'note') {
-                        category = pathParts[0]; // e.g. /笔记/file -> 笔记
+                if (!frontmatterWithArticleData.category) {
+                    const relativePath = page.url.replace(/^\/note\//, '');
+                    const parts = relativePath.split('/');
+
+                    if (parts.length > 1) {
+                        // 直接使用文件夹名作为分类名
+                        frontmatterWithArticleData.category = parts[0];
+                    } else {
+                        frontmatterWithArticleData.category = '杂项';
                     }
                 }
 
                 return {
                     ...page,
-                    frontmatter: {
-                        ...page.frontmatter,
-                        date: date,
-                        category: page.frontmatter.category || category // Prioritize frontmatter category
-                    },
+                    frontmatter: frontmatterWithArticleData,
                     // Remove .md extension and ensure leading slash for URL
-                    url: page.url.replace(/\\.md$/, '')
+                    url: page.url.replace(/\.md$/, '')
                 };
             })
             .filter(page => page !== null) // Remove marked pages
             .sort((a, b) => {
-                return b.frontmatter.date.getTime() - a.frontmatter.date.getTime();
+                const dateA = a.frontmatter.date instanceof Date ? a.frontmatter.date : new Date(a.frontmatter.date);
+                const dateB = b.frontmatter.date instanceof Date ? b.frontmatter.date : new Date(b.frontmatter.date);
+                return dateB.getTime() - dateA.getTime();
             });
     }
 })

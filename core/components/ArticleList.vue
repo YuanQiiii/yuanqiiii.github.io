@@ -8,12 +8,23 @@
             {{ post.frontmatter.title || decodeURIComponent(post.url.split('/').pop()) }}
           </h2>
         </a>
-        <p v-if="post.frontmatter.category" class="article-meta">
-          分类: {{ post.frontmatter.category }}
-        </p>
-        <p v-if="post.frontmatter.excerpt || post.excerpt" class="article-excerpt">
-          {{ post.frontmatter.excerpt || summarize(post.excerpt) }}
-        </p>
+        <div class="article-meta-container">
+          <p v-if="post.frontmatter.category" class="article-meta">
+            <span class="meta-label">分类:</span> {{ post.frontmatter.category }}
+          </p>
+          <p v-if="post.frontmatter.author" class="article-meta">
+            <span class="meta-label">作者:</span> {{ post.frontmatter.author }}
+          </p>
+          <p v-if="post.frontmatter.date" class="article-meta">
+            <span class="meta-label">发布于:</span> {{ formatDate(post.frontmatter.date) }}
+          </p>
+          <p v-if="post.frontmatter.reading_time" class="article-meta">
+            <span class="meta-label">阅读时间:</span> {{ post.frontmatter.reading_time }} 分钟
+          </p>
+          <p v-if="post.frontmatter.word_count" class="article-meta">
+            <span class="meta-label">字数:</span> {{ post.frontmatter.word_count }}
+          </p>
+        </div>
         <div v-if="post.frontmatter.tags && post.frontmatter.tags.length" class="article-tags">
           <span v-for="tag in post.frontmatter.tags" :key="tag" class="tag">#{{ tag }}</span>
         </div>
@@ -25,10 +36,17 @@
 <script setup>
 import { data as posts } from '../.vitepress/posts.data.js';
 
-const summarize = (htmlContent, maxLength = 100) => {
-  if (!htmlContent) return '';
-  const textContent = htmlContent.replace(/<[^>]+>/g, '');
-  return textContent.length > maxLength ? textContent.substring(0, maxLength) + '...' : textContent;
+// 格式化日期函数
+const formatDate = (date) => {
+  if (!date) return '';
+  const d = new Date(date);
+  if (isNaN(d.getTime())) return '';
+  
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  
+  return `${year}-${month}-${day}`;
 };
 </script>
 
@@ -68,14 +86,21 @@ const summarize = (htmlContent, maxLength = 100) => {
 .article-meta {
   font-size: 0.9em;
   color: #666;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.25em;
+  margin-right: 1em;
+  display: inline-block;
 }
 
-.article-excerpt {
-  font-size: 1em;
-  color: #333;
-  line-height: 1.6;
+.meta-label {
+  font-weight: 500;
+  color: #444;
+}
+
+.article-meta-container {
+  display: flex;
+  flex-wrap: wrap;
   margin-bottom: 0.75em;
+  gap: 0.5em;
 }
 
 .article-tags .tag {
