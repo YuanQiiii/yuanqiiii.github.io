@@ -427,3 +427,210 @@ Last login: Tue Jun 17 23:57:33 2025 from xxx.xxx.xxx.xxx
 >     ```
 >
 > **总结**：对于大多数用户来说，**方法一（禁用不想要的脚本）** 和 **方法三（添加自定义脚本）** 是最常用和最灵活的。
+
+
+好的，遵照您的要求，我将我们之前讨论过的所有内容——从电源自动化到网络唤醒，再到所有相关的排错步骤——整理成一篇完整的、系统化的教程。
+
+---
+
+## 进阶
+
+**最终目标：**
+* **停电保护**：在意外断电（拔掉电源）时能自动、安全地关机，保护数据和硬件。
+* **自动恢复**：在电力恢复（插上电源）后能自动开机，恢复服务，无需人工干预。
+* **按需唤醒**：在服务器关机状态下，可以通过网络随时随地远程启动它，兼顾节能与便利。
+
+**准备工作：**
+* 一台笔记本电脑。
+* 已安装 Ubuntu Server 操作系统。
+* 一根网线，将笔记本电脑连接到您的路由器（有线连接是网络唤醒最可靠的方式）。
+
+---
+
+### **第一章：配置电源自动化（可靠性核心）**
+
+本章的目标是让服务器能够应对电源的意外中断与恢复。
+
+#### **1.1 BIOS/UEFI 设置：实现“通电自动开机”**
+
+这是实现自动恢复的基础，完全由硬件决定。
+
+1.  **进入 BIOS/UEFI**：重启笔记本，在开机瞬间（品牌LOGO出现时）反复按下特定键（通常是 `F2`, `DEL`, `F10`, `ESC` 之一）进入设置界面。
+2.  **寻找电源选项**：在 `Power`（电源）、`Power Management`（电源管理）或 `Advanced`（高级）菜单中，寻找类似以下名称的选项：
+    * `Restore on AC/Power Loss`
+    * `AC Power Recovery`
+    * `Wake on AC` / `Power on AC`
+    * `After Power Loss`
+3.  **启用功能**：将该选项的值设置为 **`Power On`** 或 `Always On`。
+4.  **保存退出**：按 `F10` 保存设置并重启。
+
+> **测试**：将笔记本关机，拔掉电源。重新插上电源，如果笔记本自动启动，则此步骤成功。
+
+#### **1.2 系统设置：实现“断电自动关机”**
+
+我们将使用 `acpid` 服务来监听电源状态变化。
+
+1.  **安装 acpid**：
+    ```bash
+    sudo apt update
+    sudo apt install acpid
+    ```
+2.  **创建事件监听文件**：
+    ```bash
+    sudo nano /etc/acpi/events/power-off-on-battery
+    ```
+    粘贴以下内容：
+    ```
+    # 当交流电源适配器事件发生时触发
+    event=ac_adapter.*
+    action=/etc/acpi/actions/power-off.sh %e
+    ```
+    保存并关闭 (`Ctrl+X`, `Y`, `Enter`)。
+
+3.  **创建关机动作脚本**：
+    这个脚本包含了防止因“事件抖动”而重复关机的“锁文件”逻辑，是最佳实践。
+    ```bash
+    sudo nano /etc/acpi/actions/power-off.sh
+    ```
+    粘贴以下全部内容：
+    ```bash
+    #!/bin/bash
+    # /etc/acpi/actions/power-off.sh
+    # 使用锁文件确保关机命令只执行一次
+    
+    LOCK_FILE="/var/run/power-off-in-progress"
+    
+    # 如果锁文件已存在，则退出，防止重复执行
+    if [ -f "$LOCK_FILE" ]; then
+        exit 0
+    fi
+    
+    # 检查电源状态 (0代表电池, 1代表交流电)
+    # 路径可能为AC或ACAD，脚本会自动检测
+    POWER_SUPPLY_PATH="/sys/class/power_supply/AC/online"
+    if [ ! -f "$POWER_SUPPLY_PATH" ]; then
+        POWER_SUPPLY_PATH="/sys/class/power_supply/ACAD/online"
+    fi
+    
+    if [ -f "$POWER_SUPPLY_PATH" ] && [ "$(cat "$POWER_SUPPLY_PATH")" -eq 0 ]; then
+        # 确认使用电池后，先创建锁文件
+        touch "$LOCK_FILE"
+        
+        # 记录日志并关机
+        logger "AC adapter unplugged. Initiating shutdown."
+        /sbin/shutdown -h now
+    fi
+    
+    exit 0
+    ```
+4.  **赋予脚本执行权限**：
+    ```bash
+    sudo chmod +x /etc/acpi/actions/power-off.sh
+    ```
+5.  **重启服务**：
+    ```bash
+    sudo systemctl restart acpid
+    ```
+
+---
+
+### **第二章：配置网络远程唤醒（灵活性核心）**
+
+本章的目标是让你可以在任何地方通过网络启动已关机的服务器。
+
+#### **2.1 BIOS/UEFI 设置：启用“网络唤醒”**
+
+1.  **再次进入 BIOS/UEFI**。
+2.  在 `Power`、`Advanced` 或 `Onboard Devices` 菜单中，寻找类似以下名称的选项：
+    * `Wake on LAN` (WOL)
+    * `Wake on PME`
+    * `Power on by PCI-E`
+3.  **启用功能**：将该选项设置为 **`Enabled`**。
+4.  **重要**：同时检查并**禁用**任何可能导致网卡彻底断电的深度节能选项，如 **`ErP Ready`**, **`Deep Sleep`** 等。
+
+#### **2.2 系统设置：配置网卡待命**
+
+1.  **获取网卡信息**：
+    ```bash
+    ip a
+    ```
+    在输出中找到你的**有线网卡**（如 `eno1` 或 `enp3s0`），并**准确记录下它的 MAC 地址**（`link/ether` 后面的那串字符）。这是网络唤醒的唯一ID。
+
+2.  **配置 Netplan**：
+    编辑 Netplan 的 YAML 配置文件（通常在 `/etc/netplan/` 目录下）。
+    ```bash
+    # 注意替换为你的真实文件名
+    sudo nano /etc/netplan/01-netcfg.yaml
+    ```
+    在你的有线网卡配置下，添加 `wakeonlan: true`。
+    ```yaml
+    network:
+      ethernets:
+        eno1: # <--- 替换为你的网卡名
+          dhcp4: true
+          wakeonlan: true # <--- 添加此行
+      version: 2
+    ```
+3.  **修正权限并应用配置**：
+    为防止出现权限警告，先修正文件权限，然后应用配置。
+    ```bash
+    sudo chmod 600 /etc/netplan/01-netcfg.yaml
+    sudo netplan apply
+    ```
+
+#### **2.3 发送唤醒指令**
+
+从局域网内另一台设备发送“魔术包”。
+
+* **在 Linux/macOS 上**：
+    ```bash
+    # 安装工具 (Debian/Ubuntu)
+    sudo apt install wakeonlan
+    # 发送指令 (使用你的MAC地址)
+    wakeonlan YOUR_MAC_ADDRESS_HERE
+    # 或者更精确地指定广播地址
+    wakeonlan -i 192.168.1.255 YOUR_MAC_ADDRESS_HERE
+    ```
+* **在 Windows 或手机上**：
+    在应用商店搜索 "Wake on LAN"，下载相应工具，输入目标服务器的MAC地址和广播地址（如`192.168.1.255`）即可。
+
+---
+
+### **第三章：常见问题排错指南**
+
+如果配置后功能不正常，请按以下步骤检查。
+
+#### **问题一：网络唤醒（WOL）无效**
+
+这是最常见的问题，按以下流程排查。
+
+**第一步：验证魔术包是否抵达服务器**
+1.  手动启动你的服务器。
+2.  安装 `tcpdump` 工具：`sudo apt install tcpdump`。
+3.  运行监听命令（将 `eno1` 换成你的网卡名）：
+    ```bash
+    sudo tcpdump -i eno1 -X 'udp and (port 7 or port 9)'
+    ```
+4.  从另一台设备发送魔术包。
+5.  观察 `tcpdump` 的输出。
+
+**第二步：分析诊断结果**
+
+* **如果看到了类似魔术包的输出**（开头有 `ffff ffff ffff`，后面是你发送的MAC地址在重复）：
+    * **恭喜，网络是通的！** 问题在服务器自身。
+    * **检查1：MAC地址是否完全匹配？** 再次运行 `ip a`，逐个字符对比你发送的MAC地址和服务器网卡的真实MAC地址。这是最常见的错误点！
+    * **检查2：BIOS里的深度节能选项** (`ErP`, `Deep Sleep`) 是否已**禁用**？
+    * **检查3：物理网口灯**。关机后，网口的灯是否还亮？不亮则说明网卡被断电了，返回检查BIOS设置。
+
+* **如果没有看到任何输出**：
+    * **说明魔术包没送到！** 问题在网络路径或发送端。
+    * **检查1**：发送命令里的MAC地址是否有笔误？
+    * **检查2**：发送端和服务器是否在同一局域网内？
+    * **检查3**：尝试明确指定广播地址的发送命令 (`-i` 参数)。
+
+#### **问题二：其他常见问题**
+
+* **Netplan 权限警告**：如在应用配置时看到 `Permissions for ... are too open` 的警告，运行 `sudo chmod 600 /etc/netplan/your-file.yaml` 即可修复。
+* **收到多条关机信息**：本教程第一章中的 `power-off.sh` 脚本已包含“锁文件”逻辑，能避免此问题。如果你使用了旧的脚本，请更新到本文版本。
+
+---
