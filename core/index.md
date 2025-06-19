@@ -9,13 +9,13 @@ hero:
   actions:
     - theme: brand
       text: 浏览文章
-      link: /note/list.md
+      link: /note/list
     - theme: alt
       text: 关于我
-      link: /note/about.md
+      link: /note/about
     - theme: alt
       text: 友情链接
-      link: /note/friend.md
+      link: /note/friend
 
 ---
 

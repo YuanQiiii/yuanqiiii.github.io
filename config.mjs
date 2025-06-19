@@ -1,5 +1,5 @@
 import { defineConfig } from 'vitepress'
-import { data as allPosts } from './core/.vitepress/posts.data.ts'
+import { data as allPosts } from './core/.vitepress/posts.data.js'
 import { resolve } from 'path'
 
 // Function to build sidebar for /note/ path
