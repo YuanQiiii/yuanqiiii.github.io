@@ -2,7 +2,10 @@
 layout: home
 hero:
   name: "Friend" 
+
+
 ---
+
 <script setup>
 import {
   VPTeamPage,

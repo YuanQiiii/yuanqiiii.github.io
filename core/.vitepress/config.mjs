@@ -1,6 +1,53 @@
 import { defineConfig } from 'vitepress'
-import sidebarArticles from './sidebarArticles.js'
 import { resolve } from 'path'
+import articlesData from './articlesData.js'
+
+// Function to build sidebar for /note/ path
+function getNoteSidebar() {
+    const allPosts = articlesData || [];
+    const notePosts = allPosts.filter(post => post.path.startsWith('/note/'));
+    const groups = {}; // Example: { '想法': [], '笔记': [] }
+    const directItems = [];
+
+    for (const post of notePosts) {
+        // post.path is like '/note/想法/filename' or '/note/filename'
+        const pathParts = post.path.split('/').filter(p => p); // e.g., ['note', '想法', 'filename'] or ['note', 'filename']
+
+        if (pathParts.length === 3 && pathParts[0] === 'note') { // Indicates a post in a sub-category like /note/想法/file
+            const category = pathParts[1];
+            if (!groups[category]) {
+                groups[category] = [];
+            }
+            groups[category].push({
+                text: post.title || post.path.split('/').pop(),
+                link: post.path
+            });
+        } else if (pathParts.length === 2 && pathParts[0] === 'note') { // Indicates a direct post under /note, e.g., /note/file
+            directItems.push({
+                text: post.title || post.path.split('/').pop(),
+                link: post.path
+            });
+        }
+    }
+
+    const sidebarGroupItems = [];
+    for (const categoryName in groups) {
+        sidebarGroupItems.push({
+            text: categoryName,
+            collapsed: false,
+            items: groups[categoryName] // These items are already sorted by date from posts.data.js
+        });
+    }
+
+    // Sort category groups by name for consistent order
+    sidebarGroupItems.sort((a, b) => a.text.localeCompare(b.text));
+
+    // Combine direct items (sorted by title) with grouped items
+    // Direct items will appear first, then sorted category groups.
+    directItems.sort((a, b) => a.text.localeCompare(b.text));
+
+    return [...directItems, ...sidebarGroupItems];
+}
 
 export default defineConfig({
     // 基本配置
@@ -26,21 +73,14 @@ export default defineConfig({
             }
         },
         optimizeDeps: {
-            include: ['vitepress']
+            include: ['vue']
         },
-        ssr: { // Added ssr config
-            noExternal: ['vitepress']
+        ssr: {
+            noExternal: ['vue', '@vue/server-renderer']
         },
         // 构建优化
         build: {
-            chunkSizeWarningLimit: 1000,
-            rollupOptions: {
-                output: {
-                    manualChunks: {
-                        'vitepress-vendor': ['vitepress']
-                    }
-                }
-            }
+            chunkSizeWarningLimit: 1000
         }
     },
     // Markdown 配置
@@ -131,7 +171,7 @@ export default defineConfig({
 
         // 侧边栏配置
         sidebar: {
-            '/note/': sidebarArticles,
+            '/note/': getNoteSidebar(),
             // 可以在这里为特定路径配置不同的侧边栏，或者禁用它
             // 例如，为友链页面禁用侧边栏:
             '/note/friend': false

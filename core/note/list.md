@@ -2,9 +2,13 @@
 layout: home
 hero:
   name: "List" 
+
+
 ---
+
 <script setup>
-import ArticleList from '../components/ArticleList.vue' // Corrected path
+import ArticleList from '../.vitepress/theme/components/ArticleList.vue'
 </script>
 
 <ArticleList />
+

@@ -63,7 +63,6 @@
     <!-- 全局组件 -->
     <template #layout-bottom>
       <ImageLightbox ref="lightbox" />
-      <ThemeToggle />
     </template>
   </Layout>
 </template>
@@ -72,10 +71,10 @@
 import { ref, computed, onMounted, nextTick } from 'vue'
 import { useRoute, useData } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
-import ReadingProgress from '../../components/ReadingProgress.vue'
-import ArticleInfo from '../../components/ArticleInfo.vue'
-import ArticleTags from '../../components/ArticleTags.vue'
-import ImageLightbox from '../../components/ImageLightbox.vue'
+import ReadingProgress from './components/ReadingProgress.vue'
+import ArticleInfo from './components/ArticleInfo.vue'
+import ArticleTags from './components/ArticleTags.vue'
+import ImageLightbox from './components/ImageLightbox.vue'
 
 const { Layout } = DefaultTheme
 const route = useRoute()

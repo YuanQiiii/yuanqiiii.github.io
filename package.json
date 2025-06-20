@@ -7,7 +7,7 @@
     "docs:dev": "vitepress dev core",
     "docs:build": "vitepress build core",
     "docs:preview": "vitepress preview core",
-    "preprocess": "python3 preprocess.py",
+    "preprocess": "python3 scripts/preprocess.py",
     "build": "npm run preprocess && npm run docs:build",
     "clean": "rm -rf core/.vitepress/dist core/.vitepress/cache",
     "serve": "npm run docs:preview"

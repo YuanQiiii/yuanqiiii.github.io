@@ -34,7 +34,7 @@
 </template>
 
 <script setup>
-import { data as posts } from '../.vitepress/posts.data.js';
+import { data as posts } from '../../posts.data.js';
 
 // 格式化日期函数
 const formatDate = (date) => {

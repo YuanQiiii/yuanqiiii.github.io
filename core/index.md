@@ -17,12 +17,18 @@ hero:
       text: 友情链接
       link: /note/friend
 
+
+
 ---
 
+
+
 <script setup>
-import Effect from './components/Effect.vue'
+import Effect from './.vitepress/theme/components/Effect.vue'
 </script>
 
 <ClientOnly>
   <Effect />
 </ClientOnly>
+
+

@@ -7,10 +7,13 @@ import matter from 'gray-matter';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// 项目根目录
+const PROJECT_ROOT = path.dirname(__dirname);
+
 // 文章目录
-const NOTES_DIR = path.join(__dirname, 'core', 'note');
+const NOTES_DIR = path.join(PROJECT_ROOT, 'core', 'note');
 // 输出文件
-const OUTPUT_FILE = path.join(__dirname, 'core', '.vitepress', 'articlesData.js');
+const OUTPUT_FILE = path.join(PROJECT_ROOT, 'core', '.vitepress', 'articlesData.js');
 
 // 计算阅读时间（每分钟300个中文字或200个英文单词）
 function estimateReadingTime(content) {

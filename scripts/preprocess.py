@@ -235,7 +235,9 @@ def generate_articles_data():
     try:
         import subprocess
         print("正在生成文章数据...")
-        subprocess.run(['node', 'generateArticlesData.js'], check=True)
+        # 使用正确的路径
+        script_path = os.path.join(os.path.dirname(__file__), 'generateArticlesData.js')
+        subprocess.run(['node', script_path], check=True)
         print("文章数据生成完成")
     except Exception as e:
         print(f"生成文章数据时出错: {e}")
@@ -245,7 +247,9 @@ def generate_articles_data():
 if __name__ == "__main__":
     try:
         directory = 'core'
-        skip_list = get_skip_markdown_files('skip_list.txt')
+        # 使用正确的 skip_list.txt 路径
+        skip_list_path = os.path.join(os.path.dirname(__file__), 'skip_list.txt')
+        skip_list = get_skip_markdown_files(skip_list_path)
         
         print("开始预处理...")
         process_markdown_files(directory, skip_list)
