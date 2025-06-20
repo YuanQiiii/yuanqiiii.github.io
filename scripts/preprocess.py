@@ -155,7 +155,10 @@ def process_markdown_files(directory_path, skip_files):
 
 def generate_sitemap():
     '''生成站点地图'''
-    docs_dir = os.path.join(os.path.dirname(__file__), 'core')
+    # 获取项目根目录
+    script_dir = os.path.dirname(__file__)
+    project_root = os.path.dirname(script_dir)
+    docs_dir = os.path.join(project_root, 'core')
     public_dir = os.path.join(docs_dir, 'public')
     if not os.path.exists(public_dir):
         os.makedirs(public_dir)
@@ -177,19 +180,44 @@ def generate_sitemap():
 '''
     
     # 添加文章页面
-    for article in articles_data:
-        try:
-            modified_date = datetime.fromisoformat(article['modified'].replace('Z', '+00:00')).strftime('%Y-%m-%d')
-        except:
-            modified_date = datetime.now().strftime('%Y-%m-%d')
+    try:
+        # 尝试读取已生成的文章数据
+        script_dir = os.path.dirname(__file__)
+        project_root = os.path.dirname(script_dir)
+        articles_file = os.path.join(project_root, 'core', '.vitepress', 'articlesData.js')
+        
+        if os.path.exists(articles_file):
+            # 读取 JS 文件并提取 JSON 数据
+            with open(articles_file, 'r', encoding='utf-8') as f:
+                content = f.read()
             
-        sitemap_content += f'''  <url>
+            # 提取 JSON 数据部分
+            import re
+            json_match = re.search(r'export default\s+(\[.*\]);', content, re.DOTALL)
+            if json_match:
+                json_str = json_match.group(1)
+                articles_data = json.loads(json_str)
+                
+                for article in articles_data:
+                    try:
+                        modified_date = datetime.fromisoformat(article['modified'].replace('Z', '+00:00')).strftime('%Y-%m-%d')
+                    except:
+                        modified_date = datetime.now().strftime('%Y-%m-%d')
+                        
+                    sitemap_content += f'''  <url>
     <loc>{base_url}{article['path']}</loc>
     <lastmod>{modified_date}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 '''
+            else:
+                print("无法解析文章数据文件格式")
+        else:
+            print("文章数据文件不存在，跳过添加文章链接到 sitemap")
+    except Exception as e:
+        print(f"读取文章数据时出错: {e}")
+        # 继续生成基本的 sitemap
     
     sitemap_content += '</urlset>'
     
@@ -203,7 +231,10 @@ def compress_images():
     try:
         from PIL import Image
         
-        docs_dir = os.path.join(os.path.dirname(__file__), 'core')
+        # 获取项目根目录
+        script_dir = os.path.dirname(__file__)
+        project_root = os.path.dirname(script_dir)
+        docs_dir = os.path.join(project_root, 'core')
         
         for root, dirs, files in os.walk(docs_dir):
             for file in files:
@@ -235,8 +266,16 @@ def generate_articles_data():
     try:
         import subprocess
         print("正在生成文章数据...")
+        
+        # 确保 .vitepress 目录存在
+        script_dir = os.path.dirname(__file__)
+        project_root = os.path.dirname(script_dir)
+        vitepress_dir = os.path.join(project_root, 'core', '.vitepress')
+        if not os.path.exists(vitepress_dir):
+            os.makedirs(vitepress_dir)
+        
         # 使用正确的路径
-        script_path = os.path.join(os.path.dirname(__file__), 'generateArticlesData.js')
+        script_path = os.path.join(script_dir, 'generateArticlesData.js')
         subprocess.run(['node', script_path], check=True)
         print("文章数据生成完成")
     except Exception as e:
@@ -246,14 +285,22 @@ def generate_articles_data():
 
 if __name__ == "__main__":
     try:
+        # 获取项目根目录
+        script_dir = os.path.dirname(__file__)
+        project_root = os.path.dirname(script_dir)
+        
+        # 切换到项目根目录
+        os.chdir(project_root)
+        
         directory = 'core'
         # 使用正确的 skip_list.txt 路径
-        skip_list_path = os.path.join(os.path.dirname(__file__), 'skip_list.txt')
+        skip_list_path = os.path.join(script_dir, 'skip_list.txt')
         skip_list = get_skip_markdown_files(skip_list_path)
         
         print("开始预处理...")
         process_markdown_files(directory, skip_list)
         generate_articles_data()  # 生成文章数据
+        generate_sitemap()  # 生成站点地图
         compress_images()
         print('文档预处理完成')
         
