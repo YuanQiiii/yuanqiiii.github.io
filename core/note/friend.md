@@ -22,7 +22,7 @@ const members = [
     ]
   },
   {
-    avatar: 'https://github.com/YuanQiiii/yuanqiiii.github.io/blob/main/core/public/Weixin%20Image_20250622192528.jpg',
+    avatar: 'https://raw.githubusercontent.com/YuanQiiii/yuanqiiii.github.io/refs/heads/main/core/public/Image_20250622192528.jpg',
     name: 'aq',
     title: 'Friend',
     links: [
