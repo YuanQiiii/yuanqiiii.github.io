@@ -1,6 +1,6 @@
 <!-- Effect.vue -->
 <script setup>
-import { onMounted, onBeforeUnmount, reactive } from 'vue'
+import { onMounted, onBeforeUnmount, reactive, nextTick } from 'vue'
 
 /* 集中状态管理 */
 const state = reactive({
@@ -8,13 +8,10 @@ const state = reactive({
   ctx: null,
   offscreenCanvas: null,
   offscreenCtx: null,
-  dpr: window.devicePixelRatio || 1,
-  particles: [],
-  grid: {},
-  gridSize: 100, // 网格大小，可根据需要调整
-  particleCount: 60, // 默认粒子数量
-  maxDistance: 100, // 默认最大连接距离
-  connectionProbability: 0.05, // 默认连接概率
+  dpr: window.devicePixelRatio || 1,  particles: [],  grid: {},
+  gridSize: 70, // 减小网格大小以增加精细度
+  particleCount: 50, // 进一步增加粒子数量
+  maxDistance: 300, // 减小连接距离以增加密度
   bounds: {
     width: 0,
     height: 0
@@ -23,59 +20,14 @@ const state = reactive({
   animationId: null,
   frameSkip: 0, // 跳帧计数
   targetFPS: 60,
-  lastFrameTime: 0,
-  deltaTime: 0,
+  lastFrameTime: 0,  deltaTime: 0,
   useQuadTree: true, // 是否使用四叉树优化
-  renderMode: 'auto', // 'high', 'medium', 'low', 'auto'
-  isDarkMode: false, // 是否为暗色模式
+  renderMode: 'auto', // 'high', 'medium', 'low', 'auto'  isDarkMode: false, // 是否为暗色模式
   colorPalette: [], // 颜色调色板
-  connectionColors: new Map(), // 存储连接线的颜色
+  connectionColors: null, // 存储连接线的颜色
+  activeConnections: null, // 存储活跃的连接
+  connectionProbability: 0.15, // 大幅提高连接建立概率
 })
-
-
-/* 粒子类 */
-class Particle {
-  constructor() {
-    this.x = Math.random() * state.bounds.width
-    this.y = Math.random() * state.bounds.height
-    this.vx = (Math.random() * 2 - 1) * 2
-    this.vy = (Math.random() * 2 - 1) * 2
-    this.radius = (2 + Math.random() * 2) * state.dpr // 随机大小
-    this.baseRadius = this.radius
-    this.pulse = Math.random() * Math.PI * 2 // 脉冲相位
-    this.pulseSpeed = 0.02 + Math.random() * 0.03
-    this.opacity = 0.5 + Math.random() * 0.5
-    this.color = getParticleColor() // 粒子颜色
-  }
-
-  update() {
-    this.x += this.vx
-    this.y += this.vy
-
-    // 边界反弹
-    if (this.x <= 0 || this.x >= state.bounds.width) {
-      this.vx *= -0.8 // 添加能量损失
-      this.x = Math.max(0, Math.min(this.x, state.bounds.width))
-    }
-    if (this.y <= 0 || this.y >= state.bounds.height) {
-      this.vy *= -0.8
-      this.y = Math.max(0, Math.min(this.y, state.bounds.height))
-    }
-
-    // 脉冲动画
-    this.pulse += this.pulseSpeed
-    this.radius = this.baseRadius + Math.sin(this.pulse) * 0.5
-  }
-
-  draw(ctx) {
-    // 绘制简单空心小圆
-    ctx.beginPath()
-    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2)
-    ctx.strokeStyle = this.color
-    ctx.lineWidth = 0.2 * state.dpr
-    ctx.stroke()
-  }
-}
 
 /* 检测背景色模式 */
 function detectBackgroundMode() {
@@ -133,7 +85,7 @@ function isColorDark(color) {
 /* 初始化颜色调色板 */
 function initializeColorPalette() {
   if (state.isDarkMode) {
-    // 暗色模式：使用亮色调色板
+    // 暗色模式：使用更多亮色调色板
     state.colorPalette = [
       'rgba(255, 182, 193, 0.8)',  // 亮粉色
       'rgba(173, 216, 230, 0.8)',  // 亮蓝色
@@ -143,9 +95,17 @@ function initializeColorPalette() {
       'rgba(255, 255, 224, 0.8)',  // 亮黄色
       'rgba(255, 160, 122, 0.8)',  // 亮橙色
       'rgba(176, 224, 230, 0.8)',  // 粉蓝色
+      'rgba(255, 192, 203, 0.8)',  // 粉红色
+      'rgba(152, 251, 152, 0.8)',  // 淡绿色
+      'rgba(255, 20, 147, 0.8)',   // 深粉色
+      'rgba(135, 206, 250, 0.8)',  // 天蓝色
+      'rgba(255, 215, 0, 0.8)',    // 金色
+      'rgba(186, 85, 211, 0.8)',   // 中紫色
+      'rgba(255, 99, 71, 0.8)',    // 番茄色
+      'rgba(64, 224, 208, 0.8)',   // 青绿色
     ]
   } else {
-    // 亮色模式：使用深色调色板
+    // 亮色模式：使用更多深色调色板
     state.colorPalette = [
       'rgba(220, 20, 60, 0.8)',    // 深红色
       'rgba(25, 25, 112, 0.8)',    // 深蓝色
@@ -155,6 +115,14 @@ function initializeColorPalette() {
       'rgba(184, 134, 11, 0.8)',   // 深黄色
       'rgba(139, 69, 19, 0.8)',    // 棕色
       'rgba(72, 61, 139, 0.8)',    // 深紫色
+      'rgba(178, 34, 34, 0.8)',    // 火砖色
+      'rgba(46, 139, 87, 0.8)',    // 海绿色
+      'rgba(205, 92, 92, 0.8)',    // 印度红
+      'rgba(75, 0, 130, 0.8)',     // 靛蓝色
+      'rgba(139, 0, 139, 0.8)',    // 深洋红
+      'rgba(85, 107, 47, 0.8)',    // 暗橄榄绿
+      'rgba(165, 42, 42, 0.8)',    // 棕色
+      'rgba(0, 100, 0, 0.8)',      // 深绿色
     ]
   }
 }
@@ -170,6 +138,11 @@ function getParticleColor() {
 
 /* 获取连接线颜色 */
 function getConnectionColor(connectionId) {
+  // 确保connectionColors Map存在
+  if (!state.connectionColors) {
+    state.connectionColors = new Map()
+  }
+  
   if (!state.connectionColors.has(connectionId)) {
     const randomColor = state.colorPalette[Math.floor(Math.random() * state.colorPalette.length)]
     state.connectionColors.set(connectionId, randomColor)
@@ -189,6 +162,57 @@ function updateThemeMode() {
     state.particles.forEach(particle => {
       particle.color = getParticleColor()
     })
+  }
+}
+
+
+/* 粒子类 */
+class Particle {
+  constructor() {
+    this.x = Math.random() * state.bounds.width
+    this.y = Math.random() * state.bounds.height
+    this.vx = (Math.random() * 2 - 1) * 2
+    this.vy = (Math.random() * 2 - 1) * 2
+    this.radius = (1 + Math.random() * 1.5) * state.dpr // 更小的随机大小
+    this.baseRadius = this.radius
+    this.pulse = Math.random() * Math.PI * 2 // 脉冲相位
+    this.pulseSpeed = 0.02 + Math.random() * 0.03
+    this.opacity = 0.5 + Math.random() * 0.5
+    this.color = getParticleColor() // 粒子颜色
+    this.id = Math.random().toString(36).substr(2, 9) // 给每个粒子一个唯一ID
+  }
+
+  update() {
+    this.x += this.vx
+    this.y += this.vy
+
+    // 边界反弹
+    if (this.x <= 0 || this.x >= state.bounds.width) {
+      this.vx *= -0.8 // 添加能量损失
+      this.x = Math.max(0, Math.min(this.x, state.bounds.width))
+    }
+    if (this.y <= 0 || this.y >= state.bounds.height) {
+      this.vy *= -0.8
+      this.y = Math.max(0, Math.min(this.y, state.bounds.height))
+    }
+
+    // 脉冲动画
+    this.pulse += this.pulseSpeed
+    this.radius = this.baseRadius + Math.sin(this.pulse) * 0.3 // 更细微的脉冲动画
+  }
+  draw(ctx) {
+    // 绘制更精细的空心小圆
+    ctx.beginPath()
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2)
+    ctx.strokeStyle = this.color
+    ctx.lineWidth = 0.15 * state.dpr // 更细的线条
+    ctx.stroke()
+    
+    // 添加内部光晕效果
+    ctx.beginPath()
+    ctx.arc(this.x, this.y, this.radius * 0.5, 0, Math.PI * 2)
+    ctx.fillStyle = this.color.replace(/[\d.]+\)$/g, '0.3)')
+    ctx.fill()
   }
 }
 
@@ -242,10 +266,86 @@ function getNeighbors(col, row) {
 }
 
 function getConnectionId(p1, p2) {
-  // 确保相同的两个粒子生成相同的ID
-  const id1 = state.particles.indexOf(p1)
-  const id2 = state.particles.indexOf(p2)
-  return id1 < id2 ? `${id1}-${id2}` : `${id2}-${id1}`
+  // 使用粒子的唯一ID来生成连接ID
+  return p1.id < p2.id ? `${p1.id}-${p2.id}` : `${p2.id}-${p1.id}`
+}
+
+/* 管理连接状态 */
+function updateConnections() {
+  // 确保activeConnections Map存在
+  if (!state.activeConnections) {
+    state.activeConnections = new Map()
+  }
+  
+  const maxDistanceSquared = state.maxDistance ** 2
+  const connectionsToRemove = []
+  
+  // 检查现有连接是否需要断开
+  for (let [connectionId, connection] of state.activeConnections) {
+    const p1 = connection.particle1
+    const p2 = connection.particle2
+    
+    const dx = p1.x - p2.x
+    const dy = p1.y - p2.y
+    const distanceSquared = dx * dx + dy * dy
+    
+    if (distanceSquared > maxDistanceSquared) {
+      connectionsToRemove.push(connectionId)
+    } else {
+      // 更新连接信息
+      connection.distance = Math.sqrt(distanceSquared)
+      connection.x1 = p1.x
+      connection.y1 = p1.y
+      connection.x2 = p2.x
+      connection.y2 = p2.y
+    }
+  }
+  
+  // 移除断开的连接
+  connectionsToRemove.forEach(id => {
+    state.activeConnections.delete(id)
+  })
+  
+  // 使用网格优化来检查新连接（提高性能）
+  updateGrid()
+  
+  // 遍历网格检查连接
+  for (let col in state.grid) {
+    for (let row in state.grid[col]) {
+      const cellParticles = state.grid[col][row]
+      if (cellParticles.length > 0) {
+        const neighbors = getNeighbors(parseInt(col), parseInt(row))
+        cellParticles.forEach(particle => {
+          neighbors.forEach(other => {
+            if (particle !== other && particle.id !== other.id) {
+              const connectionId = getConnectionId(particle, other)
+              
+              // 如果连接不存在，检查是否需要建立
+              if (!state.activeConnections.has(connectionId)) {
+                const dx = particle.x - other.x
+                const dy = particle.y - other.y
+                const distanceSquared = dx * dx + dy * dy
+                
+                if (distanceSquared < maxDistanceSquared && Math.random() < state.connectionProbability) {
+                  // 建立新连接
+                  state.activeConnections.set(connectionId, {
+                    particle1: particle,
+                    particle2: other,
+                    distance: Math.sqrt(distanceSquared),
+                    x1: particle.x,
+                    y1: particle.y,
+                    x2: other.x,
+                    y2: other.y,
+                    createdAt: Date.now()
+                  })
+                }
+              }
+            }
+          })
+        })
+      }
+    }
+  }
 }
 
 
@@ -259,72 +359,70 @@ function render() {
   state.particles.forEach(particle => {
     particle.update()
   })
+  // 更新连接状态（建立新连接，断开超距离连接）
+  updateConnections()
 
-  // 更新网格
-  updateGrid()
-
-  // 批量绘制连接线
-  const newConnections = []
-  const maxDistanceSquared = state.maxDistance ** 2
-  state.offscreenCtx.lineWidth = 0.3 * state.dpr
-
-  // 遍历网格检查连接
-  for (let col in state.grid) {
-    for (let row in state.grid[col]) {
-      const cellParticles = state.grid[col][row]
-      if (cellParticles.length > 0) {
-        const neighbors = getNeighbors(parseInt(col), parseInt(row))
-        cellParticles.forEach(particle => {
-          neighbors.forEach(other => {
-            if (particle !== other) {
-              const dx = particle.x - other.x
-              const dy = particle.y - other.y
-              const distanceSquared = dx * dx + dy * dy
-
-              if (distanceSquared < maxDistanceSquared && Math.random() < state.connectionProbability) {
-                newConnections.push({
-                  x1: particle.x,
-                  y1: particle.y,
-                  x2: other.x,
-                  y2: other.y,
-                  distance: Math.sqrt(distanceSquared)
-                })
-              }
-            }
-          })
-        })
-      }
-    }
-  }
-  // 绘制连接线 - 多彩线条
-  newConnections.forEach(conn => {
-    const connectionId = getConnectionId(
-      state.particles.find(p => Math.abs(p.x - conn.x1) < 1 && Math.abs(p.y - conn.y1) < 1),
-      state.particles.find(p => Math.abs(p.x - conn.x2) < 1 && Math.abs(p.y - conn.y2) < 1)
-    )
-    const alpha = Math.max(0.3, 0.8 * (1 - conn.distance / state.maxDistance))
+  // 绘制所有活跃的连接线
+  if (state.activeConnections) {
+    for (let [connectionId, connection] of state.activeConnections) {
+    const alpha = Math.max(0.6, 0.95 * (1 - connection.distance / state.maxDistance))
     const color = getConnectionColor(connectionId)
     
+    // 创建渐变效果
+    const gradient = state.offscreenCtx.createLinearGradient(
+      connection.x1, connection.y1, 
+      connection.x2, connection.y2
+    )
+    const baseColor = color.replace(/[\d.]+\)$/g, `${alpha})`)
+    const fadeColor = color.replace(/[\d.]+\)$/g, `${alpha * 0.3})`)
+    
+    gradient.addColorStop(0, baseColor)
+    gradient.addColorStop(0.5, fadeColor)
+    gradient.addColorStop(1, baseColor)
+    
     state.offscreenCtx.beginPath()
-    state.offscreenCtx.strokeStyle = color.replace(/[\d.]+\)$/g, `${alpha})`)
-    state.offscreenCtx.lineWidth = 0.5 * state.dpr
+    state.offscreenCtx.strokeStyle = gradient
+    state.offscreenCtx.lineWidth = Math.max(0.12, 0.4 * (1 - connection.distance / state.maxDistance)) * state.dpr
     state.offscreenCtx.lineCap = 'round'
     state.offscreenCtx.lineJoin = 'round'
-    state.offscreenCtx.moveTo(conn.x1, conn.y1)
-    state.offscreenCtx.lineTo(conn.x2, conn.y2)
+    state.offscreenCtx.moveTo(connection.x1, connection.y1)
+    state.offscreenCtx.lineTo(connection.x2, connection.y2)
     state.offscreenCtx.stroke()
-  })  
-  // 重置透明度
-  state.offscreenCtx.globalAlpha = 1
+    }
+  }
 
   // 批量绘制粒子
   state.particles.forEach(particle => {
     particle.draw(state.offscreenCtx)
   })
 
+  // 添加页脚透明渐变效果
+  applyFooterTransparency()
+
   // 一次性将离屏画布内容复制到主画布
   state.ctx.clearRect(0, 0, state.bounds.width, state.bounds.height)
   state.ctx.drawImage(state.offscreenCanvas, 0, 0)
+}
+
+/* 应用页脚透明效果 */
+function applyFooterTransparency() {
+  const footerHeight = 200 // 页脚渐变区域高度
+  const startY = state.bounds.height - footerHeight
+  
+  // 创建从透明到完全透明的渐变
+  const gradient = state.offscreenCtx.createLinearGradient(0, startY, 0, state.bounds.height)
+  gradient.addColorStop(0, 'rgba(255, 255, 255, 0)') // 顶部完全透明
+  gradient.addColorStop(0.3, 'rgba(255, 255, 255, 0.1)') // 逐渐变不透明
+  gradient.addColorStop(0.7, 'rgba(255, 255, 255, 0.3)') // 中等透明度
+  gradient.addColorStop(1, 'rgba(255, 255, 255, 0.8)') // 底部高透明度
+  
+  // 使用混合模式创建遮罩效果
+  state.offscreenCtx.globalCompositeOperation = 'destination-out'
+  state.offscreenCtx.fillStyle = gradient
+  state.offscreenCtx.fillRect(0, startY, state.bounds.width, footerHeight)
+  
+  // 恢复正常的绘制模式
+  state.offscreenCtx.globalCompositeOperation = 'source-over'
 }
 
 /* 获取随机颜色 */
@@ -358,34 +456,59 @@ function animate(currentTime = 0) {
 
 /* 设置画布 */
 function setupCanvas() {
-  if (!state.canvas) return
-  state.ctx = state.canvas.getContext('2d')
-  state.bounds.width = window.innerWidth
-  state.bounds.height = window.innerHeight
-  state.canvas.width = state.bounds.width * state.dpr
-  state.canvas.height = state.bounds.height * state.dpr
-  state.canvas.style.width = `${state.bounds.width}px`
-  state.canvas.style.height = `${state.bounds.height}px`
-  state.ctx.scale(state.dpr, state.dpr)
+  if (!state.canvas) {
+    console.error('Canvas not available for setup')
+    return
+  }
+  
+  try {
+    state.bounds.width = window.innerWidth
+    state.bounds.height = window.innerHeight
+    
+    // 设置主画布
+    state.canvas.width = state.bounds.width * state.dpr
+    state.canvas.height = state.bounds.height * state.dpr
+    state.canvas.style.width = `${state.bounds.width}px`
+    state.canvas.style.height = `${state.bounds.height}px`
+    
+    state.ctx = state.canvas.getContext('2d', {
+      antialias: true
+    })
+    
+    if (!state.ctx) {
+      console.error('Failed to get 2D context from main canvas')
+      return
+    }
+    
+    state.ctx.scale(state.dpr, state.dpr)
 
-  // 设置离屏画布
-  state.offscreenCanvas = document.createElement('canvas')
-  state.offscreenCtx = state.offscreenCanvas.getContext('2d')
-  state.offscreenCanvas.width = state.bounds.width
-  state.offscreenCanvas.height = state.bounds.height
+    // 设置离屏画布
+    state.offscreenCanvas = document.createElement('canvas')
+    state.offscreenCanvas.width = state.bounds.width
+    state.offscreenCanvas.height = state.bounds.height
 
-  state.ctx = state.canvas.getContext('2d', {
-    antialias: true
-  })
-  state.offscreenCtx = state.offscreenCanvas.getContext('2d', {
-    antialias: true
-  })
+    state.offscreenCtx = state.offscreenCanvas.getContext('2d', {
+      antialias: true
+    })
+    
+    if (!state.offscreenCtx) {
+      console.error('Failed to get 2D context from offscreen canvas')
+      return
+    }
 
-  // 启用抗锯齿
-  state.ctx.imageSmoothingEnabled = true
-  state.ctx.imageSmoothingQuality = 'high'
-  state.offscreenCtx.imageSmoothingEnabled = true
-  state.offscreenCtx.imageSmoothingQuality = 'high'
+    // 启用抗锯齿
+    state.ctx.imageSmoothingEnabled = true
+    state.ctx.imageSmoothingQuality = 'high'
+    state.offscreenCtx.imageSmoothingEnabled = true
+    state.offscreenCtx.imageSmoothingQuality = 'high'
+    
+    console.log('Canvas setup complete', {
+      canvasSize: { width: state.bounds.width, height: state.bounds.height },
+      dpr: state.dpr
+    })
+  } catch (error) {
+    console.error('Error setting up canvas:', error)
+  }
 }
 
 // 添加四叉树类
@@ -406,7 +529,6 @@ class QuadTree {
     }
     this.nodes = []
   }
-
   split() {
     const { x, y, width, height } = this.bounds
     const subWidth = width / 2
@@ -416,7 +538,9 @@ class QuadTree {
     this.nodes[1] = new QuadTree({ x, y, width: subWidth, height: subHeight }, this.level + 1, this.maxLevel, this.maxObjects)
     this.nodes[2] = new QuadTree({ x, y: y + subHeight, width: subWidth, height: subHeight }, this.level + 1, this.maxLevel, this.maxObjects)
     this.nodes[3] = new QuadTree({ x: x + subWidth, y: y + subHeight, width: subWidth, height: subHeight }, this.level + 1, this.maxLevel, this.maxObjects)
-  }  insert(particle) {
+  }
+  
+  insert(particle) {
     if (this.nodes.length > 0) {
       const index = this.getIndex(particle)
       if (index !== -1) {
@@ -508,7 +632,7 @@ class ObjectPool {
 }
 
 
-/* 事件处理 */
+ /* 事件处理 */
 function handleResize() {
   setupCanvas()
   resetState()
@@ -525,6 +649,7 @@ function handleVisibilityChange() {
 /* 启动动画 */
 function startAnimation() {
   if (!state.isAnimating) {
+    console.log('Starting animation...')
     state.isAnimating = true
     animate()
   }
@@ -543,50 +668,102 @@ function pauseAnimation() {
 function resetState() {
   // 更新主题模式
   updateThemeMode()
+  // 重置连接状态
+  resetConnections()
   initializeParticles()
   initializeGrid()
 }
 
+/* 重置连接状态 */
+function resetConnections() {
+  // 确保Map对象存在
+  if (!state.activeConnections) {
+    state.activeConnections = new Map()
+  } else {
+    state.activeConnections.clear()
+  }
+  
+  if (!state.connectionColors) {
+    state.connectionColors = new Map()
+  } else {
+    state.connectionColors.clear()
+  }
+}
+
 /* 初始加载 */
 onMounted(() => {
-  // 初始化主题检测
-  state.isDarkMode = detectBackgroundMode()
-  initializeColorPalette()
-  
-  // 创建 canvas
-  state.canvas = document.createElement('canvas')
-  state.canvas.style.position = 'fixed'
-  state.canvas.style.top = '0'
-  state.canvas.style.left = '0'
-  state.canvas.style.width = '100%'
-  state.canvas.style.height = '100%'
-  state.canvas.style.pointerEvents = 'none'
-  state.canvas.style.zIndex = '0'
-  document.body.appendChild(state.canvas)
+  try {
+    console.log('Effect component mounting...')
+      // 等待DOM完全加载
+    nextTick(() => {
+      // 初始化Map对象
+      state.activeConnections = new Map()
+      state.connectionColors = new Map()
+      
+      // 初始化主题检测
+      state.isDarkMode = detectBackgroundMode()
+      initializeColorPalette()
+      
+      // 创建 canvas
+      state.canvas = document.createElement('canvas')
+      state.canvas.style.position = 'fixed'
+      state.canvas.style.top = '0'
+      state.canvas.style.left = '0'
+      state.canvas.style.width = '100%'
+      state.canvas.style.height = '100%'
+      state.canvas.style.pointerEvents = 'none'
+      state.canvas.style.zIndex = '-1'
+      state.canvas.style.backgroundColor = 'transparent'
+      
+      // 确保canvas添加到body
+      if (document.body) {
+        document.body.appendChild(state.canvas)
+      } else {
+        console.error('Document body not available')
+        return
+      }
 
-  // 设置画布和粒子
-  setupCanvas()
-  resetState()
+      // 设置画布和粒子
+      setupCanvas()
+      
+      // 验证画布设置
+      if (!state.ctx || !state.offscreenCtx) {
+        console.error('Canvas context not available')
+        return
+      }
+      
+      resetState()
 
-  // 启动动画
-  startAnimation()
+      // 启动动画
+      startAnimation()
 
-  // 事件绑定
-  window.addEventListener('resize', handleResize)
-  document.addEventListener('visibilitychange', handleVisibilityChange)
-  
-  // 监听主题变化
-  const observer = new MutationObserver(() => {
-    updateThemeMode()
-  })
-  observer.observe(document.documentElement, { 
-    attributes: true, 
-    attributeFilter: ['class', 'data-theme'] 
-  })
-  observer.observe(document.body, { 
-    attributes: true, 
-    attributeFilter: ['class', 'data-theme'] 
-  })
+      // 事件绑定
+      window.addEventListener('resize', handleResize)
+      document.addEventListener('visibilitychange', handleVisibilityChange)
+      
+      // 监听主题变化
+      const observer = new MutationObserver(() => {
+        updateThemeMode()
+      })
+      observer.observe(document.documentElement, { 
+        attributes: true, 
+        attributeFilter: ['class', 'data-theme'] 
+      })
+      observer.observe(document.body, { 
+        attributes: true, 
+        attributeFilter: ['class', 'data-theme'] 
+      })
+      
+      console.log('Effect component initialized successfully', {
+        canvasSize: { width: state.bounds.width, height: state.bounds.height },
+        particleCount: state.particles.length,
+        isDarkMode: state.isDarkMode,
+        isAnimating: state.isAnimating
+      })
+    })
+  } catch (error) {
+    console.error('Error initializing Effect component:', error)
+  }
 })
 
 /* 组件销毁 */
@@ -606,12 +783,15 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="effect-container"></div>
+  <div class="effect-container">
+    <!-- 效果由Canvas绘制，此div仅作为组件占位 -->
+  </div>
 </template>
 <style scoped>
 .effect-container {
   position: relative;
   width: 100%;
   height: 100%;
+  min-height: 1px; /* 确保组件至少有高度 */
 }
 </style>

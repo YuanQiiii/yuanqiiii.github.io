@@ -22,11 +22,3 @@ hero:
 ---
 
 
-
-<script setup>
-import Effect from './.vitepress/theme/components/Effect.vue'
-</script>
-
-<ClientOnly>
-  <Effect />
-</ClientOnly>

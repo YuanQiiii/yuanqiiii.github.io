@@ -5,13 +5,6 @@
       <ReadingProgress />
     </template>
 
-    <!-- 主要内容区域 -->
-    <template #doc-before>
-      <div v-if="isArticlePage" class="article-header">
-        <!-- ArticleInfo 和 ArticleTags 组件已被移除 -->
-      </div>
-    </template>
-
     <!-- 文章底部 -->
     <template #doc-after>
       <div v-if="isArticlePage" class="article-footer">
@@ -51,6 +44,7 @@
     <!-- 全局组件 -->
     <template #layout-bottom>
       <ImageLightbox ref="lightbox" />
+      <Effect />
     </template>
   </Layout>
 </template>
@@ -61,6 +55,7 @@ import { useRoute, useData } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 import ReadingProgress from './components/ReadingProgress.vue'
 import ImageLightbox from './components/ImageLightbox.vue'
+import Effect from './components/Effect.vue'
 
 const { Layout } = DefaultTheme
 const route = useRoute()
@@ -302,6 +297,7 @@ onMounted(() => {
   line-height: 1.5;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }

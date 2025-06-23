@@ -150,13 +150,7 @@ export default defineConfig({
         returnToTopLabel: '返回顶部',
         darkModeSwitchLabel: '外观',
         lightModeSwitchTitle: '切换到浅色模式',
-        darkModeSwitchTitle: '切换到深色模式',
-
-        // 页脚
-        footer: {
-            message: '基于 VitePress 构建',
-            copyright: `Copyright © 2023-${new Date().getFullYear()} YuanQiiii`
-        }
+        darkModeSwitchTitle: '切换到深色模式'
     },
 
     // 站点地图配置
