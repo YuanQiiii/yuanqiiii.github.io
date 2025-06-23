@@ -4,19 +4,15 @@
   "type": "module",
   "description": "Personal blog with enhanced features",
   "scripts": {
-    "docs:dev": "vitepress dev core",
-    "docs:build": "vitepress build core",
-    "docs:preview": "vitepress preview core",
+    "dev": "vitepress dev core",
+    "build": "npm run preprocess && vitepress build core",
+    "preview": "vitepress preview core",
     "preprocess": "python3 scripts/preprocess.py",
-    "build": "npm run preprocess && npm run docs:build",
-    "clean": "rm -rf core/.vitepress/dist core/.vitepress/cache",
-    "serve": "npm run docs:preview"
+    "clean": "rm -rf core/.vitepress/dist core/.vitepress/cache"
   },
   "devDependencies": {
-    "@types/node": "^20.14.0",
     "gray-matter": "^4.0.3",
     "markdown-it-mathjax3": "^4.3.2",
-    "typescript": "^5.8.3",
     "vitepress": "^1.6.3",
     "vue": "^3.4.38"
   },

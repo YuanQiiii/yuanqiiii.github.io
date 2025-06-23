@@ -16,7 +16,7 @@ import ImageLightbox from './components/ImageLightbox.vue'
 export default {
     extends: DefaultTheme,
     Layout,
-    enhanceApp({ app, router, siteData }) {
+    enhanceApp({ app, router }) {
         // 注册全局组件
         app.component('ReadingProgress', ReadingProgress)
         app.component('ArticleInfo', ArticleInfo)
@@ -28,23 +28,14 @@ export default {
         app.component('ImageLightbox', ImageLightbox)
 
         // 路由守卫
-        if (router && typeof router.beforeEach === 'function') {
+        if (router) {
             router.beforeEach((to, from, next) => {
-                // 页面切换时重置滚动位置
                 if (to.path !== from.path) {
                     window.scrollTo(0, 0)
                 }
                 next()
             })
         }
-
-        // 全局错误处理
-        app.config.errorHandler = (err, vm, info) => {
-            console.error('VitePress 应用错误:', err, info)
-        }
-
-        // 添加全局属性
-        app.config.globalProperties.$siteUrl = 'https://yuanqiiii.github.io'
     }
 }
 
