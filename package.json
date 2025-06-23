@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vitepress dev core",
     "build": "npm run preprocess && vitepress build core",
+    "docs:build": "npm run preprocess && vitepress build core",
     "preview": "vitepress preview core",
     "preprocess": "python3 scripts/preprocess.py",
     "clean": "rm -rf core/.vitepress/dist core/.vitepress/cache"

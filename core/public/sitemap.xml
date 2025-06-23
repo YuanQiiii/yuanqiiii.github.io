@@ -2,43 +2,103 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://yuanqiiii.github.io/</loc>
-    <lastmod>2025-06-11</lastmod>
+    <lastmod>2025-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://yuanqiiii.github.io/note/笔记/普通心理学</loc>
-    <lastmod>2025-06-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://yuanqiiii.github.io/note/想法/随想01</loc>
-    <lastmod>2025-06-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://yuanqiiii.github.io/note/想法/love</loc>
-    <lastmod>2025-06-11</lastmod>
+    <lastmod>2025-06-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yuanqiiii.github.io/note/想法/prompt</loc>
+    <lastmod>2025-06-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yuanqiiii.github.io/note/想法/网站设计思路</loc>
+    <lastmod>2025-06-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yuanqiiii.github.io/note/想法/nvidia</loc>
+    <lastmod>2025-06-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yuanqiiii.github.io/note/想法/server</loc>
+    <lastmod>2025-06-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://yuanqiiii.github.io/note/想法/年终总结</loc>
-    <lastmod>2025-06-11</lastmod>
+    <lastmod>2025-06-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yuanqiiii.github.io/note/想法/知识库</loc>
+    <lastmod>2025-06-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yuanqiiii.github.io/note/想法/随想01</loc>
+    <lastmod>2025-06-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://yuanqiiii.github.io/note/想法/随想02</loc>
-    <lastmod>2025-06-11</lastmod>
+    <lastmod>2025-06-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yuanqiiii.github.io/note/想法/韭菜模拟器</loc>
+    <lastmod>2025-06-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yuanqiiii.github.io/note/想法/基于邮件通信的AI伙伴</loc>
+    <lastmod>2025-06-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://yuanqiiii.github.io/note/想法/谈谈对于git设计的理解</loc>
-    <lastmod>2025-06-11</lastmod>
+    <lastmod>2025-06-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yuanqiiii.github.io/note/笔记/模板</loc>
+    <lastmod>2025-06-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yuanqiiii.github.io/note/笔记/普通心理学</loc>
+    <lastmod>2025-06-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yuanqiiii.github.io/note/笔记/day0</loc>
+    <lastmod>2025-06-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yuanqiiii.github.io/note/笔记/questions</loc>
+    <lastmod>2025-06-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

@@ -27,10 +27,10 @@ export default {
         app.component('ImageGallery', ImageGallery)
         app.component('ImageLightbox', ImageLightbox)
 
-        // 路由守卫
-        if (router) {
+        // 路由守卫 - 只在客户端执行
+        if (router && typeof router.beforeEach === 'function') {
             router.beforeEach((to, from, next) => {
-                if (to.path !== from.path) {
+                if (typeof window !== 'undefined' && to.path !== from.path) {
                     window.scrollTo(0, 0)
                 }
                 next()
