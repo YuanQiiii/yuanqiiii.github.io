@@ -10,7 +10,7 @@
           <input 
             v-model="searchQuery" 
             type="text" 
-            placeholder="搜索文章标题或内容..." 
+            placeholder="搜索文章标题..." 
             class="search-input"
           >
         </div>
@@ -42,7 +42,6 @@
         <article v-for="post in filteredPosts" :key="post.url" class="article-card">
           <a :href="post.url" class="article-link">
             <h2 class="article-title">{{ post.title }}</h2>
-            <p class="article-description">{{ post.description }}</p>
             <div class="article-meta">
               <span class="meta-item">
                 <span class="meta-icon">📅</span>
@@ -60,9 +59,6 @@
                 <span class="meta-icon">📂</span>
                 {{ post.category }}
               </span>
-            </div>
-            <div v-if="post.tags && post.tags.length" class="article-tags">
-              <span v-for="tag in post.tags" :key="tag" class="tag">#{{ tag }}</span>
             </div>
           </a>
         </article>
@@ -100,9 +96,7 @@ const filteredPosts = computed(() => {
   if (searchQuery.value) {
     const query = searchQuery.value.toLowerCase()
     posts = posts.filter(post => 
-      post.title.toLowerCase().includes(query) ||
-      post.description.toLowerCase().includes(query) ||
-      (post.tags && post.tags.some(tag => tag.toLowerCase().includes(query)))
+      post.title.toLowerCase().includes(query)
     )
   }
 
@@ -139,20 +133,16 @@ onMounted(async () => {
           title: '关于我',
           date: '2024-01-01',
           category: '其他',
-          description: '个人介绍页面',
           readingTime: 2,
-          wordCount: 500,
-          tags: []
+          wordCount: 500
         },
         {
           url: '/content/friend',
           title: '友情链接',
           date: '2024-01-01',
           category: '其他',
-          description: '朋友们的网站链接',
           readingTime: 1,
-          wordCount: 200,
-          tags: []
+          wordCount: 200
         }
       ]
     }
@@ -283,23 +273,13 @@ const formatDate = (date) => {
   line-height: 1.4;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
 .article-link:hover .article-title {
   color: var(--vp-c-brand-1);
-}
-
-.article-description {
-  color: var(--vp-c-text-2);
-  font-size: 14px;
-  line-height: 1.5;
-  margin: 0 0 15px 0;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 
 /* 元信息 */
@@ -326,30 +306,6 @@ const formatDate = (date) => {
 .meta-icon {
   margin-right: 4px;
   opacity: 0.7;
-}
-
-/* 标签 */
-.article-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.tag {
-  display: inline-block;
-  background: var(--vp-c-default-soft);
-  color: var(--vp-c-text-2);
-  padding: 2px 8px;
-  border-radius: 12px;
-  font-size: 12px;
-  border: 1px solid var(--vp-c-border);
-  transition: all 0.2s;
-}
-
-.tag:hover {
-  background: var(--vp-c-brand-soft);
-  color: var(--vp-c-brand-1);
-  border-color: var(--vp-c-brand-1);
 }
 
 /* 状态样式 */

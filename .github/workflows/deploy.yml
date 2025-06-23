@@ -35,11 +35,20 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Generate article list
-        run: npm run generate:articles
+      - name: Build site with article generation
+        run: npm run build:full
 
-      - name: Build with VitePress
-        run: npm run docs:build
+      - name: Verify build output
+        run: |
+          echo "Checking if articles.json exists..."
+          ls -la docs/.vitepress/dist/
+          if [ -f "docs/.vitepress/dist/articles.json" ]; then
+            echo "✅ articles.json found in build output"
+            echo "Article count: $(cat docs/.vitepress/dist/articles.json | grep -o '"total":[0-9]*' | cut -d':' -f2)"
+          else
+            echo "❌ articles.json not found in build output"
+            exit 1
+          fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

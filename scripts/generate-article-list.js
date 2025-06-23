@@ -99,25 +99,13 @@ function processMarkdownFile(filePath, relativePath) {
         const readingTime = calculateReadingTime(articleContent)
         const wordCount = calculateWordCount(articleContent)
 
-        // 从内容中提取摘要（前150个字符）
-        const excerpt = articleContent
-            .replace(/```[\s\S]*?```/g, '')
-            .replace(/`[^`]*`/g, '')
-            .replace(/!\[.*?\]\(.*?\)/g, '')
-            .replace(/\[.*?\]\(.*?\)/g, '')
-            .replace(/#{1,6}\s+/g, '')
-            .trim()
-            .substring(0, 150) + (articleContent.length > 150 ? '...' : '')
-
         return {
             url,
             title: frontmatter.title || fileName,
             date: frontmatter.date || getFileModifiedDate(filePath),
             lastModified: getFileModifiedDate(filePath),
             category: frontmatter.category || getCategoryFromPath(relativePath),
-            tags: frontmatter.tags || [],
             author: frontmatter.author || 'YuanQiiii',
-            description: frontmatter.description || excerpt,
             readingTime,
             wordCount,
             frontmatter

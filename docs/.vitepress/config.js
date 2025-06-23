@@ -1,4 +1,10 @@
 import { defineConfig } from 'vitepress'
+import fs from 'fs'
+import path from 'path'
+import { fileURLToPath } from 'url'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 export default defineConfig({
     // 基本配置
@@ -163,21 +169,37 @@ export default defineConfig({
         build: {
             chunkSizeWarningLimit: 1000
         },
-        // 复制生成的文章数据到构建目录
+        // 确保 articles.json 存在于 public 目录
         plugins: [
             {
-                name: 'copy-articles-data',
-                generateBundle() {
-                    // 在构建时将 articles.json 复制到 public 目录
-                    const fs = require('fs')
-                    const path = require('path')
+                name: 'ensure-articles-data',
+                buildStart() {
+                    try {
+                        // 确保 public 目录存在
+                        const publicDir = path.join(__dirname, '../public')
+                        if (!fs.existsSync(publicDir)) {
+                            fs.mkdirSync(publicDir, { recursive: true })
+                        }
 
-                    const srcPath = path.join(__dirname, 'theme/data/articles.json')
-                    const destPath = path.join(__dirname, '../../public/articles.json')
+                        const destPath = path.join(publicDir, 'articles.json')
+                        const srcPath = path.join(__dirname, 'theme/data/articles.json')
 
-                    if (fs.existsSync(srcPath)) {
-                        fs.copyFileSync(srcPath, destPath)
-                        console.log('✅ 已复制 articles.json 到 public 目录')
+                        // 如果已经生成的文章数据存在，则复制它
+                        if (fs.existsSync(srcPath)) {
+                            fs.copyFileSync(srcPath, destPath)
+                            console.log('✅ 已复制现有的 articles.json 到 public 目录')
+                        } else {
+                            // 创建默认的 articles.json
+                            const defaultData = {
+                                generated: new Date().toISOString(),
+                                total: 0,
+                                articles: []
+                            }
+                            fs.writeFileSync(destPath, JSON.stringify(defaultData, null, 2))
+                            console.log('📝 已创建默认的 articles.json')
+                        }
+                    } catch (error) {
+                        console.warn('⚠️ 处理 articles.json 失败:', error.message)
                     }
                 }
             }
