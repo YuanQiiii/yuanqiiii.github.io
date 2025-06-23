@@ -9,13 +9,13 @@ hero:
   actions:
     - theme: brand
       text: 浏览文章
-      link: /note/list
+      link: /content/list
     - theme: alt
       text: 关于我
-      link: /note/about
+      link: /content/about
     - theme: alt
       text: 友情链接
-      link: /note/friend
+      link: /content/friend
 
 
 
@@ -30,5 +30,3 @@ import Effect from './.vitepress/theme/components/Effect.vue'
 <ClientOnly>
   <Effect />
 </ClientOnly>
-
-
