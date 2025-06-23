@@ -1,9 +1,5 @@
 ---
 layout: page
-hero:
-  name: "Friend" 
-
-
 ---
 
 <script setup>
