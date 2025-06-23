@@ -1,148 +1,117 @@
-# YuanQiiii 个人博客
+# YuanQiiii's Blog
 
-## 1. 项目概述
+基于 VitePress 构建的个人博客，记录学习，分享思考，记载生活。
 
-这是一个基于 VitePress 构建的现代化个人静态博客网站，采用模块化架构设计，集成了多种现代化功能与优化。项目注重代码质量、性能优化和开发体验，旨在打造高性能、易维护、可扩展的个人博客平台。
+🌐 **在线访问**: [https://yuanqiiii.github.io](https://yuanqiiii.github.io)
 
-## 2. 核心特性
-
-### 2.1 🚀 现代化技术栈
-
-- **VitePress**：基于 Vite 的静态站点生成器
-- **Vue 3**：响应式组件系统
-- **TypeScript**：类型安全的 JavaScript
-- **模块化配置**：配置文件按功能模块化拆分
-
-### 2.2 🔍 搜索与导航
-
-- **本地全文搜索**：完全基于 VitePress 实现的本地搜索功能
-- **中文检索增强**：优化的中文分词和检索体验
-- **智能侧边栏**：自动根据文章分类构建侧边栏导航
-- **面包屑导航**：清晰的页面层级结构
-
-### 2.3 🎨 用户体验
-
-- **响应式设计**：全站组件适配各类移动设备
-- **暗黑/亮色主题**：支持系统偏好与手动切换
-- **阅读进度指示**：显示当前阅读位置
-- **图片灯箱**：支持图片放大查看和键盘导航
-- **平滑滚动**：页面切换和锚点跳转动画
-
-### 2.4 📝 内容展示
-
-- **文章信息卡片**：显示作者、发布时间、阅读时长等
-- **文章标签系统**：支持文章分类与标签过滤
-- **文章列表**：格式化的文章列表展示
-- **代码块增强**：语法高亮和一键复制功能
-- **图片画廊**：支持多图展示和缩略图
-
-### 2.5 ⚡ 性能优化
-
-- **预处理脚本**：文档元数据提取、摘要生成、阅读时长估算
-- **图片优化**：自动压缩和懒加载
-- **代码分割**：组件按需加载
-- **缓存策略**：构建缓存和静态资源缓存
-- **Bundle 优化**：分包策略和体积控制
-
-### 2.6 🔧 开发体验
-
-- **TypeScript 支持**：完整的类型定义
-- **ESLint + Prettier**：代码规范和格式化
-- **热重载**：开发时实时预览
-- **模块化架构**：配置和组件按功能拆分
-- **错误处理**：完善的错误捕获和日志记录
-
-### 2.7 📊 SEO 与分析
-
-- **自动生成 sitemap.xml**：搜索引擎优化
-- **结构化数据**：Schema.org 标记
-- **Open Graph**：社交媒体分享优化
-- **性能监控**：构建分析和运行时监控
-
-## 3. 项目目录结构
-
-```
-yuanqiiii.github.io/
-├── README.md                      # 项目主要说明文档
-├── package.json                   # Node.js 项目配置
-├── docs/                          # 📁 项目文档目录
-│   ├── STRUCTURE.md              # 详细项目结构说明
-│   ├── DEVELOPMENT.md            # 开发指南
-│   └── DEPLOYMENT.md             # 部署指南
-├── scripts/                       # 📁 构建和工具脚本目录
-│   ├── build.sh                  # 自动化构建脚本
-│   ├── preprocess.py             # 文档预处理脚本
-│   ├── generateArticlesData.js   # 文章数据生成脚本
-│   └── skip_list.txt             # 预处理忽略文件列表
-├── core/                          # 📁 VitePress 核心目录
-│   ├── index.md                  # 网站首页
-│   ├── .vitepress/               # VitePress 配置目录
-│   │   ├── config.mjs            # VitePress 主配置文件
-│   │   ├── theme/                # 自定义主题目录
-│   │   │   ├── index.js          # 主题入口文件
-│   │   │   ├── custom.css        # 自定义样式
-│   │   │   └── components/       # Vue 组件目录
-│   │   │       ├── ArticleList.vue      # 文章列表组件
-│   │   │       ├── CodeBlock.vue        # 代码块组件
-│   │   │       ├── Effect.vue           # 特效组件
-│   │   │       ├── ImageGallery.vue     # 图片画廊组件
-│   │   │       ├── ImageLightbox.vue    # 图片灯箱组件
-│   │   │       └── ReadingProgress.vue  # 阅读进度组件
-│   ├── note/                     # 📁 文章内容目录
-│   │   ├── about.md              # 关于页面
-│   │   ├── friend.md             # 友情链接
-│   │   ├── list.md               # 文章列表
-│   │   ├── 想法/                 # 思考类文章
-│   │   └── 笔记/                 # 学习笔记
-│   └── public/                   # 📁 静态资源目录
-│       └── sitemap.xml           # 站点地图
-└── node_modules/                  # Node.js 依赖包目录
-```
-
-> 📖 **详细结构说明**: 查看 [`docs/STRUCTURE.md`](docs/STRUCTURE.md) 了解完整的项目结构和文件用途。
-
-## 4. 使用指南
+## 快速开始
 
 ### 环境要求
 
 - Node.js 16+
-- Python 3.6+ (用于预处理脚本)
-- 可选：Pillow 库 (用于图片压缩)
-
-### 安装依赖
-
-```bash
-# 安装 Node.js 依赖
-npm install
-
-# 可选：安装 Python 依赖（如果需要运行预处理脚本）
-pip install pillow
-```
+- npm 8+
 
 ### 本地开发
 
 ```bash
-# 运行预处理脚本（可选）
-npm run preprocess
+# 克隆项目
+git clone https://github.com/YuanQiiii/yuanqiiii.github.io.git
+cd yuanqiiii.github.io
+
+# 安装依赖
+npm install
 
 # 启动开发服务器
 npm run docs:dev
+
+# 本地访问 http://localhost:5173
 ```
 
-### 生产构建
+### 构建部署
 
 ```bash
-# 使用自动化构建脚本（推荐）
-./scripts/build.sh
+# 构建生产版本
+npm run docs:build
 
-# 或手动构建
-npm run build
+# 预览构建结果
+npm run docs:preview
 ```
 
-## 5. 性能与体验优化
+## 项目结构
 
-- **图片优化**：自动压缩大尺寸图片，减少页面加载时间
-- **代码分割**：通过 Vite 的构建优化实现代码分割
-- **懒加载**：图片和组件的懒加载减少首屏加载时间
-- **用户体验**：平滑过渡动画、键盘导航支持
-- **SEO 优化**：自动生成站点地图，优化元数据
+```text
+yuanqiiii.github.io/
+├── docs/                    # VitePress 文档源码
+│   ├── .vitepress/         # VitePress 配置
+│   │   ├── config.js       # 主配置文件
+│   │   └── theme/          # 自定义主题（如有）
+│   ├── index.md            # 网站首页
+│   ├── note/               # 文章内容
+│   │   ├── about.md        # 关于页面
+│   │   ├── friend.md       # 友情链接
+│   │   ├── list.md         # 文章列表
+│   │   ├── idea/           # 思考感悟类文章
+│   │   └── note/           # 学习笔记类文章
+│   └── public/             # 静态资源文件
+├── README.md               # 项目说明（本文件）
+├── DEPLOYMENT.md           # 部署指南
+├── package.json            # 项目配置与依赖
+└── .github/                # GitHub Actions 配置
+```
+
+## 网站特性
+
+- 📝 **Markdown 写作**: 支持丰富的 Markdown 语法
+- 🎨 **响应式设计**: 适配各种设备屏幕
+- 🔍 **全文搜索**: 本地搜索功能
+- 🌙 **深色模式**: 支持明暗主题切换
+- 📱 **移动优化**: 移动端友好体验
+- ⚡ **快速加载**: 静态站点快速访问
+- 🔗 **SEO 优化**: 搜索引擎友好
+- 📈 **自动部署**: GitHub Actions 自动化部署
+
+## 内容分类
+
+### 💭 思考感悟 (`/note/idea/`)
+
+- 生活思考与人生感悟
+- 技术思辨与前沿观点
+- 创意想法与构思记录
+
+### 📚 学习笔记 (`/note/note/`)
+
+- 技术学习笔记
+- 课程总结整理
+- 知识点梳理
+
+## 文档说明
+
+- 📖 **开发指南**: 详见 [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md)
+- 🚀 **部署说明**: 详见 [DEPLOYMENT.md](DEPLOYMENT.md)
+- 🏗️ **项目结构**: 详见 [docs/STRUCTURE.md](docs/STRUCTURE.md)
+
+## 部署方式
+
+项目使用 GitHub Pages 进行自动部署：
+
+1. 推送代码到 `main` 分支
+2. GitHub Actions 自动构建
+3. 部署到 `gh-pages` 分支
+4. 网站自动更新
+
+详细部署说明请参考 [DEPLOYMENT.md](DEPLOYMENT.md)
+
+## 技术栈
+
+- **框架**: VitePress
+- **语言**: JavaScript, Markdown
+- **部署**: GitHub Pages
+- **CI/CD**: GitHub Actions
+
+## 开源协议
+
+MIT License
+
+---
+
+💡 **提示**: 如果你也想搭建类似的博客，可以 fork 本项目并根据需要进行定制。

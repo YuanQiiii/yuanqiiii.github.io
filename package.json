@@ -2,18 +2,17 @@
   "name": "yuanqiiii.github.io",
   "version": "1.0.0",
   "type": "module",
-  "description": "Personal blog with enhanced features",
+  "description": "YuanQiiii's personal blog built with VitePress - 记录学习，分享思考，记载生活",
   "scripts": {
-    "dev": "vitepress dev core",
-    "build": "npm run preprocess && vitepress build core",
-    "docs:build": "npm run preprocess && vitepress build core",
-    "preview": "vitepress preview core",
-    "preprocess": "python3 scripts/preprocess.py",
-    "clean": "rm -rf core/.vitepress/dist core/.vitepress/cache"
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs",
+    "dev": "npm run docs:dev",
+    "build": "npm run docs:build",
+    "preview": "npm run docs:preview",
+    "clean": "rm -rf docs/.vitepress/dist docs/.vitepress/cache"
   },
   "devDependencies": {
-    "gray-matter": "^4.0.3",
-    "markdown-it-mathjax3": "^4.3.2",
     "vitepress": "^1.6.3",
     "vue": "^3.4.38"
   },

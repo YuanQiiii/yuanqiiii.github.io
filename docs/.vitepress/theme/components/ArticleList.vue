@@ -34,7 +34,31 @@
 </template>
 
 <script setup>
-import { data as posts } from '../../posts.data.js';
+import { ref, onMounted } from 'vue'
+
+const posts = ref([])
+
+// 模拟获取文章列表的函数
+onMounted(() => {
+  // 这里可以通过其他方式获取文章列表
+  // 暂时使用静态数据作为示例
+  posts.value = [
+    {
+      url: '/note/about',
+      frontmatter: {
+        title: '关于我',
+        date: '2024-01-01'
+      }
+    },
+    {
+      url: '/note/friend',
+      frontmatter: {
+        title: '友情链接',
+        date: '2024-01-01'
+      }
+    }
+  ]
+})
 
 // 格式化日期函数
 const formatDate = (date) => {
