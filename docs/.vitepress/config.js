@@ -44,9 +44,9 @@ export default defineConfig({
         // 导航配置
         nav: [
             { text: '首页', link: '/' },
-            { text: '文章列表', link: '/note/list' },
-            { text: '关于我', link: '/note/about' },
-            { text: '友情链接', link: '/note/friend' }
+            { text: '文章列表', link: '/content/list' },
+            { text: '关于我', link: '/content/about' },
+            { text: '友情链接', link: '/content/friend' }
         ],
 
         // 侧边栏配置
@@ -55,27 +55,27 @@ export default defineConfig({
                 {
                     text: '文章',
                     items: [
-                        { text: '文章列表', link: '/note/list' },
-                        { text: '关于我', link: '/note/about' },
-                        { text: '友情链接', link: '/note/friend' }
+                        { text: '文章列表', link: '/content/list' },
+                        { text: '关于我', link: '/content/about' },
+                        { text: '友情链接', link: '/content/friend' }
                     ]
                 },
                 {
                     text: '随想',
                     collapsed: false,
                     items: [
-                        { text: '爱情思考', link: '/note/idea/love' },
-                        { text: 'NVIDIA思考', link: '/note/idea/nvidia' },
-                        { text: '提示词工程', link: '/note/idea/prompt' },
-                        { text: '服务器思考', link: '/note/idea/server' },
-                        { text: 'AI伙伴构想', link: '/note/idea/基于邮件通信的AI伙伴' },
-                        { text: '年终总结', link: '/note/idea/年终总结' },
-                        { text: '知识库建设', link: '/note/idea/知识库' },
-                        { text: '网站设计思路', link: '/note/idea/网站设计思路' },
-                        { text: 'Git设计理解', link: '/note/idea/谈谈对于git设计的理解' },
-                        { text: '随想01', link: '/note/idea/随想01' },
-                        { text: '随想02', link: '/note/idea/随想02' },
-                        { text: '韭菜模拟器', link: '/note/idea/韭菜模拟器' }
+                        { text: '爱情思考', link: '/content/idea/love' },
+                        { text: 'NVIDIA思考', link: '/content/idea/nvidia' },
+                        { text: '提示词工程', link: '/content/idea/prompt' },
+                        { text: '服务器思考', link: '/content/idea/server' },
+                        { text: 'AI伙伴构想', link: '/content/idea/基于邮件通信的AI伙伴' },
+                        { text: '年终总结', link: '/content/idea/年终总结' },
+                        { text: '知识库建设', link: '/content/idea/知识库' },
+                        { text: '网站设计思路', link: '/content/idea/网站设计思路' },
+                        { text: 'Git设计理解', link: '/content/idea/谈谈对于git设计的理解' },
+                        { text: '随想01', link: '/content/idea/随想01' },
+                        { text: '随想02', link: '/content/idea/随想02' },
+                        { text: '韭菜模拟器', link: '/content/idea/韭菜模拟器' }
                     ]
                 },
                 {
@@ -162,6 +162,25 @@ export default defineConfig({
     vite: {
         build: {
             chunkSizeWarningLimit: 1000
-        }
+        },
+        // 复制生成的文章数据到构建目录
+        plugins: [
+            {
+                name: 'copy-articles-data',
+                generateBundle() {
+                    // 在构建时将 articles.json 复制到 public 目录
+                    const fs = require('fs')
+                    const path = require('path')
+
+                    const srcPath = path.join(__dirname, 'theme/data/articles.json')
+                    const destPath = path.join(__dirname, '../../public/articles.json')
+
+                    if (fs.existsSync(srcPath)) {
+                        fs.copyFileSync(srcPath, destPath)
+                        console.log('✅ 已复制 articles.json 到 public 目录')
+                    }
+                }
+            }
+        ]
     }
 })

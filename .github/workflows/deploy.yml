@@ -35,6 +35,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Generate article list
+        run: npm run generate:articles
+
       - name: Build with VitePress
         run: npm run docs:build
 

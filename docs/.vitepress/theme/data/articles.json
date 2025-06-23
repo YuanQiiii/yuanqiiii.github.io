@@ -1,0 +1,250 @@
+{
+  "generated": "2025-06-23T05:50:16.172Z",
+  "total": 18,
+  "articles": [
+    {
+      "url": "/content/about",
+      "title": "about",
+      "date": "2025-06-23",
+      "lastModified": "2025-06-23",
+      "category": "页面",
+      "tags": [],
+      "author": "YuanQiiii",
+      "description": "::: details 关键词\n- Psychology\n- Computer Science\n- Peking University\n- 永劫无间\n- 习惯性消极\n- 业余选手\n- 完美主义\n:::\n\n::: details 联系我\n\n- shihuaidexianyu@gmail.com\n\n::...",
+      "readingTime": 1,
+      "wordCount": 33,
+      "frontmatter": {
+        "layout": "home",
+        "hero": {
+          "name": "About"
+        }
+      }
+    },
+    {
+      "url": "/content/friend",
+      "title": "friend",
+      "date": "2025-06-23",
+      "lastModified": "2025-06-23",
+      "category": "页面",
+      "tags": [],
+      "author": "YuanQiiii",
+      "description": "<script setup>\nimport {\n  VPTeamPage,\n  VPTeamPageTitle,\n  VPTeamMembers\n} from 'vitepress/theme'\nconst members = [\n  {\n    avatar: 'https://pku-cs-cj...",
+      "readingTime": 2,
+      "wordCount": 305,
+      "frontmatter": {
+        "layout": "home",
+        "hero": {
+          "name": "Friend"
+        }
+      }
+    },
+    {
+      "url": "/content/idea/love",
+      "title": "love",
+      "date": "2025-06-23",
+      "lastModified": "2025-06-23",
+      "category": "idea",
+      "tags": [],
+      "author": "YuanQiiii",
+      "description": "> [!tip]\n> 作者为 Das6fY5，转自\n---\n“求求你不要扔掉我。”少女走在他的背后。\n\n “我可以端茶倒水，为你暖身子，我可以在白天给你打扫房间，到夜里把自己折进床底下……只要每两周充一次电就好，电费我会去兼职赚钱交给你，让我做什么都行，除了……”\n\n 他停住，站在一处高崖旁。面前是...",
+      "readingTime": 32,
+      "wordCount": 9554,
+      "frontmatter": {}
+    },
+    {
+      "url": "/content/idea/nvidia",
+      "title": "nvidia",
+      "date": "2025-06-23",
+      "lastModified": "2025-06-23",
+      "category": "idea",
+      "tags": [],
+      "author": "YuanQiiii",
+      "description": "好的，当然可以。根据我们整个排错过程，我为您整理了一份完整的、从头到尾的教程。这份教程涵盖了所有关键步骤和我们遇到的常见问题，可以帮助您或其他用户一次性成功安装。\n\n---\n\n**如何在启用 Secure Boot 的 Linux 系统上正确安装 NVIDIA 官方驱动**\n\n在许多现代 Linux...",
+      "readingTime": 5,
+      "wordCount": 1207,
+      "frontmatter": {}
+    },
+    {
+      "url": "/content/idea/prompt",
+      "title": "prompt",
+      "date": "2025-06-23",
+      "lastModified": "2025-06-23",
+      "category": "idea",
+      "tags": [],
+      "author": "YuanQiiii",
+      "description": "...",
+      "readingTime": 1,
+      "wordCount": 0,
+      "frontmatter": {}
+    },
+    {
+      "url": "/content/idea/server",
+      "title": "server",
+      "date": "2025-06-23",
+      "lastModified": "2025-06-23",
+      "category": "idea",
+      "tags": [],
+      "author": "YuanQiiii",
+      "description": "如何从零开始，将一台旧笔记本变身为家庭服务器？\n\n动机\n\n如果你想部署像 LobeChat 这样的自定义服务，搭建一个个人小网站，或者运行一些需要长时间在线的程序，你很可能会陷入一个两难的境地：云服务器性能羸弱，价格不菲；自己的主力笔记本又无法 24 小时不间断运转。\n\n> [!note]\n> 归根...",
+      "readingTime": 20,
+      "wordCount": 5686,
+      "frontmatter": {}
+    },
+    {
+      "url": "/content/idea/基于邮件通信的AI伙伴",
+      "title": "基于邮件通信的AI伙伴",
+      "date": "2025-06-23",
+      "lastModified": "2025-06-23",
+      "category": "idea",
+      "tags": [],
+      "author": "YuanQiiii",
+      "description": "**技术设计文档：基于推理增强型LLM的个性化记忆AI邮件伙伴系统**\n\n-----\n\n**1.0 文档概述 (Document Overview)**\n\n**1.1 目的 (Purpose)**\n\n本文档为“个性化记忆AI邮件伙伴系统V2”提供了详尽的逻辑设计、技术架构、数据模型、API规范和核心...",
+      "readingTime": 8,
+      "wordCount": 2241,
+      "frontmatter": {}
+    },
+    {
+      "url": "/content/idea/年终总结",
+      "title": "年终总结",
+      "date": "2025-06-23",
+      "lastModified": "2025-06-23",
+      "category": "idea",
+      "tags": [],
+      "author": "YuanQiiii",
+      "description": "2024-2025\n\n> [!note]\n> 所谓的长大啊，到底是什么呢？\n\n一个男孩来到了这个世界，自此一个名为人生的游戏正式开服。\n\n2024年，这个游戏已经运行了21年，虽然一度差点停服，仍是跌跌撞撞地进入了第22个年头，但我还是没有搞清楚这个游戏的逻辑，无法果决，无法自信。\n\n我多么期待长大...",
+      "readingTime": 11,
+      "wordCount": 3133,
+      "frontmatter": {}
+    },
+    {
+      "url": "/content/idea/知识库",
+      "title": "知识库",
+      "date": "2025-06-23",
+      "lastModified": "2025-06-23",
+      "category": "idea",
+      "tags": [],
+      "author": "YuanQiiii",
+      "description": "- 如何整合与ai对话的内容，创建一个可快速检索的问答知识库，支持模糊搜索，计划使用md作为基础，创建复杂的跨文件链接，建立自己的Wikipedia,生成交互式的概念连接图\n- 或许这就是一个记忆库的雏形，高效搜索，高速渲染，文件自动管理，回收站设计\n- 可视化逻辑？先考虑通过api的方式设计，可视...",
+      "readingTime": 3,
+      "wordCount": 699,
+      "frontmatter": {}
+    },
+    {
+      "url": "/content/idea/网站设计思路",
+      "title": "网站设计思路",
+      "date": "2025-06-23",
+      "lastModified": "2025-06-23",
+      "category": "idea",
+      "tags": [],
+      "author": "YuanQiiii",
+      "description": "- 使用桑吉图对网站的数据流动做出展示\n- 还需要行为树形象展示网站的操作逻辑以减轻用户的操作负担，考虑使用路径规划的形式，需要在网站设计的使用考虑对应的逻辑和实现，这件事可能需要对每个页面的链接出现，以及此时使用的cookie，需要给出鉴权所在的位置\n- 这同时也方便了对用户行为进行分析\n- 既作...",
+      "readingTime": 1,
+      "wordCount": 224,
+      "frontmatter": {}
+    },
+    {
+      "url": "/content/idea/谈谈对于git设计的理解",
+      "title": "谈谈对于git设计的理解",
+      "date": "2025-06-23",
+      "lastModified": "2025-06-23",
+      "category": "idea",
+      "tags": [],
+      "author": "YuanQiiii",
+      "description": "**多人协作，如何高效同步“工程进度”？——用“建大楼”理解 Git 的协作模式**\n\n想象一下，我们要合力建造一栋宏伟的大楼。这是一个庞大而复杂的工程，就像我们参与的大型软件项目一样。如何确保每个人负责的部分能顺利推进，并且最终完美地组装在一起呢？这就涉及到了信息同步和进度管理的问题。\n\n**大楼...",
+      "readingTime": 5,
+      "wordCount": 1483,
+      "frontmatter": {}
+    },
+    {
+      "url": "/content/idea/随想01",
+      "title": "随想01",
+      "date": "2025-06-23",
+      "lastModified": "2025-06-23",
+      "category": "idea",
+      "tags": [],
+      "author": "YuanQiiii",
+      "description": ">[!note]突发奇想+ai润色\n在信息时代的浪潮中，网站作为信息传递与服务交互的核心载体，其组织架构通常划分为前端与后端。两者各司其职，协同作用，共同响应并满足用户的访问请求。根据我的观察与实践，网站的构建模式可大致归为几类：一种是侧重前端体验的，另一种是侧重后端能力的，亦或是根据后端是否超越了...",
+      "readingTime": 14,
+      "wordCount": 3929,
+      "frontmatter": {}
+    },
+    {
+      "url": "/content/idea/随想02",
+      "title": "随想02",
+      "date": "2025-06-23",
+      "lastModified": "2025-06-23",
+      "category": "idea",
+      "tags": [],
+      "author": "YuanQiiii",
+      "description": "> 你说自我意识是不是因为记忆都是围绕自己而展开的从而导致的\n>\n> 如果训练的时候以情景的方式将自己放在训练的内容中\n>\n> 就是强调自我的概念\n>\n> 获得信息以自我为中心展开\n>\n> 所以自我其实是在记忆中不断连续的自己\n>\n> 一切记忆中的事件都由一个带有时间属性的自我因素\n>\n> 我在查询...",
+      "readingTime": 36,
+      "wordCount": 10609,
+      "frontmatter": {}
+    },
+    {
+      "url": "/content/idea/韭菜模拟器",
+      "title": "韭菜模拟器",
+      "date": "2025-06-23",
+      "lastModified": "2025-06-23",
+      "category": "idea",
+      "tags": [],
+      "author": "YuanQiiii",
+      "description": "准备和aq老师合作完成的开放复杂系统",
+      "readingTime": 1,
+      "wordCount": 17,
+      "frontmatter": {}
+    },
+    {
+      "url": "/content/note/day0",
+      "title": "day0",
+      "date": "2025-06-23",
+      "lastModified": "2025-06-23",
+      "category": "note",
+      "tags": [],
+      "author": "YuanQiiii",
+      "description": "**教程：构建可扩展的实时系统——以  为例**\n\n我们以一个真实的高性能交易模拟系统  为例，详细探讨构建一个可扩展、高可用的系统所依赖的几大核心支柱：\n\n* **微服务架构 (Microservice Architecture)**\n* **事件驱动架构 (Event-Driven Archit...",
+      "readingTime": 9,
+      "wordCount": 2420,
+      "frontmatter": {}
+    },
+    {
+      "url": "/content/note/questions",
+      "title": "questions",
+      "date": "2025-06-23",
+      "lastModified": "2025-06-23",
+      "category": "note",
+      "tags": [],
+      "author": "YuanQiiii",
+      "description": "问题解答\n\n> 对于LLM来说，系统级提示词和用户级提示词有什么区别？\n\n系统提示词 vs. 用户提示词：为大型语言模型（LLM）设定舞台与指导表演\n\n在与大型语言模型（LLM）的互动中，**系统提示词（System Prompt）** 和 **用户提示词（User Prompt）** 是两种关键的...",
+      "readingTime": 5,
+      "wordCount": 1405,
+      "frontmatter": {}
+    },
+    {
+      "url": "/content/note/普通心理学",
+      "title": "普通心理学",
+      "date": "2025-06-23",
+      "lastModified": "2025-06-23",
+      "category": "note",
+      "tags": [],
+      "author": "YuanQiiii",
+      "description": "普通心理学\n\n其他\n\n1\n\n现代心理学的发展\n\n> 心理学史\n>\n> - 柏拉图与亚里士多德的哲学思想之争\n>   - 亚里士多德,约翰∙洛克:经验主义者\n>     - 人们的心智生来是白板,通过在世界上的经验来获取信息\n>   - 柏拉图,伊曼努尔∙ 康德:先天论者\n>     - 人们生来便具...",
+      "readingTime": 175,
+      "wordCount": 52116,
+      "frontmatter": {}
+    },
+    {
+      "url": "/content/note/模板",
+      "title": "模板",
+      "date": "2025-06-23",
+      "lastModified": "2025-06-23",
+      "category": "note",
+      "tags": [],
+      "author": "YuanQiiii",
+      "description": "**模板核心结构：**\n\n1. **开头段 (Introduction):** 引出话题 + 明确观点/立场\n2. **主体段1 (Body Paragraph 1):** 第一个核心论点 + 论证/例证\n3. **主体段2 (Body Paragraph 2):** 第二个核心论点 + 论证/例证...",
+      "readingTime": 5,
+      "wordCount": 1088,
+      "frontmatter": {}
+    }
+  ]
+}
