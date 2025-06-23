@@ -1,9 +1,5 @@
 ---
-layout: home
-hero:
-  name: "About" 
-
-
+layout: page
 ---
 - Psychology
 - Computer Science
