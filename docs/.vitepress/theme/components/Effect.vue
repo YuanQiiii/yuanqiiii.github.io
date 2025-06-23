@@ -27,6 +27,9 @@ const state = reactive({
   deltaTime: 0,
   useQuadTree: true, // 是否使用四叉树优化
   renderMode: 'auto', // 'high', 'medium', 'low', 'auto'
+  isDarkMode: false, // 是否为暗色模式
+  colorPalette: [], // 颜色调色板
+  connectionColors: new Map(), // 存储连接线的颜色
 })
 
 
@@ -42,6 +45,7 @@ class Particle {
     this.pulse = Math.random() * Math.PI * 2 // 脉冲相位
     this.pulseSpeed = 0.02 + Math.random() * 0.03
     this.opacity = 0.5 + Math.random() * 0.5
+    this.color = getParticleColor() // 粒子颜色
   }
 
   update() {
@@ -67,9 +71,124 @@ class Particle {
     // 绘制简单空心小圆
     ctx.beginPath()
     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2)
-    ctx.strokeStyle = `rgba(255, 255, 255, ${this.opacity})`
+    ctx.strokeStyle = this.color
     ctx.lineWidth = 0.2 * state.dpr
     ctx.stroke()
+  }
+}
+
+/* 检测背景色模式 */
+function detectBackgroundMode() {
+  // 检测html元素的背景色或主题类
+  const html = document.documentElement
+  const body = document.body
+  
+  // 检查是否有主题类
+  if (html.classList.contains('dark') || body.classList.contains('dark') ||
+      html.getAttribute('data-theme') === 'dark' || body.getAttribute('data-theme') === 'dark') {
+    return true
+  }
+  
+  // 检查CSS变量或计算样式
+  const computedStyle = window.getComputedStyle(body)
+  const backgroundColor = computedStyle.backgroundColor
+  
+  // 如果背景色是透明的，检查html元素
+  if (backgroundColor === 'rgba(0, 0, 0, 0)' || backgroundColor === 'transparent') {
+    const htmlStyle = window.getComputedStyle(html)
+    const htmlBg = htmlStyle.backgroundColor
+    if (htmlBg !== 'rgba(0, 0, 0, 0)' && htmlBg !== 'transparent') {
+      return isColorDark(htmlBg)
+    }
+  }
+  
+  return backgroundColor !== 'rgba(0, 0, 0, 0)' && backgroundColor !== 'transparent' 
+    ? isColorDark(backgroundColor) : false
+}
+
+/* 判断颜色是否为暗色 */
+function isColorDark(color) {
+  // 创建临时元素来解析颜色
+  const tempElement = document.createElement('div')
+  tempElement.style.color = color
+  document.body.appendChild(tempElement)
+  const computedColor = window.getComputedStyle(tempElement).color
+  document.body.removeChild(tempElement)
+  
+  // 解析RGB值
+  const rgb = computedColor.match(/\d+/g)
+  if (rgb && rgb.length >= 3) {
+    const r = parseInt(rgb[0])
+    const g = parseInt(rgb[1])
+    const b = parseInt(rgb[2])
+    
+    // 计算亮度
+    const brightness = (r * 299 + g * 587 + b * 114) / 1000
+    return brightness < 128
+  }
+  
+  return false
+}
+
+/* 初始化颜色调色板 */
+function initializeColorPalette() {
+  if (state.isDarkMode) {
+    // 暗色模式：使用亮色调色板
+    state.colorPalette = [
+      'rgba(255, 182, 193, 0.8)',  // 亮粉色
+      'rgba(173, 216, 230, 0.8)',  // 亮蓝色
+      'rgba(144, 238, 144, 0.8)',  // 亮绿色
+      'rgba(255, 218, 185, 0.8)',  // 桃色
+      'rgba(221, 160, 221, 0.8)',  // 亮紫色
+      'rgba(255, 255, 224, 0.8)',  // 亮黄色
+      'rgba(255, 160, 122, 0.8)',  // 亮橙色
+      'rgba(176, 224, 230, 0.8)',  // 粉蓝色
+    ]
+  } else {
+    // 亮色模式：使用深色调色板
+    state.colorPalette = [
+      'rgba(220, 20, 60, 0.8)',    // 深红色
+      'rgba(25, 25, 112, 0.8)',    // 深蓝色
+      'rgba(34, 139, 34, 0.8)',    // 深绿色
+      'rgba(255, 140, 0, 0.8)',    // 深橙色
+      'rgba(128, 0, 128, 0.8)',    // 紫色
+      'rgba(184, 134, 11, 0.8)',   // 深黄色
+      'rgba(139, 69, 19, 0.8)',    // 棕色
+      'rgba(72, 61, 139, 0.8)',    // 深紫色
+    ]
+  }
+}
+
+/* 获取粒子颜色 */
+function getParticleColor() {
+  if (state.isDarkMode) {
+    return `rgba(255, 255, 255, 0.8)`
+  } else {
+    return `rgba(60, 60, 60, 0.8)`
+  }
+}
+
+/* 获取连接线颜色 */
+function getConnectionColor(connectionId) {
+  if (!state.connectionColors.has(connectionId)) {
+    const randomColor = state.colorPalette[Math.floor(Math.random() * state.colorPalette.length)]
+    state.connectionColors.set(connectionId, randomColor)
+  }
+  return state.connectionColors.get(connectionId)
+}
+
+/* 更新主题模式 */
+function updateThemeMode() {
+  const newDarkMode = detectBackgroundMode()
+  if (newDarkMode !== state.isDarkMode) {
+    state.isDarkMode = newDarkMode
+    initializeColorPalette()
+    // 清除连接线颜色缓存，让它们重新生成
+    state.connectionColors.clear()
+    // 更新粒子颜色
+    state.particles.forEach(particle => {
+      particle.color = getParticleColor()
+    })
   }
 }
 
@@ -177,21 +296,24 @@ function render() {
       }
     }
   }
-
-  // 绘制连接线 - 单色线条
-  state.offscreenCtx.strokeStyle = 'rgba(255, 255, 255, 1)' // 统一使用白色半透明线条
-  state.offscreenCtx.lineWidth = 0.5 * state.dpr
-  state.offscreenCtx.lineCap = 'round'
-  state.offscreenCtx.lineJoin = 'round'
-    newConnections.forEach(conn => {
+  // 绘制连接线 - 多彩线条
+  newConnections.forEach(conn => {
+    const connectionId = getConnectionId(
+      state.particles.find(p => Math.abs(p.x - conn.x1) < 1 && Math.abs(p.y - conn.y1) < 1),
+      state.particles.find(p => Math.abs(p.x - conn.x2) < 1 && Math.abs(p.y - conn.y2) < 1)
+    )
     const alpha = Math.max(0.3, 0.8 * (1 - conn.distance / state.maxDistance))
+    const color = getConnectionColor(connectionId)
+    
     state.offscreenCtx.beginPath()
-    state.offscreenCtx.globalAlpha = alpha
+    state.offscreenCtx.strokeStyle = color.replace(/[\d.]+\)$/g, `${alpha})`)
+    state.offscreenCtx.lineWidth = 0.5 * state.dpr
+    state.offscreenCtx.lineCap = 'round'
+    state.offscreenCtx.lineJoin = 'round'
     state.offscreenCtx.moveTo(conn.x1, conn.y1)
     state.offscreenCtx.lineTo(conn.x2, conn.y2)
     state.offscreenCtx.stroke()
-  })
-  
+  })  
   // 重置透明度
   state.offscreenCtx.globalAlpha = 1
 
@@ -294,8 +416,7 @@ class QuadTree {
     this.nodes[1] = new QuadTree({ x, y, width: subWidth, height: subHeight }, this.level + 1, this.maxLevel, this.maxObjects)
     this.nodes[2] = new QuadTree({ x, y: y + subHeight, width: subWidth, height: subHeight }, this.level + 1, this.maxLevel, this.maxObjects)
     this.nodes[3] = new QuadTree({ x: x + subWidth, y: y + subHeight, width: subWidth, height: subHeight }, this.level + 1, this.maxLevel, this.maxObjects)
-  }
-  insert(particle) {
+  }  insert(particle) {
     if (this.nodes.length > 0) {
       const index = this.getIndex(particle)
       if (index !== -1) {
@@ -420,12 +541,18 @@ function pauseAnimation() {
 
 /* 重置状态 */
 function resetState() {
+  // 更新主题模式
+  updateThemeMode()
   initializeParticles()
   initializeGrid()
 }
 
 /* 初始加载 */
 onMounted(() => {
+  // 初始化主题检测
+  state.isDarkMode = detectBackgroundMode()
+  initializeColorPalette()
+  
   // 创建 canvas
   state.canvas = document.createElement('canvas')
   state.canvas.style.position = 'fixed'
@@ -447,6 +574,19 @@ onMounted(() => {
   // 事件绑定
   window.addEventListener('resize', handleResize)
   document.addEventListener('visibilitychange', handleVisibilityChange)
+  
+  // 监听主题变化
+  const observer = new MutationObserver(() => {
+    updateThemeMode()
+  })
+  observer.observe(document.documentElement, { 
+    attributes: true, 
+    attributeFilter: ['class', 'data-theme'] 
+  })
+  observer.observe(document.body, { 
+    attributes: true, 
+    attributeFilter: ['class', 'data-theme'] 
+  })
 })
 
 /* 组件销毁 */
