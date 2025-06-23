@@ -8,19 +8,7 @@
     <!-- 主要内容区域 -->
     <template #doc-before>
       <div v-if="isArticlePage" class="article-header">
-        <ArticleInfo 
-          :author="articleData.author"
-          :publish-date="articleData.created"
-          :update-date="articleData.modified"
-          :reading-time="articleData.reading_time"
-          :word-count="articleData.word_count"
-          :category="articleData.category"
-        />
-        <ArticleTags 
-          v-if="articleData.tags && articleData.tags.length > 0"
-          :tags="articleData.tags"
-          :clickable="false"
-        />
+        <!-- ArticleInfo 和 ArticleTags 组件已被移除 -->
       </div>
     </template>
 
@@ -72,8 +60,6 @@ import { ref, computed, onMounted, nextTick } from 'vue'
 import { useRoute, useData } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 import ReadingProgress from './components/ReadingProgress.vue'
-import ArticleInfo from './components/ArticleInfo.vue'
-import ArticleTags from './components/ArticleTags.vue'
 import ImageLightbox from './components/ImageLightbox.vue'
 
 const { Layout } = DefaultTheme

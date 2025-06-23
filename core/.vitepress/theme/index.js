@@ -5,8 +5,6 @@ import './custom.css'
 
 // 全局组件
 import ReadingProgress from './components/ReadingProgress.vue'
-import ArticleInfo from './components/ArticleInfo.vue'
-import ArticleTags from './components/ArticleTags.vue'
 import ArticleList from './components/ArticleList.vue'
 import CodeBlock from './components/CodeBlock.vue'
 import Effect from './components/Effect.vue'
@@ -19,8 +17,6 @@ export default {
     enhanceApp({ app, router }) {
         // 注册全局组件
         app.component('ReadingProgress', ReadingProgress)
-        app.component('ArticleInfo', ArticleInfo)
-        app.component('ArticleTags', ArticleTags)
         app.component('ArticleList', ArticleList)
         app.component('CodeBlock', CodeBlock)
         app.component('Effect', Effect)

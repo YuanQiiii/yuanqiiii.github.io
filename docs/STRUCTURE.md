@@ -33,9 +33,7 @@ yuanqiiii.github.io/
 │   │   │   ├── style.css         # 原有样式文件
 │   │   │   ├── custom.css        # 新增自定义样式
 │   │   │   └── components/       # Vue 组件目录
-│   │   │       ├── ArticleInfo.vue      # 文章信息组件
 │   │   │       ├── ArticleList.vue      # 文章列表组件
-│   │   │       ├── ArticleTags.vue      # 文章标签组件
 │   │   │       ├── CodeBlock.vue        # 代码块组件
 │   │   │       ├── Effect.vue           # 特效组件
 │   │   │       ├── ImageGallery.vue     # 图片画廊组件
@@ -87,21 +85,24 @@ yuanqiiii.github.io/
 ## 文件用途说明
 
 ### 核心配置文件
+
 - `package.json`: Node.js 项目配置，依赖管理
 - `core/.vitepress/config.mjs`: VitePress 主配置，包含站点信息、导航、侧边栏等
 
 ### 构建脚本
+
 - `scripts/build.sh`: 一键构建脚本，包含清理、预处理、构建全流程
 - `scripts/preprocess.py`: 文档预处理，提取元数据、生成摘要、优化图片
 - `scripts/generateArticlesData.js`: 生成文章索引数据
 
 ### 主题组件
+
 - `ReadingProgress.vue`: 阅读进度指示器
-- `ArticleInfo.vue`: 文章信息展示（作者、时间、标签等）
 - `ImageLightbox.vue`: 图片点击放大查看
 - `CodeBlock.vue`: 代码块语法高亮和复制功能
 
 ### 内容文件
+
 - `core/note/`: 所有 Markdown 文章内容
 - `core/public/`: 静态资源文件（图片、sitemap等）
 
