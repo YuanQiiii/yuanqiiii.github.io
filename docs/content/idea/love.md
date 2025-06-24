@@ -1,10 +1,3 @@
----
-title: "爱情故事"
-date: "2024-12-01"
-category: "idea"
-tags: ["故事", "机器人", "爱情"]
----
-
 > [!tip]
 > 作者为 Das6fY5，转自[链接](https://adnmb3.com/t/32444047)
 ---
