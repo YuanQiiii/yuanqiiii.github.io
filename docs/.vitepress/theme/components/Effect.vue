@@ -8,7 +8,7 @@ const state = reactive({
   ctx: null,
   offscreenCanvas: null,
   offscreenCtx: null,
-  dpr: typeof window !== 'undefined' ? (window.devicePixelRatio || 1) : 1,
+  dpr: typeof window !== 'undefined' ? Math.max(2, window.devicePixelRatio || 1) : 2, // 提高DPR最小值到2，确保高清显示
   particles: [],
   grid: {},
   gridSize: 70, // 减小网格大小以增加精细度
@@ -93,44 +93,44 @@ function isColorDark(color) {
 /* 初始化颜色调色板 */
 function initializeColorPalette() {
   if (state.isDarkMode) {
-    // 暗色模式：使用更多亮色调色板
+    // 暗色模式：使用更多亮色调色板，提高亮度
     state.colorPalette = [
-      'rgba(255, 182, 193, 0.8)',  // 亮粉色
-      'rgba(173, 216, 230, 0.8)',  // 亮蓝色
-      'rgba(144, 238, 144, 0.8)',  // 亮绿色
-      'rgba(255, 218, 185, 0.8)',  // 桃色
-      'rgba(221, 160, 221, 0.8)',  // 亮紫色
-      'rgba(255, 255, 224, 0.8)',  // 亮黄色
-      'rgba(255, 160, 122, 0.8)',  // 亮橙色
-      'rgba(176, 224, 230, 0.8)',  // 粉蓝色
-      'rgba(255, 192, 203, 0.8)',  // 粉红色
-      'rgba(152, 251, 152, 0.8)',  // 淡绿色
-      'rgba(255, 20, 147, 0.8)',   // 深粉色
-      'rgba(135, 206, 250, 0.8)',  // 天蓝色
-      'rgba(255, 215, 0, 0.8)',    // 金色
-      'rgba(186, 85, 211, 0.8)',   // 中紫色
-      'rgba(255, 99, 71, 0.8)',    // 番茄色
-      'rgba(64, 224, 208, 0.8)',   // 青绿色
+      'rgba(255, 182, 193, 0.9)',  // 亮粉色
+      'rgba(173, 216, 230, 0.9)',  // 亮蓝色
+      'rgba(144, 238, 144, 0.9)',  // 亮绿色
+      'rgba(255, 218, 185, 0.9)',  // 桃色
+      'rgba(221, 160, 221, 0.9)',  // 亮紫色
+      'rgba(255, 255, 224, 0.9)',  // 亮黄色
+      'rgba(255, 160, 122, 0.9)',  // 亮橙色
+      'rgba(176, 224, 230, 0.9)',  // 粉蓝色
+      'rgba(255, 192, 203, 0.9)',  // 粉红色
+      'rgba(152, 251, 152, 0.9)',  // 淡绿色
+      'rgba(255, 20, 147, 0.9)',   // 深粉色
+      'rgba(135, 206, 250, 0.9)',  // 天蓝色
+      'rgba(255, 215, 0, 0.9)',    // 金色
+      'rgba(186, 85, 211, 0.9)',   // 中紫色
+      'rgba(255, 99, 71, 0.9)',    // 番茄色
+      'rgba(64, 224, 208, 0.9)',   // 青绿色
     ]
   } else {
-    // 亮色模式：使用更多深色调色板
+    // 亮色模式：使用更多深色调色板，提高对比度
     state.colorPalette = [
-      'rgba(220, 20, 60, 0.8)',    // 深红色
-      'rgba(25, 25, 112, 0.8)',    // 深蓝色
-      'rgba(34, 139, 34, 0.8)',    // 深绿色
-      'rgba(255, 140, 0, 0.8)',    // 深橙色
-      'rgba(128, 0, 128, 0.8)',    // 紫色
-      'rgba(184, 134, 11, 0.8)',   // 深黄色
-      'rgba(139, 69, 19, 0.8)',    // 棕色
-      'rgba(72, 61, 139, 0.8)',    // 深紫色
-      'rgba(178, 34, 34, 0.8)',    // 火砖色
-      'rgba(46, 139, 87, 0.8)',    // 海绿色
-      'rgba(205, 92, 92, 0.8)',    // 印度红
-      'rgba(75, 0, 130, 0.8)',     // 靛蓝色
-      'rgba(139, 0, 139, 0.8)',    // 深洋红
-      'rgba(85, 107, 47, 0.8)',    // 暗橄榄绿
-      'rgba(165, 42, 42, 0.8)',    // 棕色
-      'rgba(0, 100, 0, 0.8)',      // 深绿色
+      'rgba(220, 20, 60, 0.9)',    // 深红色
+      'rgba(25, 25, 112, 0.9)',    // 深蓝色
+      'rgba(34, 139, 34, 0.9)',    // 深绿色
+      'rgba(255, 140, 0, 0.9)',    // 深橙色
+      'rgba(128, 0, 128, 0.9)',    // 紫色
+      'rgba(184, 134, 11, 0.9)',   // 深黄色
+      'rgba(139, 69, 19, 0.9)',    // 棕色
+      'rgba(72, 61, 139, 0.9)',    // 深紫色
+      'rgba(178, 34, 34, 0.9)',    // 火砖色
+      'rgba(46, 139, 87, 0.9)',    // 海绿色
+      'rgba(205, 92, 92, 0.9)',    // 印度红
+      'rgba(75, 0, 130, 0.9)',     // 靛蓝色
+      'rgba(139, 0, 139, 0.9)',    // 深洋红
+      'rgba(85, 107, 47, 0.9)',    // 暗橄榄绿
+      'rgba(165, 42, 42, 0.9)',    // 棕色
+      'rgba(0, 100, 0, 0.9)',      // 深绿色
     ]
   }
 }
@@ -138,9 +138,9 @@ function initializeColorPalette() {
 /* 获取粒子颜色 */
 function getParticleColor() {
   if (state.isDarkMode) {
-    return `rgba(255, 255, 255, 0.8)`
+    return `rgba(255, 255, 255, 0.4)` // 降低透明度，从0.95降低到0.4
   } else {
-    return `rgba(60, 60, 60, 0.8)`
+    return `rgba(40, 40, 40, 0.4)` // 降低透明度，从0.95降低到0.4
   }
 }
 
@@ -181,11 +181,11 @@ class Particle {
     this.y = Math.random() * state.bounds.height
     this.vx = (Math.random() * 2 - 1) * 2
     this.vy = (Math.random() * 2 - 1) * 2
-    this.radius = (1 + Math.random() * 1.5) * state.dpr // 更小的随机大小
+    this.radius = (2 + Math.random() * 3) // 增大基础半径，从1-2.5增加到2-5
     this.baseRadius = this.radius
     this.pulse = Math.random() * Math.PI * 2 // 脉冲相位
     this.pulseSpeed = 0.02 + Math.random() * 0.03
-    this.opacity = 0.5 + Math.random() * 0.5
+    this.opacity = 0.7 + Math.random() * 0.3 // 提高基础透明度
     this.color = getParticleColor() // 粒子颜色
     this.id = Math.random().toString(36).substr(2, 9) // 给每个粒子一个唯一ID
   }
@@ -194,32 +194,35 @@ class Particle {
     this.x += this.vx
     this.y += this.vy
 
-    // 边界反弹
-    if (this.x <= 0 || this.x >= state.bounds.width) {
+    // 边界反弹 - 考虑粒子半径，确保完全在屏幕内
+    if (this.x - this.radius <= 0 || this.x + this.radius >= state.bounds.width) {
       this.vx *= -0.8 // 添加能量损失
-      this.x = Math.max(0, Math.min(this.x, state.bounds.width))
+      this.x = Math.max(this.radius, Math.min(this.x, state.bounds.width - this.radius))
     }
-    if (this.y <= 0 || this.y >= state.bounds.height) {
+    if (this.y - this.radius <= 0 || this.y + this.radius >= state.bounds.height) {
       this.vy *= -0.8
-      this.y = Math.max(0, Math.min(this.y, state.bounds.height))
-    }
-
-    // 脉冲动画
+      this.y = Math.max(this.radius, Math.min(this.y, state.bounds.height - this.radius))
+    }    // 脉冲动画
     this.pulse += this.pulseSpeed
-    this.radius = this.baseRadius + Math.sin(this.pulse) * 0.3 // 更细微的脉冲动画
-  }
-  draw(ctx) {
-    // 绘制更精细的空心小圆
+    this.radius = this.baseRadius + Math.sin(this.pulse) * 0.8 // 增大脉冲幅度，从0.3增加到0.8
+  }  draw(ctx) {
+    // 绘制更明显的空心小圆，增大线条宽度
     ctx.beginPath()
     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2)
     ctx.strokeStyle = this.color
-    ctx.lineWidth = 0.15 * state.dpr // 更细的线条
+    ctx.lineWidth = 0.8 // 大幅增加线条宽度，从0.2增加到0.8
     ctx.stroke()
     
-    // 添加内部光晕效果
+    // 添加内部光晕效果，增大范围
     ctx.beginPath()
-    ctx.arc(this.x, this.y, this.radius * 0.5, 0, Math.PI * 2)
-    ctx.fillStyle = this.color.replace(/[\d.]+\)$/g, '0.3)')
+    ctx.arc(this.x, this.y, this.radius * 0.6, 0, Math.PI * 2) // 从0.5增加到0.6
+    ctx.fillStyle = this.color.replace(/[\d.]+\)$/g, '0.6)') // 提高内部光晕亮度
+    ctx.fill()
+    
+    // 添加核心高亮效果，增大范围
+    ctx.beginPath()
+    ctx.arc(this.x, this.y, this.radius * 0.4, 0, Math.PI * 2) // 从0.3增加到0.4
+    ctx.fillStyle = this.color.replace(/[\d.]+\)$/g, '0.8)') // 进一步提高核心亮度
     ctx.fill()
   }
 }
@@ -360,7 +363,7 @@ function updateConnections() {
 /* 绘制粒子和连接 */
 // 修改 render 函数中的连接线绘制部分
 function render() {
-  // 清空离屏画布
+  // 清空离屏画布 - 使用缩放后的坐标系
   state.offscreenCtx.clearRect(0, 0, state.bounds.width, state.bounds.height)
 
   // 更新所有粒子
@@ -369,11 +372,10 @@ function render() {
   })
   // 更新连接状态（建立新连接，断开超距离连接）
   updateConnections()
-
   // 绘制所有活跃的连接线
   if (state.activeConnections) {
     for (let [connectionId, connection] of state.activeConnections) {
-    const alpha = Math.max(0.6, 0.95 * (1 - connection.distance / state.maxDistance))
+    const alpha = Math.max(0.75, 0.98 * (1 - connection.distance / state.maxDistance)) // 提高最低亮度
     const color = getConnectionColor(connectionId)
     
     // 创建渐变效果
@@ -382,15 +384,14 @@ function render() {
       connection.x2, connection.y2
     )
     const baseColor = color.replace(/[\d.]+\)$/g, `${alpha})`)
-    const fadeColor = color.replace(/[\d.]+\)$/g, `${alpha * 0.3})`)
-    
-    gradient.addColorStop(0, baseColor)
+    const fadeColor = color.replace(/[\d.]+\)$/g, `${alpha * 0.6})`) // 提高渐变中点亮度
+      gradient.addColorStop(0, baseColor)
     gradient.addColorStop(0.5, fadeColor)
     gradient.addColorStop(1, baseColor)
     
     state.offscreenCtx.beginPath()
     state.offscreenCtx.strokeStyle = gradient
-    state.offscreenCtx.lineWidth = Math.max(0.12, 0.4 * (1 - connection.distance / state.maxDistance)) * state.dpr
+    state.offscreenCtx.lineWidth = Math.max(0.5, 1.2 * (1 - connection.distance / state.maxDistance)) // 大幅增加线条粗细
     state.offscreenCtx.lineCap = 'round'
     state.offscreenCtx.lineJoin = 'round'
     state.offscreenCtx.moveTo(connection.x1, connection.y1)
@@ -406,10 +407,9 @@ function render() {
 
   // 添加页脚透明渐变效果
   applyFooterTransparency()
-
   // 一次性将离屏画布内容复制到主画布
   state.ctx.clearRect(0, 0, state.bounds.width, state.bounds.height)
-  state.ctx.drawImage(state.offscreenCanvas, 0, 0)
+  state.ctx.drawImage(state.offscreenCanvas, 0, 0, state.bounds.width, state.bounds.height, 0, 0, state.bounds.width, state.bounds.height)
 }
 
 /* 应用页脚透明效果 */
@@ -466,20 +466,24 @@ function animate(currentTime = 0) {
 function setupCanvas() {
   if (!state.canvas) {
     console.error('Canvas not available for setup')
-    return  }
+    return
+  }
   
   try {
+    // 获取真实的窗口尺寸
     if (typeof window !== 'undefined') {
-      state.bounds.width = window.innerWidth
-      state.bounds.height = window.innerHeight
+      // 使用 clientWidth 和 clientHeight 获取更准确的视口尺寸
+      state.bounds.width = document.documentElement.clientWidth || window.innerWidth
+      state.bounds.height = document.documentElement.clientHeight || window.innerHeight
     } else {
       state.bounds.width = 1200 // 默认宽度
       state.bounds.height = 800 // 默认高度
     }
     
-    // 设置主画布
+    // 设置主画布 - 物理尺寸使用DPR缩放
     state.canvas.width = state.bounds.width * state.dpr
     state.canvas.height = state.bounds.height * state.dpr
+    // CSS尺寸保持逻辑尺寸
     state.canvas.style.width = `${state.bounds.width}px`
     state.canvas.style.height = `${state.bounds.height}px`
     
@@ -492,9 +496,10 @@ function setupCanvas() {
       return
     }
     
+    // 缩放主画布上下文以匹配DPR
     state.ctx.scale(state.dpr, state.dpr)
 
-    // 设置离屏画布
+    // 设置离屏画布 - 使用逻辑尺寸，不需要DPR缩放
     state.offscreenCanvas = document.createElement('canvas')
     state.offscreenCanvas.width = state.bounds.width
     state.offscreenCanvas.height = state.bounds.height
@@ -508,7 +513,7 @@ function setupCanvas() {
       return
     }
 
-    // 启用抗锯齿
+    // 离屏画布不需要额外的缩放，保持1:1像素比例    // 启用抗锯齿
     state.ctx.imageSmoothingEnabled = true
     state.ctx.imageSmoothingQuality = 'high'
     state.offscreenCtx.imageSmoothingEnabled = true
@@ -516,6 +521,7 @@ function setupCanvas() {
     
     console.log('Canvas setup complete', {
       canvasSize: { width: state.bounds.width, height: state.bounds.height },
+      physicalSize: { width: state.canvas.width, height: state.canvas.height },
       dpr: state.dpr
     })
   } catch (error) {

@@ -44,10 +44,10 @@ export default defineConfig({
 
         // 导航配置
         nav: [
-            { text: '首页', link: '/' },
-            { text: '文章列表', link: '/content/list' },
-            { text: '关于我', link: '/content/about' },
-            { text: '友情链接', link: '/content/friend' }
+            { text: 'Home', link: '/' },
+            { text: 'List', link: '/content/list' },
+            { text: 'About', link: '/content/about' },
+            { text: 'Friend', link: '/content/friend' }
         ],
 
         // 社交链接
