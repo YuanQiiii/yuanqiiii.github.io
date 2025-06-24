@@ -8,7 +8,9 @@ const state = reactive({
   ctx: null,
   offscreenCanvas: null,
   offscreenCtx: null,
-  dpr: window.devicePixelRatio || 1,  particles: [],  grid: {},
+  dpr: typeof window !== 'undefined' ? (window.devicePixelRatio || 1) : 1,
+  particles: [],
+  grid: {},
   gridSize: 70, // 减小网格大小以增加精细度
   particleCount: 50, // 进一步增加粒子数量
   maxDistance: 300, // 减小连接距离以增加密度
@@ -20,9 +22,11 @@ const state = reactive({
   animationId: null,
   frameSkip: 0, // 跳帧计数
   targetFPS: 60,
-  lastFrameTime: 0,  deltaTime: 0,
+  lastFrameTime: 0,
+  deltaTime: 0,
   useQuadTree: true, // 是否使用四叉树优化
-  renderMode: 'auto', // 'high', 'medium', 'low', 'auto'  isDarkMode: false, // 是否为暗色模式
+  renderMode: 'auto', // 'high', 'medium', 'low', 'auto'
+  isDarkMode: false, // 是否为暗色模式
   colorPalette: [], // 颜色调色板
   connectionColors: null, // 存储连接线的颜色
   activeConnections: null, // 存储活跃的连接
@@ -31,6 +35,8 @@ const state = reactive({
 
 /* 检测背景色模式 */
 function detectBackgroundMode() {
+  if (typeof window === 'undefined') return false
+  
   // 检测html元素的背景色或主题类
   const html = document.documentElement
   const body = document.body
@@ -60,6 +66,8 @@ function detectBackgroundMode() {
 
 /* 判断颜色是否为暗色 */
 function isColorDark(color) {
+  if (typeof window === 'undefined') return false
+  
   // 创建临时元素来解析颜色
   const tempElement = document.createElement('div')
   tempElement.style.color = color
@@ -458,12 +466,16 @@ function animate(currentTime = 0) {
 function setupCanvas() {
   if (!state.canvas) {
     console.error('Canvas not available for setup')
-    return
-  }
+    return  }
   
   try {
-    state.bounds.width = window.innerWidth
-    state.bounds.height = window.innerHeight
+    if (typeof window !== 'undefined') {
+      state.bounds.width = window.innerWidth
+      state.bounds.height = window.innerHeight
+    } else {
+      state.bounds.width = 1200 // 默认宽度
+      state.bounds.height = 800 // 默认高度
+    }
     
     // 设置主画布
     state.canvas.width = state.bounds.width * state.dpr
@@ -734,25 +746,27 @@ onMounted(() => {
       
       resetState()
 
-      // 启动动画
-      startAnimation()
+      // 启动动画      startAnimation()
 
       // 事件绑定
-      window.addEventListener('resize', handleResize)
-      document.addEventListener('visibilitychange', handleVisibilityChange)
-      
-      // 监听主题变化
-      const observer = new MutationObserver(() => {
-        updateThemeMode()
-      })
-      observer.observe(document.documentElement, { 
-        attributes: true, 
-        attributeFilter: ['class', 'data-theme'] 
-      })
-      observer.observe(document.body, { 
-        attributes: true, 
-        attributeFilter: ['class', 'data-theme'] 
-      })
+      if (typeof window !== 'undefined') {
+        window.addEventListener('resize', handleResize)
+        document.addEventListener('visibilitychange', handleVisibilityChange)
+      }
+        // 监听主题变化
+      if (typeof window !== 'undefined') {
+        const observer = new MutationObserver(() => {
+          updateThemeMode()
+        })
+        observer.observe(document.documentElement, { 
+          attributes: true, 
+          attributeFilter: ['class', 'data-theme'] 
+        })
+        observer.observe(document.body, { 
+          attributes: true, 
+          attributeFilter: ['class', 'data-theme'] 
+        })
+      }
       
       console.log('Effect component initialized successfully', {
         canvasSize: { width: state.bounds.width, height: state.bounds.height },
@@ -769,8 +783,10 @@ onMounted(() => {
 /* 组件销毁 */
 onBeforeUnmount(() => {
   // 事件解绑
-  window.removeEventListener('resize', handleResize)
-  document.removeEventListener('visibilitychange', handleVisibilityChange)
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('resize', handleResize)
+    document.removeEventListener('visibilitychange', handleVisibilityChange)
+  }
 
   // 停止动画
   pauseAnimation()

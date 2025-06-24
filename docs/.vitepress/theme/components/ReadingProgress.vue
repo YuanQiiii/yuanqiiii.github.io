@@ -11,6 +11,8 @@ const progress = ref(0)
 const visible = ref(false)
 
 const updateProgress = () => {
+  if (typeof window === 'undefined') return
+  
   const scrollTop = window.pageYOffset || document.documentElement.scrollTop
   const scrollHeight = document.documentElement.scrollHeight - window.innerHeight
   const scrollProgress = (scrollTop / scrollHeight) * 100
@@ -20,12 +22,16 @@ const updateProgress = () => {
 }
 
 onMounted(() => {
-  window.addEventListener('scroll', updateProgress)
-  updateProgress()
+  if (typeof window !== 'undefined') {
+    window.addEventListener('scroll', updateProgress)
+    updateProgress()
+  }
 })
 
 onUnmounted(() => {
-  window.removeEventListener('scroll', updateProgress)
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('scroll', updateProgress)
+  }
 })
 </script>
 

@@ -1,10 +1,4 @@
 import { defineConfig } from 'vitepress'
-import fs from 'fs'
-import path from 'path'
-import { fileURLToPath } from 'url'
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
 
 export default defineConfig({
     // 基本配置
@@ -18,7 +12,7 @@ export default defineConfig({
     ignoreDeadLinks: true,
 
     // 主题外观配置 - 强制深色模式
-    appearance: 'dark',
+    appearance: 'force-dark',
 
     // Markdown 配置
     markdown: {
@@ -31,12 +25,10 @@ export default defineConfig({
 
     // SEO 和 Meta 配置
     head: [
-        ['meta', { charset: 'utf-8' }],
-        ['meta', { name: 'viewport', content: 'width=device-width, initial-scale=1' }],
         ['meta', { name: 'author', content: 'YuanQiiii' }],
         ['meta', { name: 'keywords', content: '博客,技术,编程,学习,分享,思考' }],
         ['meta', { name: 'theme-color', content: '#646cff' }],
-        ['link', { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+        ['link', { rel: 'icon', href: '/favicon.ico' }],
         ['meta', { property: 'og:type', content: 'website' }],
         ['meta', { property: 'og:locale', content: 'zh_CN' }],
         ['meta', { property: 'og:site_name', content: 'YuanQiiii 的博客' }],
@@ -47,7 +39,7 @@ export default defineConfig({
 
     // 主题配置
     themeConfig: {
-        // 站点标题和 logo
+        // 站点标题
         siteTitle: 'YuanQiiii',
 
         // 导航配置
@@ -57,10 +49,12 @@ export default defineConfig({
             { text: '关于我', link: '/content/about' },
             { text: '友情链接', link: '/content/friend' }
         ],
+
         // 社交链接
         socialLinks: [
             { icon: 'github', link: 'https://github.com/YuanQiiii' }
         ],
+
         // 搜索配置
         search: {
             provider: 'local',
@@ -87,7 +81,7 @@ export default defineConfig({
             }
         },
 
-        // 页面配置
+        // 页面导航
         outline: {
             level: [2, 3],
             label: '页面导航'
@@ -113,47 +107,5 @@ export default defineConfig({
     // 站点地图配置
     sitemap: {
         hostname: 'https://yuanqiiii.github.io'
-    },
-
-    // Vite 配置
-    vite: {
-        build: {
-            chunkSizeWarningLimit: 1000
-        },
-        // 确保 articles.json 存在于 public 目录
-        plugins: [
-            {
-                name: 'ensure-articles-data',
-                buildStart() {
-                    try {
-                        // 确保 public 目录存在
-                        const publicDir = path.join(__dirname, '../public')
-                        if (!fs.existsSync(publicDir)) {
-                            fs.mkdirSync(publicDir, { recursive: true })
-                        }
-
-                        const destPath = path.join(publicDir, 'articles.json')
-                        const srcPath = path.join(__dirname, 'theme/data/articles.json')
-
-                        // 如果已经生成的文章数据存在，则复制它
-                        if (fs.existsSync(srcPath)) {
-                            fs.copyFileSync(srcPath, destPath)
-                            console.log('✅ 已复制现有的 articles.json 到 public 目录')
-                        } else {
-                            // 创建默认的 articles.json
-                            const defaultData = {
-                                generated: new Date().toISOString(),
-                                total: 0,
-                                articles: []
-                            }
-                            fs.writeFileSync(destPath, JSON.stringify(defaultData, null, 2))
-                            console.log('📝 已创建默认的 articles.json')
-                        }
-                    } catch (error) {
-                        console.warn('⚠️ 处理 articles.json 失败:', error.message)
-                    }
-                }
-            }
-        ]
     }
 })
