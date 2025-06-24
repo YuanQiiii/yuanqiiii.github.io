@@ -138,9 +138,9 @@ function initializeColorPalette() {
 /* 获取粒子颜色 */
 function getParticleColor() {
   if (state.isDarkMode) {
-    return `rgba(255, 255, 255, 0.4)` // 降低透明度，从0.95降低到0.4
+    return `rgba(255, 255, 255, 0.3)` // 降低透明度，从0.95降低到0.4
   } else {
-    return `rgba(40, 40, 40, 0.4)` // 降低透明度，从0.95降低到0.4
+    return `rgba(40, 40, 40, 0.3)` // 降低透明度，从0.95降低到0.4
   }
 }
 
@@ -185,7 +185,7 @@ class Particle {
     this.baseRadius = this.radius
     this.pulse = Math.random() * Math.PI * 2 // 脉冲相位
     this.pulseSpeed = 0.02 + Math.random() * 0.03
-    this.opacity = 0.7 + Math.random() * 0.3 // 提高基础透明度
+    this.opacity = 0.3 + Math.random() * 0.3 // 提高基础透明度
     this.color = getParticleColor() // 粒子颜色
     this.id = Math.random().toString(36).substr(2, 9) // 给每个粒子一个唯一ID
   }
@@ -222,7 +222,7 @@ class Particle {
     // 添加核心高亮效果，增大范围
     ctx.beginPath()
     ctx.arc(this.x, this.y, this.radius * 0.4, 0, Math.PI * 2) // 从0.3增加到0.4
-    ctx.fillStyle = this.color.replace(/[\d.]+\)$/g, '0.8)') // 进一步提高核心亮度
+    ctx.fillStyle = this.color.replace(/[\d.]+\)$/g, '0.4)') // 进一步提高核心亮度
     ctx.fill()
   }
 }
@@ -375,7 +375,7 @@ function render() {
   // 绘制所有活跃的连接线
   if (state.activeConnections) {
     for (let [connectionId, connection] of state.activeConnections) {
-    const alpha = Math.max(0.75, 0.98 * (1 - connection.distance / state.maxDistance)) // 提高最低亮度
+    const alpha = Math.max(0.45, 0.98 * (1 - connection.distance / state.maxDistance)) // 提高最低亮度
     const color = getConnectionColor(connectionId)
     
     // 创建渐变效果

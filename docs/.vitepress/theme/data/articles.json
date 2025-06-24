@@ -1,7 +1,29 @@
 {
-  "generated": "2025-06-24T05:22:29.370Z",
+  "generated": "2025-06-24T06:10:32.123Z",
   "total": 19,
   "articles": [
+    {
+      "url": "/content/idea/nvidia",
+      "title": "nvidia",
+      "date": "2025-06-24",
+      "lastModified": "2025-06-24",
+      "category": "idea",
+      "author": "YuanQiiii",
+      "readingTime": 5,
+      "wordCount": 1224,
+      "frontmatter": {}
+    },
+    {
+      "url": "/content/idea/网站设计思路",
+      "title": "网站设计思路",
+      "date": "2025-06-24",
+      "lastModified": "2025-06-24",
+      "category": "idea",
+      "author": "YuanQiiii",
+      "readingTime": 1,
+      "wordCount": 246,
+      "frontmatter": {}
+    },
     {
       "url": "/content/about",
       "title": "about",
@@ -33,28 +55,6 @@
           "name": "Friend"
         }
       }
-    },
-    {
-      "url": "/content/idea/love",
-      "title": "love",
-      "date": "2025-06-23",
-      "lastModified": "2025-06-23",
-      "category": "idea",
-      "author": "YuanQiiii",
-      "readingTime": 32,
-      "wordCount": 9554,
-      "frontmatter": {}
-    },
-    {
-      "url": "/content/idea/nvidia",
-      "title": "nvidia",
-      "date": "2025-06-23",
-      "lastModified": "2025-06-23",
-      "category": "idea",
-      "author": "YuanQiiii",
-      "readingTime": 5,
-      "wordCount": 1207,
-      "frontmatter": {}
     },
     {
       "url": "/content/idea/prompt",
@@ -109,17 +109,6 @@
       "author": "YuanQiiii",
       "readingTime": 3,
       "wordCount": 699,
-      "frontmatter": {}
-    },
-    {
-      "url": "/content/idea/网站设计思路",
-      "title": "网站设计思路",
-      "date": "2025-06-23",
-      "lastModified": "2025-06-23",
-      "category": "idea",
-      "author": "YuanQiiii",
-      "readingTime": 1,
-      "wordCount": 224,
       "frontmatter": {}
     },
     {
@@ -220,6 +209,26 @@
       "readingTime": 5,
       "wordCount": 1088,
       "frontmatter": {}
+    },
+    {
+      "url": "/content/idea/love",
+      "title": "爱情故事",
+      "date": "2024-12-01",
+      "lastModified": "2025-06-24",
+      "category": "idea",
+      "author": "YuanQiiii",
+      "readingTime": 32,
+      "wordCount": 9554,
+      "frontmatter": {
+        "title": "爱情故事",
+        "date": "2024-12-01",
+        "category": "idea",
+        "tags": [
+          "故事",
+          "机器人",
+          "爱情"
+        ]
+      }
     }
   ]
 }

@@ -9,11 +9,11 @@
     <template #doc-after>
       <div v-if="isArticlePage" class="article-footer">
         <div class="article-navigation">
-          <a v-if="prevArticle" :href="prevArticle.path" class="nav-link prev">
+          <a v-if="prevArticle" :href="prevArticle.url" class="nav-link prev">
             <div class="nav-direction">← 上一篇</div>
             <div class="nav-title">{{ prevArticle.title }}</div>
           </a>
-          <a v-if="nextArticle" :href="nextArticle.path" class="nav-link next">
+          <a v-if="nextArticle" :href="nextArticle.url" class="nav-link next">
             <div class="nav-direction">下一篇 →</div>
             <div class="nav-title">{{ nextArticle.title }}</div>
           </a>
@@ -25,15 +25,13 @@
           <div class="related-grid">
             <a 
               v-for="article in relatedArticles" 
-              :key="article.path"
-              :href="article.path"
+              :key="article.url"
+              :href="article.url"
               class="related-item"
             >
               <h4>{{ article.title }}</h4>
-              <p>{{ article.excerpt }}</p>
               <div class="related-meta">
                 <span class="category">{{ article.category }}</span>
-                <span class="reading-time">{{ article.reading_time }}分钟</span>
               </div>
             </a>
           </div>
@@ -50,8 +48,9 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, nextTick } from 'vue'
+import { ref, computed, onMounted, nextTick, watch } from 'vue'
 import { useRoute, useData } from 'vitepress'
+import { data as articlesData } from './data/articles.data.js'
 import DefaultTheme from 'vitepress/theme'
 import ReadingProgress from './components/ReadingProgress.vue'
 import ImageLightbox from './components/ImageLightbox.vue'
@@ -62,53 +61,55 @@ const route = useRoute()
 const { page } = useData()
 
 const lightbox = ref(null)
-const articlesData = ref([])
 const articleData = ref({})
 const prevArticle = ref(null)
 const nextArticle = ref(null)
 const relatedArticles = ref([])
 
 const isArticlePage = computed(() => {
-  return route.path.endsWith('.md') && 
-         route.path !== '/' && 
-         !route.path.includes('/index')
+  // 检查是否是文章页面 (不是首页、列表页等)
+  const path = route.path
+  return path !== '/' && 
+         !path.endsWith('/list') && 
+         !path.endsWith('/about') && 
+         !path.endsWith('/friend') &&
+         path.includes('/content/')
 })
 
 // 加载文章数据
-const loadArticlesData = async () => {
-  try {
-    // 暂时使用空数据避免构建错误
-    const data = []
-    articlesData.value = data
+const loadArticleData = () => {
+  if (!isArticlePage.value || !articlesData || articlesData.length === 0) {
+    prevArticle.value = null
+    nextArticle.value = null
+    relatedArticles.value = []
+    return
+  }
+
+  const currentPath = route.path
+  const currentIndex = articlesData.findIndex(article => article.url === currentPath)
+  
+  if (currentIndex !== -1) {
+    articleData.value = articlesData[currentIndex]
     
-    if (isArticlePage.value) {
-      const currentPath = route.path
-      const currentIndex = data.findIndex(article => article.path === currentPath)
-      
-      if (currentIndex !== -1) {
-        articleData.value = data[currentIndex]
-        
-        // 设置上一篇和下一篇
-        if (currentIndex > 0) {
-          prevArticle.value = data[currentIndex - 1]
-        }
-        if (currentIndex < data.length - 1) {
-          nextArticle.value = data[currentIndex + 1]
-        }
-        
-        // 查找相关文章
-        relatedArticles.value = findRelatedArticles(data[currentIndex], data)
-      }
-    }
-  } catch (e) {
-    console.warn('无法加载文章数据:', e)
+    // 设置上一篇和下一篇
+    prevArticle.value = currentIndex > 0 ? articlesData[currentIndex - 1] : null
+    nextArticle.value = currentIndex < articlesData.length - 1 ? articlesData[currentIndex + 1] : null
+    
+    // 查找相关文章
+    relatedArticles.value = findRelatedArticles(articlesData[currentIndex], articlesData)
+  } else {
+    prevArticle.value = null
+    nextArticle.value = null
+    relatedArticles.value = []
   }
 }
 
 // 查找相关文章
 const findRelatedArticles = (currentArticle, allArticles) => {
+  if (!currentArticle || !allArticles) return []
+  
   const related = allArticles
-    .filter(article => article.path !== currentArticle.path)
+    .filter(article => article.url !== currentArticle.url)
     .map(article => {
       let score = 0
       
@@ -118,10 +119,12 @@ const findRelatedArticles = (currentArticle, allArticles) => {
       }
       
       // 相同标签加分
-      const commonTags = article.tags?.filter(tag => 
-        currentArticle.tags?.includes(tag)
-      ) || []
-      score += commonTags.length * 2
+      if (currentArticle.tags && article.tags) {
+        const commonTags = article.tags.filter(tag => 
+          currentArticle.tags.includes(tag)
+        )
+        score += commonTags.length * 2
+      }
       
       // 标题相似度
       const titleSimilarity = calculateSimilarity(
@@ -197,7 +200,13 @@ const setupImageClickEvents = () => {
 }
 
 onMounted(() => {
-  loadArticlesData()
+  loadArticleData()
+  setupImageClickEvents()
+})
+
+// 监听路由变化
+watch(() => route.path, () => {
+  loadArticleData()
   setupImageClickEvents()
 })
 </script>
@@ -284,22 +293,10 @@ onMounted(() => {
 }
 
 .related-item h4 {
-  margin: 0 0 0.5rem 0;
+  margin: 0 0 0.75rem 0;
   font-size: 1rem;
   font-weight: 600;
   line-height: 1.4;
-}
-
-.related-item p {
-  margin: 0 0 0.75rem 0;
-  color: var(--vp-c-text-2);
-  font-size: 0.9rem;
-  line-height: 1.5;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 
 .related-meta {
