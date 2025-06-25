@@ -28,9 +28,9 @@ const state = reactive({
   renderMode: 'auto', // 'high', 'medium', 'low', 'auto'
   isDarkMode: false, // 是否为暗色模式
   colorPalette: [], // 颜色调色板
-  connectionColors: null, // 存储连接线的颜色
-  activeConnections: null, // 存储活跃的连接
+  connectionColors: null, // 存储连接线的颜色  activeConnections: null, // 存储活跃的连接
   connectionProbability: 0.15, // 大幅提高连接建立概率
+  themeObserver: null, // 主题变化观察器
 })
 
 /* 检测背景色模式 */
@@ -466,7 +466,7 @@ function animate(currentTime = 0) {
 function setupCanvas() {
   if (!state.canvas) {
     console.error('Canvas not available for setup')
-    return
+    return false
   }
   
   try {
@@ -475,11 +475,19 @@ function setupCanvas() {
       // 使用 clientWidth 和 clientHeight 获取更准确的视口尺寸
       state.bounds.width = document.documentElement.clientWidth || window.innerWidth
       state.bounds.height = document.documentElement.clientHeight || window.innerHeight
+      
+      // 检查尺寸是否有效，如果无效则重试
+      if (state.bounds.width <= 0 || state.bounds.height <= 0) {
+        console.warn('Invalid canvas dimensions detected, will retry...', {
+          width: state.bounds.width,
+          height: state.bounds.height
+        })
+        return false
+      }
     } else {
       state.bounds.width = 1200 // 默认宽度
       state.bounds.height = 800 // 默认高度
-    }
-    
+    }    
     // 设置主画布 - 物理尺寸使用DPR缩放
     state.canvas.width = state.bounds.width * state.dpr
     state.canvas.height = state.bounds.height * state.dpr
@@ -493,7 +501,7 @@ function setupCanvas() {
     
     if (!state.ctx) {
       console.error('Failed to get 2D context from main canvas')
-      return
+      return false
     }
     
     // 缩放主画布上下文以匹配DPR
@@ -510,7 +518,7 @@ function setupCanvas() {
     
     if (!state.offscreenCtx) {
       console.error('Failed to get 2D context from offscreen canvas')
-      return
+      return false
     }
 
     // 离屏画布不需要额外的缩放，保持1:1像素比例    // 启用抗锯齿
@@ -524,8 +532,11 @@ function setupCanvas() {
       physicalSize: { width: state.canvas.width, height: state.canvas.height },
       dpr: state.dpr
     })
+    
+    return true
   } catch (error) {
     console.error('Error setting up canvas:', error)
+    return false
   }
 }
 
@@ -649,11 +660,102 @@ class ObjectPool {
   }
 }
 
-
  /* 事件处理 */
 function handleResize() {
-  setupCanvas()
-  resetState()
+  if (setupCanvas()) {
+    resetState()
+  }
+}
+
+/* 初始化函数 - 添加重试机制 */
+function initializeEffect(retryCount = 0) {
+  const maxRetries = 10
+  
+  console.log(`Initializing effect, attempt ${retryCount + 1}/${maxRetries}`)
+  
+  try {
+    // 初始化Map对象
+    if (!state.activeConnections) {
+      state.activeConnections = new Map()
+    }
+    if (!state.connectionColors) {
+      state.connectionColors = new Map()
+    }
+    
+    // 初始化主题检测
+    state.isDarkMode = detectBackgroundMode()
+    initializeColorPalette()
+    
+    // 创建 canvas（如果还不存在）
+    if (!state.canvas) {
+      state.canvas = document.createElement('canvas')
+      state.canvas.style.position = 'fixed'
+      state.canvas.style.top = '0'
+      state.canvas.style.left = '0'
+      state.canvas.style.width = '100%'
+      state.canvas.style.height = '100%'
+      state.canvas.style.pointerEvents = 'none'
+      state.canvas.style.zIndex = '-1'
+      state.canvas.style.backgroundColor = 'transparent'
+      
+      // 确保canvas添加到body
+      if (document.body) {
+        document.body.appendChild(state.canvas)
+      } else {
+        console.error('Document body not available')
+        return false
+      }
+    }
+
+    // 设置画布和粒子
+    if (!setupCanvas()) {
+      // 如果设置失败且还有重试次数，则延迟重试
+      if (retryCount < maxRetries) {
+        console.log(`Canvas setup failed, retrying in ${(retryCount + 1) * 100}ms...`)
+        setTimeout(() => {
+          initializeEffect(retryCount + 1)
+        }, (retryCount + 1) * 100)
+        return false
+      } else {
+        console.error('Canvas setup failed after maximum retries')
+        return false
+      }
+    }
+    
+    // 验证画布设置
+    if (!state.ctx || !state.offscreenCtx) {
+      console.error('Canvas context not available')
+      return false
+    }
+    
+    resetState()
+
+    // 启动动画
+    startAnimation()
+    
+    console.log('Effect component initialized successfully', {
+      canvasSize: { width: state.bounds.width, height: state.bounds.height },
+      particleCount: state.particles.length,
+      isDarkMode: state.isDarkMode,
+      isAnimating: state.isAnimating,
+      retryCount: retryCount
+    })
+    
+    return true
+  } catch (error) {
+    console.error('Error initializing Effect component:', error)
+    
+    // 如果出错且还有重试次数，则延迟重试
+    if (retryCount < maxRetries) {
+      console.log(`Initialization failed, retrying in ${(retryCount + 1) * 200}ms...`)
+      setTimeout(() => {
+        initializeEffect(retryCount + 1)
+      }, (retryCount + 1) * 200)
+      return false
+    }
+    
+    return false
+  }
 }
 
 function handleVisibilityChange() {
@@ -712,77 +814,51 @@ function resetConnections() {
 onMounted(() => {
   try {
     console.log('Effect component mounting...')
-      // 等待DOM完全加载
+    
+    // 使用多重保障确保DOM完全准备好
     nextTick(() => {
-      // 初始化Map对象
-      state.activeConnections = new Map()
-      state.connectionColors = new Map()
-      
-      // 初始化主题检测
-      state.isDarkMode = detectBackgroundMode()
-      initializeColorPalette()
-      
-      // 创建 canvas
-      state.canvas = document.createElement('canvas')
-      state.canvas.style.position = 'fixed'
-      state.canvas.style.top = '0'
-      state.canvas.style.left = '0'
-      state.canvas.style.width = '100%'
-      state.canvas.style.height = '100%'
-      state.canvas.style.pointerEvents = 'none'
-      state.canvas.style.zIndex = '-1'
-      state.canvas.style.backgroundColor = 'transparent'
-      
-      // 确保canvas添加到body
-      if (document.body) {
-        document.body.appendChild(state.canvas)
-      } else {
-        console.error('Document body not available')
-        return
-      }
-
-      // 设置画布和粒子
-      setupCanvas()
-      
-      // 验证画布设置
-      if (!state.ctx || !state.offscreenCtx) {
-        console.error('Canvas context not available')
-        return
-      }
-      
-      resetState()
-
-      // 启动动画      startAnimation()
-
-      // 事件绑定
-      if (typeof window !== 'undefined') {
-        window.addEventListener('resize', handleResize)
-        document.addEventListener('visibilitychange', handleVisibilityChange)
-      }
-        // 监听主题变化
-      if (typeof window !== 'undefined') {
-        const observer = new MutationObserver(() => {
-          updateThemeMode()
-        })
-        observer.observe(document.documentElement, { 
-          attributes: true, 
-          attributeFilter: ['class', 'data-theme'] 
-        })
-        observer.observe(document.body, { 
-          attributes: true, 
-          attributeFilter: ['class', 'data-theme'] 
-        })
-      }
-      
-      console.log('Effect component initialized successfully', {
-        canvasSize: { width: state.bounds.width, height: state.bounds.height },
-        particleCount: state.particles.length,
-        isDarkMode: state.isDarkMode,
-        isAnimating: state.isAnimating
-      })
+      // 等待一个短暂的延迟，确保页面完全渲染
+      setTimeout(() => {
+        initializeEffect()
+      }, 50)
     })
+    
+    // 事件绑定
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', handleResize)
+      document.addEventListener('visibilitychange', handleVisibilityChange)
+      
+      // 监听窗口加载完成事件，作为备用初始化
+      if (document.readyState !== 'complete') {
+        window.addEventListener('load', () => {
+          if (!state.isAnimating) {
+            console.log('Window loaded, attempting backup initialization...')
+            initializeEffect()
+          }
+        }, { once: true })
+      }
+    }
+    
+    // 监听主题变化
+    if (typeof window !== 'undefined') {
+      const observer = new MutationObserver(() => {
+        updateThemeMode()
+      })
+      observer.observe(document.documentElement, { 
+        attributes: true, 
+        attributeFilter: ['class', 'data-theme'] 
+      })
+      observer.observe(document.body, { 
+        attributes: true, 
+        attributeFilter: ['class', 'data-theme'] 
+      })
+      
+      // 保存observer引用以便清理
+      state.themeObserver = observer
+    }
+    
   } catch (error) {
-    console.error('Error initializing Effect component:', error)
+    console.error('Error in onMounted:', error)
   }
 })
 
@@ -794,6 +870,12 @@ onBeforeUnmount(() => {
     document.removeEventListener('visibilitychange', handleVisibilityChange)
   }
 
+  // 清理主题观察器
+  if (state.themeObserver) {
+    state.themeObserver.disconnect()
+    state.themeObserver = null
+  }
+
   // 停止动画
   pauseAnimation()
 
@@ -801,6 +883,10 @@ onBeforeUnmount(() => {
   if (state.canvas && state.canvas.parentNode) {
     state.canvas.parentNode.removeChild(state.canvas)
   }
+  
+  // 清理状态
+  state.activeConnections?.clear()
+  state.connectionColors?.clear()
 })
 </script>
 
