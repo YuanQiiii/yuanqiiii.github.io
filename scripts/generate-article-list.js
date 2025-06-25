@@ -7,6 +7,7 @@ import matter from 'gray-matter'
 const DOCS_DIR = path.join(process.cwd(), 'docs')
 const CONTENT_DIRS = ['content'] // 扫描整个 content 目录
 const OUTPUT_FILE = path.join(DOCS_DIR, '.vitepress/theme/data/articles.json')
+const PUBLIC_OUTPUT_FILE = path.join(DOCS_DIR, 'public/articles.json')
 
 /**
  * 计算文章阅读时间（基于中文字符数）
@@ -206,6 +207,11 @@ function generateArticleList() {
         fs.mkdirSync(outputDir, { recursive: true })
     }
 
+    const publicOutputDir = path.dirname(PUBLIC_OUTPUT_FILE)
+    if (!fs.existsSync(publicOutputDir)) {
+        fs.mkdirSync(publicOutputDir, { recursive: true })
+    }
+
     // 写入文件
     const output = {
         generated: new Date().toISOString(),
@@ -214,9 +220,11 @@ function generateArticleList() {
     }
 
     fs.writeFileSync(OUTPUT_FILE, JSON.stringify(output, null, 2), 'utf-8')
+    fs.writeFileSync(PUBLIC_OUTPUT_FILE, JSON.stringify(output, null, 2), 'utf-8')
 
     console.log(`🎉 生成完成！共处理 ${articles.length} 篇文章`)
     console.log(`📄 输出文件: ${path.relative(process.cwd(), OUTPUT_FILE)}`)
+    console.log(`📄 公共文件: ${path.relative(process.cwd(), PUBLIC_OUTPUT_FILE)}`)
 
     // 输出统计信息
     const categories = {}

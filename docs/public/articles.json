@@ -1,7 +1,51 @@
 {
-  "generated": "2025-06-23T06:13:10.956Z",
-  "total": 18,
+  "generated": "2025-06-25T00:55:13.320Z",
+  "total": 19,
   "articles": [
+    {
+      "url": "/content/guide/nvidia",
+      "title": "nvidia",
+      "date": "2025-06-25",
+      "lastModified": "2025-06-25",
+      "category": "guide",
+      "author": "YuanQiiii",
+      "readingTime": 5,
+      "wordCount": 1193,
+      "frontmatter": {}
+    },
+    {
+      "url": "/content/project/知识库",
+      "title": "知识库",
+      "date": "2025-06-25",
+      "lastModified": "2025-06-25",
+      "category": "project",
+      "author": "YuanQiiii",
+      "readingTime": 3,
+      "wordCount": 699,
+      "frontmatter": {}
+    },
+    {
+      "url": "/content/idea/love",
+      "title": "love",
+      "date": "2025-06-24",
+      "lastModified": "2025-06-24",
+      "category": "idea",
+      "author": "YuanQiiii",
+      "readingTime": 32,
+      "wordCount": 9554,
+      "frontmatter": {}
+    },
+    {
+      "url": "/content/idea/网站设计思路",
+      "title": "网站设计思路",
+      "date": "2025-06-24",
+      "lastModified": "2025-06-24",
+      "category": "idea",
+      "author": "YuanQiiii",
+      "readingTime": 1,
+      "wordCount": 224,
+      "frontmatter": {}
+    },
     {
       "url": "/content/about",
       "title": "about",
@@ -10,7 +54,7 @@
       "category": "页面",
       "author": "YuanQiiii",
       "readingTime": 1,
-      "wordCount": 33,
+      "wordCount": 14,
       "frontmatter": {
         "layout": "home",
         "hero": {
@@ -35,58 +79,25 @@
       }
     },
     {
-      "url": "/content/idea/love",
-      "title": "love",
-      "date": "2025-06-23",
-      "lastModified": "2025-06-23",
-      "category": "idea",
-      "author": "YuanQiiii",
-      "readingTime": 32,
-      "wordCount": 9554,
-      "frontmatter": {}
-    },
-    {
-      "url": "/content/idea/nvidia",
-      "title": "nvidia",
-      "date": "2025-06-23",
-      "lastModified": "2025-06-23",
-      "category": "idea",
-      "author": "YuanQiiii",
-      "readingTime": 5,
-      "wordCount": 1207,
-      "frontmatter": {}
-    },
-    {
-      "url": "/content/idea/prompt",
+      "url": "/content/guide/prompt",
       "title": "prompt",
       "date": "2025-06-23",
       "lastModified": "2025-06-23",
-      "category": "idea",
+      "category": "guide",
       "author": "YuanQiiii",
       "readingTime": 1,
       "wordCount": 0,
       "frontmatter": {}
     },
     {
-      "url": "/content/idea/server",
+      "url": "/content/guide/server",
       "title": "server",
       "date": "2025-06-23",
       "lastModified": "2025-06-23",
-      "category": "idea",
+      "category": "guide",
       "author": "YuanQiiii",
       "readingTime": 20,
       "wordCount": 5686,
-      "frontmatter": {}
-    },
-    {
-      "url": "/content/idea/基于邮件通信的AI伙伴",
-      "title": "基于邮件通信的AI伙伴",
-      "date": "2025-06-23",
-      "lastModified": "2025-06-23",
-      "category": "idea",
-      "author": "YuanQiiii",
-      "readingTime": 8,
-      "wordCount": 2241,
       "frontmatter": {}
     },
     {
@@ -98,28 +109,6 @@
       "author": "YuanQiiii",
       "readingTime": 11,
       "wordCount": 3133,
-      "frontmatter": {}
-    },
-    {
-      "url": "/content/idea/知识库",
-      "title": "知识库",
-      "date": "2025-06-23",
-      "lastModified": "2025-06-23",
-      "category": "idea",
-      "author": "YuanQiiii",
-      "readingTime": 3,
-      "wordCount": 699,
-      "frontmatter": {}
-    },
-    {
-      "url": "/content/idea/网站设计思路",
-      "title": "网站设计思路",
-      "date": "2025-06-23",
-      "lastModified": "2025-06-23",
-      "category": "idea",
-      "author": "YuanQiiii",
-      "readingTime": 1,
-      "wordCount": 224,
       "frontmatter": {}
     },
     {
@@ -156,17 +145,6 @@
       "frontmatter": {}
     },
     {
-      "url": "/content/idea/韭菜模拟器",
-      "title": "韭菜模拟器",
-      "date": "2025-06-23",
-      "lastModified": "2025-06-23",
-      "category": "idea",
-      "author": "YuanQiiii",
-      "readingTime": 1,
-      "wordCount": 17,
-      "frontmatter": {}
-    },
-    {
       "url": "/content/note/day0",
       "title": "day0",
       "date": "2025-06-23",
@@ -175,6 +153,17 @@
       "author": "YuanQiiii",
       "readingTime": 9,
       "wordCount": 2420,
+      "frontmatter": {}
+    },
+    {
+      "url": "/content/note/docker",
+      "title": "docker",
+      "date": "2025-06-23",
+      "lastModified": "2025-06-23",
+      "category": "note",
+      "author": "YuanQiiii",
+      "readingTime": 4,
+      "wordCount": 939,
       "frontmatter": {}
     },
     {
@@ -208,6 +197,28 @@
       "author": "YuanQiiii",
       "readingTime": 5,
       "wordCount": 1088,
+      "frontmatter": {}
+    },
+    {
+      "url": "/content/project/基于邮件通信的AI伙伴",
+      "title": "基于邮件通信的AI伙伴",
+      "date": "2025-06-23",
+      "lastModified": "2025-06-23",
+      "category": "project",
+      "author": "YuanQiiii",
+      "readingTime": 8,
+      "wordCount": 2241,
+      "frontmatter": {}
+    },
+    {
+      "url": "/content/project/韭菜模拟器",
+      "title": "韭菜模拟器",
+      "date": "2025-06-23",
+      "lastModified": "2025-06-23",
+      "category": "project",
+      "author": "YuanQiiii",
+      "readingTime": 1,
+      "wordCount": 17,
       "frontmatter": {}
     }
   ]
