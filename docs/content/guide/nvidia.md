@@ -1,3 +1,9 @@
+---
+title: 如何在启用 Secure Boot 的 Linux 系统上正确安装 NVIDIA 官方驱动
+description: 文章描述  
+date: 2024-12-25
+tags: [Linux, NVIDIA, Boot]
+---
 ### **如何在启用 Secure Boot 的 Linux 系统上正确安装 NVIDIA 官方驱动**
 
 在许多现代 Linux 发行版中，UEFI 的安全启动（Secure Boot）功能默认是开启的。这项安全功能要求所有加载到内核中的模块都必须经过受信任的密钥签名。由于 NVIDIA 的官方驱动是闭源的专有驱动，它并未被系统默认信任，这导致了安装过程中的主要障碍。
