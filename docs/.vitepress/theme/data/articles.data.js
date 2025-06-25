@@ -11,15 +11,12 @@ export default createContentLoader('content/**/*.md', {
             return !['index', 'list', 'about', 'friend'].includes(filename)
         })
 
-        // 按日期排序
+        // 按URL排序，保持一致性
         return articles.sort((a, b) => {
-            const dateA = new Date(a.frontmatter.date || '1970-01-01')
-            const dateB = new Date(b.frontmatter.date || '1970-01-01')
-            return dateB - dateA
+            return a.url.localeCompare(b.url)
         }).map(article => ({
             url: article.url,
             title: article.frontmatter.title || article.url.split('/').pop(),
-            date: article.frontmatter.date || '1970-01-01',
             category: article.frontmatter.category || getCategoryFromUrl(article.url),
             author: article.frontmatter.author || 'YuanQiiii',
             tags: article.frontmatter.tags || [],

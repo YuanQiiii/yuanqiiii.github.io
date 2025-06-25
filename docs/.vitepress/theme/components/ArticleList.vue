@@ -22,7 +22,6 @@
             </option>
           </select>
           <select v-model="sortBy" class="filter-select">
-            <option value="date">按日期排序</option>
             <option value="title">按标题排序</option>
             <option value="readingTime">按阅读时间排序</option>
           </select>
@@ -44,11 +43,7 @@
             <h2 class="article-title">{{ post.title }}</h2>
             <div class="article-meta">
               <span class="meta-item">
-                <span class="meta-icon">📅</span>
-                {{ formatDate(post.date) }}
-              </span>
-              <span class="meta-item">
-                <span class="meta-icon">📖</span>
+                <span class="meta-icon"></span>
                 {{ post.readingTime }} 分钟
               </span>
               <span class="meta-item">
@@ -75,7 +70,7 @@ const loading = ref(true)
 const error = ref('')
 const searchQuery = ref('')
 const selectedCategory = ref('')
-const sortBy = ref('date')
+const sortBy = ref('title')
 
 // 计算属性：获取所有分类
 const categories = computed(() => {
@@ -103,13 +98,11 @@ const filteredPosts = computed(() => {
   // 排序
   posts = [...posts].sort((a, b) => {
     switch (sortBy.value) {
-      case 'title':
-        return a.title.localeCompare(b.title, 'zh-CN')
       case 'readingTime':
         return a.readingTime - b.readingTime
-      case 'date':
+      case 'title':
       default:
-        return new Date(b.date) - new Date(a.date)
+        return a.title.localeCompare(b.title, 'zh-CN')
     }
   })
 
@@ -131,7 +124,6 @@ onMounted(async () => {
         {
           url: '/content/about',
           title: '关于我',
-          date: '2024-01-01',
           category: '其他',
           readingTime: 2,
           wordCount: 500
@@ -139,7 +131,6 @@ onMounted(async () => {
         {
           url: '/content/friend',
           title: '友情链接',
-          date: '2024-01-01',
           category: '其他',
           readingTime: 1,
           wordCount: 200
@@ -153,19 +144,6 @@ onMounted(async () => {
     loading.value = false
   }
 })
-
-// 格式化日期函数
-const formatDate = (date) => {
-  if (!date) return '';
-  const d = new Date(date);
-  if (isNaN(d.getTime())) return '';
-  
-  const year = d.getFullYear();
-  const month = String(d.getMonth() + 1).padStart(2, '0');
-  const day = String(d.getDate()).padStart(2, '0');
-  
-  return `${year}-${month}-${day}`;
-};
 </script>
 
 <style scoped>

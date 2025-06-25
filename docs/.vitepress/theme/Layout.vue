@@ -7,36 +7,7 @@
 
     <!-- 文章底部 -->
     <template #doc-after>
-      <div v-if="isArticlePage" class="article-footer">
-        <div class="article-navigation">
-          <a v-if="prevArticle" :href="prevArticle.url" class="nav-link prev">
-            <div class="nav-direction">← 上一篇</div>
-            <div class="nav-title">{{ prevArticle.title }}</div>
-          </a>
-          <a v-if="nextArticle" :href="nextArticle.url" class="nav-link next">
-            <div class="nav-direction">下一篇 →</div>
-            <div class="nav-title">{{ nextArticle.title }}</div>
-          </a>
-        </div>
-        
-        <!-- 相关文章推荐 -->
-        <div v-if="relatedArticles.length > 0" class="related-articles">
-          <h3>相关文章</h3>
-          <div class="related-grid">
-            <a 
-              v-for="article in relatedArticles" 
-              :key="article.url"
-              :href="article.url"
-              class="related-item"
-            >
-              <h4>{{ article.title }}</h4>
-              <div class="related-meta">
-                <span class="category">{{ article.category }}</span>
-              </div>
-            </a>
-          </div>
-        </div>
-      </div>
+      <!-- 移除了文章导航和相关文章功能 -->
     </template>
 
     <!-- 全局组件 -->
@@ -49,8 +20,7 @@
 
 <script setup>
 import { ref, computed, onMounted, nextTick, watch } from 'vue'
-import { useRoute, useData } from 'vitepress'
-import { data as articlesData } from './data/articles.data.js'
+import { useRoute } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 import ReadingProgress from './components/ReadingProgress.vue'
 import ImageLightbox from './components/ImageLightbox.vue'
@@ -58,129 +28,8 @@ import Effect from './components/Effect.vue'
 
 const { Layout } = DefaultTheme
 const route = useRoute()
-const { page } = useData()
 
 const lightbox = ref(null)
-const articleData = ref({})
-const prevArticle = ref(null)
-const nextArticle = ref(null)
-const relatedArticles = ref([])
-
-const isArticlePage = computed(() => {
-  // 检查是否是文章页面 (不是首页、列表页等)
-  const path = route.path
-  return path !== '/' && 
-         !path.endsWith('/list') && 
-         !path.endsWith('/about') && 
-         !path.endsWith('/friend') &&
-         path.includes('/content/')
-})
-
-// 加载文章数据
-const loadArticleData = () => {
-  if (!isArticlePage.value || !articlesData || articlesData.length === 0) {
-    prevArticle.value = null
-    nextArticle.value = null
-    relatedArticles.value = []
-    return
-  }
-
-  const currentPath = route.path
-  const currentIndex = articlesData.findIndex(article => article.url === currentPath)
-  
-  if (currentIndex !== -1) {
-    articleData.value = articlesData[currentIndex]
-    
-    // 设置上一篇和下一篇
-    prevArticle.value = currentIndex > 0 ? articlesData[currentIndex - 1] : null
-    nextArticle.value = currentIndex < articlesData.length - 1 ? articlesData[currentIndex + 1] : null
-    
-    // 查找相关文章
-    relatedArticles.value = findRelatedArticles(articlesData[currentIndex], articlesData)
-  } else {
-    prevArticle.value = null
-    nextArticle.value = null
-    relatedArticles.value = []
-  }
-}
-
-// 查找相关文章
-const findRelatedArticles = (currentArticle, allArticles) => {
-  if (!currentArticle || !allArticles) return []
-  
-  const related = allArticles
-    .filter(article => article.url !== currentArticle.url)
-    .map(article => {
-      let score = 0
-      
-      // 同分类加分
-      if (article.category === currentArticle.category) {
-        score += 3
-      }
-      
-      // 相同标签加分
-      if (currentArticle.tags && article.tags) {
-        const commonTags = article.tags.filter(tag => 
-          currentArticle.tags.includes(tag)
-        )
-        score += commonTags.length * 2
-      }
-      
-      // 标题相似度
-      const titleSimilarity = calculateSimilarity(
-        article.title, 
-        currentArticle.title
-      )
-      score += titleSimilarity
-      
-      return { ...article, score }
-    })
-    .filter(article => article.score > 0)
-    .sort((a, b) => b.score - a.score)
-    .slice(0, 3)
-  
-  return related
-}
-
-// 计算字符串相似度（简单版本）
-const calculateSimilarity = (str1, str2) => {
-  const longer = str1.length > str2.length ? str1 : str2
-  const shorter = str1.length > str2.length ? str2 : str1
-  
-  if (longer.length === 0) return 1.0
-  
-  const editDistance = levenshteinDistance(longer, shorter)
-  return (longer.length - editDistance) / longer.length
-}
-
-// Levenshtein距离算法
-const levenshteinDistance = (str1, str2) => {
-  const matrix = []
-  
-  for (let i = 0; i <= str2.length; i++) {
-    matrix[i] = [i]
-  }
-  
-  for (let j = 0; j <= str1.length; j++) {
-    matrix[0][j] = j
-  }
-  
-  for (let i = 1; i <= str2.length; i++) {
-    for (let j = 1; j <= str1.length; j++) {
-      if (str2.charAt(i - 1) === str1.charAt(j - 1)) {
-        matrix[i][j] = matrix[i - 1][j - 1]
-      } else {
-        matrix[i][j] = Math.min(
-          matrix[i - 1][j - 1] + 1, // substitution
-          matrix[i][j - 1] + 1, // insertion
-          matrix[i - 1][j] + 1 // deletion
-        )
-      }
-    }
-  }
-  
-  return matrix[str2.length][str1.length]
-}
 
 // 设置图片点击事件
 const setupImageClickEvents = () => {
@@ -200,130 +49,15 @@ const setupImageClickEvents = () => {
 }
 
 onMounted(() => {
-  loadArticleData()
   setupImageClickEvents()
 })
 
 // 监听路由变化
 watch(() => route.path, () => {
-  loadArticleData()
   setupImageClickEvents()
 })
 </script>
 
 <style scoped>
-.article-header {
-  margin-bottom: 2rem;
-}
-
-.article-footer {
-  margin-top: 3rem;
-  padding-top: 2rem;
-  border-top: 1px solid var(--vp-c-divider);
-}
-
-.article-navigation {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-.nav-link {
-  display: block;
-  padding: 1rem;
-  background: var(--vp-c-bg-soft);
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 8px;
-  text-decoration: none;
-  color: var(--vp-c-text-1);
-  transition: all 0.3s ease;
-}
-
-.nav-link:hover {
-  border-color: var(--vp-c-brand);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.nav-link.next {
-  text-align: right;
-}
-
-.nav-direction {
-  font-size: 0.85rem;
-  color: var(--vp-c-text-2);
-  margin-bottom: 0.25rem;
-}
-
-.nav-title {
-  font-weight: 600;
-  line-height: 1.4;
-}
-
-.related-articles {
-  margin-top: 2rem;
-}
-
-.related-articles h3 {
-  margin-bottom: 1rem;
-  color: var(--vp-c-text-1);
-}
-
-.related-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1rem;
-}
-
-.related-item {
-  display: block;
-  padding: 1rem;
-  background: var(--vp-c-bg-soft);
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 8px;
-  text-decoration: none;
-  color: var(--vp-c-text-1);
-  transition: all 0.3s ease;
-}
-
-.related-item:hover {
-  border-color: var(--vp-c-brand);
-  transform: translateY(-2px);
-}
-
-.related-item h4 {
-  margin: 0 0 0.75rem 0;
-  font-size: 1rem;
-  font-weight: 600;
-  line-height: 1.4;
-}
-
-.related-meta {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.8rem;
-  color: var(--vp-c-text-3);
-}
-
-.category {
-  background: var(--vp-c-brand-soft);
-  color: var(--vp-c-brand);
-  padding: 0.125rem 0.5rem;
-  border-radius: 4px;
-}
-
-@media (max-width: 768px) {
-  .article-navigation {
-    grid-template-columns: 1fr;
-  }
-  
-  .nav-link.next {
-    text-align: left;
-  }
-  
-  .related-grid {
-    grid-template-columns: 1fr;
-  }
-}
+/* 移除了文章导航和相关文章的样式 */
 </style>

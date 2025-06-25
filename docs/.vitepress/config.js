@@ -7,7 +7,6 @@ export default defineConfig({
     lang: 'zh-CN',
 
     // 构建配置
-    lastUpdated: true,
     cleanUrls: true,
     ignoreDeadLinks: true,
 
@@ -95,12 +94,11 @@ export default defineConfig({
 
         // 页脚导航
         docFooter: {
-            prev: '上一页',
-            next: '下一页'
+            prev: false,
+            next: false
         },
 
         // 本地化文本
-        lastUpdatedText: '最后更新于',
         returnToTopLabel: '返回顶部'
     },
 

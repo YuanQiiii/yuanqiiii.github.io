@@ -62,20 +62,6 @@ function calculateWordCount(content) {
 }
 
 /**
- * 获取文件的修改时间
- * @param {string} filePath - 文件路径
- * @returns {string} - ISO格式的日期字符串
- */
-function getFileModifiedDate(filePath) {
-    try {
-        const stats = fs.statSync(filePath)
-        return stats.mtime.toISOString().split('T')[0]
-    } catch (error) {
-        return new Date().toISOString().split('T')[0]
-    }
-}
-
-/**
  * 处理单个 markdown 文件
  * @param {string} filePath - 文件路径
  * @param {string} relativePath - 相对路径
@@ -102,8 +88,6 @@ function processMarkdownFile(filePath, relativePath) {
         return {
             url,
             title: frontmatter.title || fileName,
-            date: frontmatter.date || '1970-01-01',
-            lastModified: getFileModifiedDate(filePath),
             category: frontmatter.category || getCategoryFromPath(relativePath),
             author: frontmatter.author || 'YuanQiiii',
             readingTime,
@@ -197,17 +181,9 @@ function generateArticleList() {
         }
     }
 
-    // 按日期降序排序，然后按路径排序（与VitePress保持一致）
+    // 按URL排序，保持一致性
     articles.sort((a, b) => {
-        const dateA = new Date(a.date)
-        const dateB = new Date(b.date)
-        const dateDiff = dateB - dateA
-        
-        // 如果日期相同，按URL排序
-        if (dateDiff === 0) {
-            return b.url.localeCompare(a.url)
-        }
-        return dateDiff
+        return a.url.localeCompare(b.url)
     })
 
     // 确保输出目录存在

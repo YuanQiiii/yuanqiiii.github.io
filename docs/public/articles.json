@@ -1,177 +1,19 @@
 {
-  "generated": "2025-06-25T01:07:35.542Z",
+  "generated": "2025-06-25T01:17:32.657Z",
   "total": 17,
   "articles": [
     {
-      "url": "/content/project/韭菜模拟器",
-      "title": "韭菜模拟器",
-      "date": "1970-01-01",
-      "lastModified": "2025-06-23",
-      "category": "project",
-      "author": "YuanQiiii",
-      "readingTime": 1,
-      "wordCount": 17,
-      "frontmatter": {}
-    },
-    {
-      "url": "/content/project/知识库",
-      "title": "知识库",
-      "date": "1970-01-01",
-      "lastModified": "2025-06-25",
-      "category": "project",
-      "author": "YuanQiiii",
-      "readingTime": 3,
-      "wordCount": 699,
-      "frontmatter": {}
-    },
-    {
-      "url": "/content/project/基于邮件通信的AI伙伴",
-      "title": "基于邮件通信的AI伙伴",
-      "date": "1970-01-01",
-      "lastModified": "2025-06-23",
-      "category": "project",
-      "author": "YuanQiiii",
-      "readingTime": 8,
-      "wordCount": 2241,
-      "frontmatter": {}
-    },
-    {
-      "url": "/content/note/模板",
-      "title": "模板",
-      "date": "1970-01-01",
-      "lastModified": "2025-06-23",
-      "category": "note",
-      "author": "YuanQiiii",
-      "readingTime": 5,
-      "wordCount": 1088,
-      "frontmatter": {}
-    },
-    {
-      "url": "/content/note/普通心理学",
-      "title": "普通心理学",
-      "date": "1970-01-01",
-      "lastModified": "2025-06-23",
-      "category": "note",
-      "author": "YuanQiiii",
-      "readingTime": 175,
-      "wordCount": 52116,
-      "frontmatter": {}
-    },
-    {
-      "url": "/content/note/questions",
-      "title": "questions",
-      "date": "1970-01-01",
-      "lastModified": "2025-06-23",
-      "category": "note",
-      "author": "YuanQiiii",
-      "readingTime": 5,
-      "wordCount": 1405,
-      "frontmatter": {}
-    },
-    {
-      "url": "/content/note/docker",
-      "title": "docker",
-      "date": "1970-01-01",
-      "lastModified": "2025-06-23",
-      "category": "note",
-      "author": "YuanQiiii",
-      "readingTime": 4,
-      "wordCount": 939,
-      "frontmatter": {}
-    },
-    {
-      "url": "/content/note/day0",
-      "title": "day0",
-      "date": "1970-01-01",
-      "lastModified": "2025-06-23",
-      "category": "note",
-      "author": "YuanQiiii",
-      "readingTime": 9,
-      "wordCount": 2420,
-      "frontmatter": {}
-    },
-    {
-      "url": "/content/idea/随想02",
-      "title": "随想02",
-      "date": "1970-01-01",
-      "lastModified": "2025-06-23",
-      "category": "idea",
-      "author": "YuanQiiii",
-      "readingTime": 36,
-      "wordCount": 10609,
-      "frontmatter": {}
-    },
-    {
-      "url": "/content/idea/随想01",
-      "title": "随想01",
-      "date": "1970-01-01",
-      "lastModified": "2025-06-23",
-      "category": "idea",
-      "author": "YuanQiiii",
-      "readingTime": 14,
-      "wordCount": 3929,
-      "frontmatter": {}
-    },
-    {
-      "url": "/content/idea/谈谈对于git设计的理解",
-      "title": "谈谈对于git设计的理解",
-      "date": "1970-01-01",
-      "lastModified": "2025-06-23",
-      "category": "idea",
-      "author": "YuanQiiii",
-      "readingTime": 5,
-      "wordCount": 1483,
-      "frontmatter": {}
-    },
-    {
-      "url": "/content/idea/网站设计思路",
-      "title": "网站设计思路",
-      "date": "1970-01-01",
-      "lastModified": "2025-06-24",
-      "category": "idea",
-      "author": "YuanQiiii",
-      "readingTime": 1,
-      "wordCount": 224,
-      "frontmatter": {}
-    },
-    {
-      "url": "/content/idea/年终总结",
-      "title": "年终总结",
-      "date": "1970-01-01",
-      "lastModified": "2025-06-23",
-      "category": "idea",
-      "author": "YuanQiiii",
-      "readingTime": 11,
-      "wordCount": 3133,
-      "frontmatter": {}
-    },
-    {
-      "url": "/content/idea/love",
-      "title": "love",
-      "date": "1970-01-01",
-      "lastModified": "2025-06-24",
-      "category": "idea",
-      "author": "YuanQiiii",
-      "readingTime": 32,
-      "wordCount": 9554,
-      "frontmatter": {}
-    },
-    {
-      "url": "/content/guide/server",
-      "title": "server",
-      "date": "1970-01-01",
-      "lastModified": "2025-06-23",
+      "url": "/content/guide/nvidia",
+      "title": "nvidia",
       "category": "guide",
       "author": "YuanQiiii",
-      "readingTime": 20,
-      "wordCount": 5686,
+      "readingTime": 5,
+      "wordCount": 1193,
       "frontmatter": {}
     },
     {
       "url": "/content/guide/prompt",
       "title": "prompt",
-      "date": "1970-01-01",
-      "lastModified": "2025-06-23",
       "category": "guide",
       "author": "YuanQiiii",
       "readingTime": 1,
@@ -179,14 +21,138 @@
       "frontmatter": {}
     },
     {
-      "url": "/content/guide/nvidia",
-      "title": "nvidia",
-      "date": "1970-01-01",
-      "lastModified": "2025-06-25",
+      "url": "/content/guide/server",
+      "title": "server",
       "category": "guide",
       "author": "YuanQiiii",
+      "readingTime": 20,
+      "wordCount": 5686,
+      "frontmatter": {}
+    },
+    {
+      "url": "/content/idea/love",
+      "title": "love",
+      "category": "idea",
+      "author": "YuanQiiii",
+      "readingTime": 32,
+      "wordCount": 9554,
+      "frontmatter": {}
+    },
+    {
+      "url": "/content/idea/年终总结",
+      "title": "年终总结",
+      "category": "idea",
+      "author": "YuanQiiii",
+      "readingTime": 11,
+      "wordCount": 3133,
+      "frontmatter": {}
+    },
+    {
+      "url": "/content/idea/网站设计思路",
+      "title": "网站设计思路",
+      "category": "idea",
+      "author": "YuanQiiii",
+      "readingTime": 1,
+      "wordCount": 224,
+      "frontmatter": {}
+    },
+    {
+      "url": "/content/idea/谈谈对于git设计的理解",
+      "title": "谈谈对于git设计的理解",
+      "category": "idea",
+      "author": "YuanQiiii",
       "readingTime": 5,
-      "wordCount": 1193,
+      "wordCount": 1483,
+      "frontmatter": {}
+    },
+    {
+      "url": "/content/idea/随想01",
+      "title": "随想01",
+      "category": "idea",
+      "author": "YuanQiiii",
+      "readingTime": 14,
+      "wordCount": 3929,
+      "frontmatter": {}
+    },
+    {
+      "url": "/content/idea/随想02",
+      "title": "随想02",
+      "category": "idea",
+      "author": "YuanQiiii",
+      "readingTime": 36,
+      "wordCount": 10609,
+      "frontmatter": {}
+    },
+    {
+      "url": "/content/note/day0",
+      "title": "day0",
+      "category": "note",
+      "author": "YuanQiiii",
+      "readingTime": 9,
+      "wordCount": 2420,
+      "frontmatter": {}
+    },
+    {
+      "url": "/content/note/docker",
+      "title": "docker",
+      "category": "note",
+      "author": "YuanQiiii",
+      "readingTime": 4,
+      "wordCount": 939,
+      "frontmatter": {}
+    },
+    {
+      "url": "/content/note/questions",
+      "title": "questions",
+      "category": "note",
+      "author": "YuanQiiii",
+      "readingTime": 5,
+      "wordCount": 1405,
+      "frontmatter": {}
+    },
+    {
+      "url": "/content/note/普通心理学",
+      "title": "普通心理学",
+      "category": "note",
+      "author": "YuanQiiii",
+      "readingTime": 175,
+      "wordCount": 52116,
+      "frontmatter": {}
+    },
+    {
+      "url": "/content/note/模板",
+      "title": "模板",
+      "category": "note",
+      "author": "YuanQiiii",
+      "readingTime": 5,
+      "wordCount": 1088,
+      "frontmatter": {}
+    },
+    {
+      "url": "/content/project/基于邮件通信的AI伙伴",
+      "title": "基于邮件通信的AI伙伴",
+      "category": "project",
+      "author": "YuanQiiii",
+      "readingTime": 8,
+      "wordCount": 2241,
+      "frontmatter": {}
+    },
+    {
+      "url": "/content/project/知识库",
+      "title": "知识库",
+      "category": "project",
+      "author": "YuanQiiii",
+      "readingTime": 3,
+      "wordCount": 699,
+      "frontmatter": {}
+    },
+    {
+      "url": "/content/project/韭菜模拟器",
+      "title": "韭菜模拟器",
+      "category": "project",
+      "author": "YuanQiiii",
+      "readingTime": 1,
+      "wordCount": 17,
       "frontmatter": {}
     }
   ]
