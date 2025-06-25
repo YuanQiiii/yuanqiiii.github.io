@@ -8,7 +8,10 @@
     --vp-c-brand-dark: #535bf2;
     --vp-c-brand-darker: #454ce1;
     --vp-c-brand-dimm: rgba(100, 108, 255, 0.08);
-
+    --vp-home-hero-name-color: transparent;
+    --vp-home-hero-name-background: -webkit-linear-gradient(120deg,
+            #bd34fe 30%,
+            #41d1ff);
     /* 自定义颜色 */
     --custom-reading-progress: var(--vp-c-brand);
     --custom-shadow: rgba(0, 0, 0, 0.1);
