@@ -5,7 +5,7 @@ hero:
   text: "愿美好的事情即将发生"
   tagline: 记录学习，分享思考，记载生活
   image:
-    src: /avatar.svg
+    src: /photo.jpg
     alt: YuanQiiii Avatar
   actions:
     - theme: brand

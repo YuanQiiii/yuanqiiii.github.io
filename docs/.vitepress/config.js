@@ -94,7 +94,7 @@ export default defineConfig({
                 icon: {
                     svg: '<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Email</title><path d="M24 5.457v13.086c0 .974-.791 1.764-1.765 1.764H1.765C.791 20.307 0 19.517 0 18.543V5.457c0-.974.791-1.764 1.765-1.764h20.47C23.209 3.693 24 4.483 24 5.457zM2.118 6.271L12 13.118l9.882-6.847H2.118zM1.412 18.543c0 .194.158.353.353.353h20.47c.194 0 .353-.158.353-.353V7.059L12 14.941 1.412 7.059v11.484z"/></svg>'
                 },
-                link: 'mailto:your-email@example.com',
+                link: 'mailto:shihuaidexianyu@gmail.com',
                 ariaLabel: '发送邮件'
             }
         ],
