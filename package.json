@@ -31,5 +31,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/YuanQiiii/yuanqiiii.github.io.git"
+  },
+  "dependencies": {
+    "glob": "^11.0.3"
   }
 }

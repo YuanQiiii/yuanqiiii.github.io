@@ -6,8 +6,7 @@ import matter from 'gray-matter'
 
 const DOCS_DIR = path.join(process.cwd(), 'docs')
 const CONTENT_DIRS = ['content'] // 扫描整个 content 目录
-const OUTPUT_FILE = path.join(DOCS_DIR, '.vitepress/theme/data/articles.json')
-const PUBLIC_OUTPUT_FILE = path.join(DOCS_DIR, 'public/articles.json')
+const OUTPUT_FILE = path.join(DOCS_DIR, 'public/articles.json')
 
 /**
  * 计算文章阅读时间（基于中文字符数）
@@ -89,7 +88,7 @@ function processMarkdownFile(filePath, relativePath) {
 
         // 跳过某些特殊文件
         const fileName = path.basename(filePath, '.md')
-        if (['README', 'index', 'list'].includes(fileName)) {
+        if (['README', 'index', 'list', 'about', 'friend'].includes(fileName)) {
             return null
         }
 
@@ -103,7 +102,7 @@ function processMarkdownFile(filePath, relativePath) {
         return {
             url,
             title: frontmatter.title || fileName,
-            date: frontmatter.date || getFileModifiedDate(filePath),
+            date: frontmatter.date || '1970-01-01',
             lastModified: getFileModifiedDate(filePath),
             category: frontmatter.category || getCategoryFromPath(relativePath),
             author: frontmatter.author || 'YuanQiiii',
@@ -198,18 +197,23 @@ function generateArticleList() {
         }
     }
 
-    // 按日期降序排序
-    articles.sort((a, b) => new Date(b.date) - new Date(a.date))
+    // 按日期降序排序，然后按路径排序（与VitePress保持一致）
+    articles.sort((a, b) => {
+        const dateA = new Date(a.date)
+        const dateB = new Date(b.date)
+        const dateDiff = dateB - dateA
+        
+        // 如果日期相同，按URL排序
+        if (dateDiff === 0) {
+            return b.url.localeCompare(a.url)
+        }
+        return dateDiff
+    })
 
     // 确保输出目录存在
     const outputDir = path.dirname(OUTPUT_FILE)
     if (!fs.existsSync(outputDir)) {
         fs.mkdirSync(outputDir, { recursive: true })
-    }
-
-    const publicOutputDir = path.dirname(PUBLIC_OUTPUT_FILE)
-    if (!fs.existsSync(publicOutputDir)) {
-        fs.mkdirSync(publicOutputDir, { recursive: true })
     }
 
     // 写入文件
@@ -220,11 +224,9 @@ function generateArticleList() {
     }
 
     fs.writeFileSync(OUTPUT_FILE, JSON.stringify(output, null, 2), 'utf-8')
-    fs.writeFileSync(PUBLIC_OUTPUT_FILE, JSON.stringify(output, null, 2), 'utf-8')
 
     console.log(`🎉 生成完成！共处理 ${articles.length} 篇文章`)
     console.log(`📄 输出文件: ${path.relative(process.cwd(), OUTPUT_FILE)}`)
-    console.log(`📄 公共文件: ${path.relative(process.cwd(), PUBLIC_OUTPUT_FILE)}`)
 
     // 输出统计信息
     const categories = {}
