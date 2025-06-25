@@ -61,7 +61,7 @@ export default defineConfig({
     // 主题配置
     themeConfig: {
         // 站点标题
-        siteTitle: 'YuanQiiii',
+        siteTitle: 'shihuaidexianyu',
 
         // 导航配置
         nav: [
