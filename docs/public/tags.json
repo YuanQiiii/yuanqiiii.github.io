@@ -1,8 +1,134 @@
 {
-  "generated": "2025-06-25T01:42:03.650Z",
-  "totalTags": 3,
-  "totalTaggedArticles": 1,
+  "generated": "2025-06-25T08:25:53.150Z",
+  "totalTags": 12,
+  "totalTaggedArticles": 4,
   "tags": [
+    {
+      "name": "Linux",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "如何在启用 Secure Boot 的 Linux 系统上正确安装 NVIDIA 官方驱动",
+          "url": "/content/guide/nvidia",
+          "date": "2024-12-25T00:00:00.000Z",
+          "category": "guide",
+          "description": "文章描述"
+        }
+      ]
+    },
+    {
+      "name": "NVIDIA",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "如何在启用 Secure Boot 的 Linux 系统上正确安装 NVIDIA 官方驱动",
+          "url": "/content/guide/nvidia",
+          "date": "2024-12-25T00:00:00.000Z",
+          "category": "guide",
+          "description": "文章描述"
+        }
+      ]
+    },
+    {
+      "name": "Boot",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "如何在启用 Secure Boot 的 Linux 系统上正确安装 NVIDIA 官方驱动",
+          "url": "/content/guide/nvidia",
+          "date": "2024-12-25T00:00:00.000Z",
+          "category": "guide",
+          "description": "文章描述"
+        }
+      ]
+    },
+    {
+      "name": "copliot",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "系统提示词",
+          "url": "/content/guide/prompt",
+          "date": "2024-12-25T00:00:00.000Z",
+          "category": "guide",
+          "description": "用于指导copliot的系统提示词"
+        }
+      ]
+    },
+    {
+      "name": "prompt",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "系统提示词",
+          "url": "/content/guide/prompt",
+          "date": "2024-12-25T00:00:00.000Z",
+          "category": "guide",
+          "description": "用于指导copliot的系统提示词"
+        }
+      ]
+    },
+    {
+      "name": "llm",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "系统提示词",
+          "url": "/content/guide/prompt",
+          "date": "2024-12-25T00:00:00.000Z",
+          "category": "guide",
+          "description": "用于指导copliot的系统提示词"
+        }
+      ]
+    },
+    {
+      "name": "server",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "如何从零开始，将一台旧笔记本变身为家庭服务器？",
+          "url": "/content/guide/server",
+          "date": "2024-12-25T00:00:00.000Z",
+          "category": "guide",
+          "description": "服务器搭建"
+        }
+      ]
+    },
+    {
+      "name": "linux",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "如何从零开始，将一台旧笔记本变身为家庭服务器？",
+          "url": "/content/guide/server",
+          "date": "2024-12-25T00:00:00.000Z",
+          "category": "guide",
+          "description": "服务器搭建"
+        }
+      ]
+    },
+    {
+      "name": "技术",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "如何从零开始，将一台旧笔记本变身为家庭服务器？",
+          "url": "/content/guide/server",
+          "date": "2024-12-25T00:00:00.000Z",
+          "category": "guide",
+          "description": "服务器搭建"
+        }
+      ]
+    },
     {
       "name": "VitePress",
       "count": 1,

@@ -1,15 +1,19 @@
 {
-  "generated": "2025-06-25T01:42:03.651Z",
+  "generated": "2025-06-25T08:25:53.151Z",
   "overview": {
-    "totalArticles": 20,
-    "totalWords": 97274,
-    "totalReadingTime": 339,
+    "totalArticles": 21,
+    "totalWords": 97550,
+    "totalReadingTime": 340,
     "totalCategories": 5,
-    "totalTags": 3,
-    "averageWordsPerArticle": 4864,
-    "averageReadingTime": 17
+    "totalTags": 12,
+    "averageWordsPerArticle": 4645,
+    "averageReadingTime": 16
   },
   "categories": [
+    {
+      "name": "页面",
+      "count": 4
+    },
     {
       "name": "guide",
       "count": 3
@@ -17,10 +21,6 @@
     {
       "name": "idea",
       "count": 6
-    },
-    {
-      "name": "页面",
-      "count": 3
     },
     {
       "name": "note",
@@ -34,26 +34,54 @@
   "monthlyStats": [
     {
       "month": "Wed Dec",
-      "count": 1,
-      "words": 500
+      "count": 4,
+      "words": 7379
     },
     {
       "month": "2025-06",
-      "count": 19,
-      "words": 96774
+      "count": 17,
+      "words": 90171
     }
   ],
   "topTags": [
     {
+      "tag": "Linux",
+      "count": 1
+    },
+    {
+      "tag": "NVIDIA",
+      "count": 1
+    },
+    {
+      "tag": "Boot",
+      "count": 1
+    },
+    {
+      "tag": "copliot",
+      "count": 1
+    },
+    {
+      "tag": "prompt",
+      "count": 1
+    },
+    {
+      "tag": "llm",
+      "count": 1
+    },
+    {
+      "tag": "server",
+      "count": 1
+    },
+    {
+      "tag": "linux",
+      "count": 1
+    },
+    {
+      "tag": "技术",
+      "count": 1
+    },
+    {
       "tag": "VitePress",
-      "count": 1
-    },
-    {
-      "tag": "Markdown",
-      "count": 1
-    },
-    {
-      "tag": "功能演示",
       "count": 1
     }
   ],

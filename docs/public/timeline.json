@@ -1,10 +1,18 @@
 {
-  "generated": "2025-06-25T01:42:03.650Z",
-  "totalArticles": 20,
+  "generated": "2025-06-25T08:25:53.150Z",
+  "totalArticles": 21,
   "years": [
     {
       "year": 2025,
       "articles": [
+        {
+          "date": "2025-06-25",
+          "title": "auto-generation",
+          "url": "/content/auto-generation",
+          "category": "页面",
+          "description": "自动生成功能说明 🤖 功能概述 博客现在支持多种数据的自动生成，让内容管理更加智能化： 📊 自动生成的数据文件 ** - 文章列表数据 - 时间线数据   - 标签云数据 - 统计数据 🔄 触发生成 数据会在以下情况自动生成： 运行  时 运行  时   手动运行  时 📝 文章元数据 为了...",
+          "tags": []
+        },
         {
           "date": "2025-06-25",
           "title": "标签云",
@@ -19,30 +27,6 @@
           "url": "/content/timeline",
           "category": "页面",
           "description": "记录我的写作历程",
-          "tags": []
-        },
-        {
-          "date": "2025-06-23",
-          "title": "nvidia",
-          "url": "/content/guide/nvidia",
-          "category": "guide",
-          "description": "如何在启用 Secure Boot 的 Linux 系统上正确安装 NVIDIA 官方驱动 在许多现代 Linux 发行版中，UEFI 的安全启动（Secure Boot）功能默认是开启的。这项安全功能要求所有加载到内核中的模块都必须经过受信任的密钥签名。由于 NVIDIA 的官方驱动是闭源的专有驱...",
-          "tags": []
-        },
-        {
-          "date": "2025-06-23",
-          "title": "prompt",
-          "url": "/content/guide/prompt",
-          "category": "guide",
-          "description": "",
-          "tags": []
-        },
-        {
-          "date": "2025-06-23",
-          "title": "server",
-          "url": "/content/guide/server",
-          "category": "guide",
-          "description": "如何从零开始，将一台旧笔记本变身为家庭服务器？ 动机 如果你想部署像 LobeChat 这样的自定义服务，搭建一个个人小网站，或者运行一些需要长时间在线的程序，你很可能会陷入一个两难的境地：云服务器性能羸弱，价格不菲；自己的主力笔记本又无法 24 小时不间断运转。 [!note] 归根结底，还是钞能...",
           "tags": []
         },
         {
@@ -164,6 +148,42 @@
       "articles": [
         {
           "date": "2024-12-25T00:00:00.000Z",
+          "title": "如何在启用 Secure Boot 的 Linux 系统上正确安装 NVIDIA 官方驱动",
+          "url": "/content/guide/nvidia",
+          "category": "guide",
+          "description": "文章描述",
+          "tags": [
+            "Linux",
+            "NVIDIA",
+            "Boot"
+          ]
+        },
+        {
+          "date": "2024-12-25T00:00:00.000Z",
+          "title": "系统提示词",
+          "url": "/content/guide/prompt",
+          "category": "guide",
+          "description": "用于指导copliot的系统提示词",
+          "tags": [
+            "copliot",
+            "prompt",
+            "llm"
+          ]
+        },
+        {
+          "date": "2024-12-25T00:00:00.000Z",
+          "title": "如何从零开始，将一台旧笔记本变身为家庭服务器？",
+          "url": "/content/guide/server",
+          "category": "guide",
+          "description": "服务器搭建",
+          "tags": [
+            "server",
+            "linux",
+            "技术"
+          ]
+        },
+        {
+          "date": "2024-12-25T00:00:00.000Z",
           "title": "Markdown 功能演示",
           "url": "/content/markdown-demo",
           "category": "页面",
@@ -178,6 +198,18 @@
     }
   ],
   "timeline": [
+    {
+      "url": "/content/auto-generation",
+      "title": "auto-generation",
+      "category": "页面",
+      "author": "YuanQiiii",
+      "date": "2025-06-25",
+      "tags": [],
+      "description": "自动生成功能说明 🤖 功能概述 博客现在支持多种数据的自动生成，让内容管理更加智能化： 📊 自动生成的数据文件 ** - 文章列表数据 - 时间线数据   - 标签云数据 - 统计数据 🔄 触发生成 数据会在以下情况自动生成： 运行  时 运行  时   手动运行  时 📝 文章元数据 为了...",
+      "readingTime": 1,
+      "wordCount": 276,
+      "frontmatter": {}
+    },
     {
       "url": "/content/tags",
       "title": "标签云",
@@ -207,42 +239,6 @@
         "title": "博客时间线",
         "description": "记录我的写作历程"
       }
-    },
-    {
-      "url": "/content/guide/nvidia",
-      "title": "nvidia",
-      "category": "guide",
-      "author": "YuanQiiii",
-      "date": "2025-06-23",
-      "tags": [],
-      "description": "如何在启用 Secure Boot 的 Linux 系统上正确安装 NVIDIA 官方驱动 在许多现代 Linux 发行版中，UEFI 的安全启动（Secure Boot）功能默认是开启的。这项安全功能要求所有加载到内核中的模块都必须经过受信任的密钥签名。由于 NVIDIA 的官方驱动是闭源的专有驱...",
-      "readingTime": 5,
-      "wordCount": 1193,
-      "frontmatter": {}
-    },
-    {
-      "url": "/content/guide/prompt",
-      "title": "prompt",
-      "category": "guide",
-      "author": "YuanQiiii",
-      "date": "2025-06-23",
-      "tags": [],
-      "description": "",
-      "readingTime": 1,
-      "wordCount": 0,
-      "frontmatter": {}
-    },
-    {
-      "url": "/content/guide/server",
-      "title": "server",
-      "category": "guide",
-      "author": "YuanQiiii",
-      "date": "2025-06-23",
-      "tags": [],
-      "description": "如何从零开始，将一台旧笔记本变身为家庭服务器？ 动机 如果你想部署像 LobeChat 这样的自定义服务，搭建一个个人小网站，或者运行一些需要长时间在线的程序，你很可能会陷入一个两难的境地：云服务器性能羸弱，价格不菲；自己的主力笔记本又无法 24 小时不间断运转。 [!note] 归根结底，还是钞能...",
-      "readingTime": 20,
-      "wordCount": 5686,
-      "frontmatter": {}
     },
     {
       "url": "/content/idea/love",
@@ -411,6 +407,81 @@
       "readingTime": 1,
       "wordCount": 17,
       "frontmatter": {}
+    },
+    {
+      "url": "/content/guide/nvidia",
+      "title": "如何在启用 Secure Boot 的 Linux 系统上正确安装 NVIDIA 官方驱动",
+      "category": "guide",
+      "author": "YuanQiiii",
+      "date": "2024-12-25T00:00:00.000Z",
+      "tags": [
+        "Linux",
+        "NVIDIA",
+        "Boot"
+      ],
+      "description": "文章描述",
+      "readingTime": 5,
+      "wordCount": 1193,
+      "frontmatter": {
+        "title": "如何在启用 Secure Boot 的 Linux 系统上正确安装 NVIDIA 官方驱动",
+        "description": "文章描述",
+        "date": "2024-12-25T00:00:00.000Z",
+        "tags": [
+          "Linux",
+          "NVIDIA",
+          "Boot"
+        ]
+      }
+    },
+    {
+      "url": "/content/guide/prompt",
+      "title": "系统提示词",
+      "category": "guide",
+      "author": "YuanQiiii",
+      "date": "2024-12-25T00:00:00.000Z",
+      "tags": [
+        "copliot",
+        "prompt",
+        "llm"
+      ],
+      "description": "用于指导copliot的系统提示词",
+      "readingTime": 1,
+      "wordCount": 0,
+      "frontmatter": {
+        "title": "系统提示词",
+        "description": "用于指导copliot的系统提示词",
+        "date": "2024-12-25T00:00:00.000Z",
+        "tags": [
+          "copliot",
+          "prompt",
+          "llm"
+        ]
+      }
+    },
+    {
+      "url": "/content/guide/server",
+      "title": "如何从零开始，将一台旧笔记本变身为家庭服务器？",
+      "category": "guide",
+      "author": "YuanQiiii",
+      "date": "2024-12-25T00:00:00.000Z",
+      "tags": [
+        "server",
+        "linux",
+        "技术"
+      ],
+      "description": "服务器搭建",
+      "readingTime": 20,
+      "wordCount": 5686,
+      "frontmatter": {
+        "title": "如何从零开始，将一台旧笔记本变身为家庭服务器？",
+        "description": "服务器搭建",
+        "date": "2024-12-25T00:00:00.000Z",
+        "tags": [
+          "server",
+          "linux",
+          "技术"
+        ]
+      }
     },
     {
       "url": "/content/markdown-demo",
