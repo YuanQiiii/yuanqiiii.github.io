@@ -3,8 +3,11 @@
 /* 全局样式变量 */
 :root {
     /* 主色调 */
-    --vp-c-brand: #646cff;
-    --vp-c-brand-light: #747bff;
+    --vp-c-brand: #a3a3c0;
+
+    --vp-c-brand-light: #434351;
+    --vp-c-brand-1: #e3cfe6;
+    --vp-c-brand-2: #ffefd3;
     --vp-c-brand-dark: #535bf2;
     --vp-c-brand-darker: #454ce1;
     --vp-c-brand-dimm: rgba(100, 108, 255, 0.08);
