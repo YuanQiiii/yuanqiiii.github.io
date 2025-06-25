@@ -1,12 +1,15 @@
 {
-  "generated": "2025-06-25T01:17:32.657Z",
-  "total": 17,
+  "generated": "2025-06-25T01:42:03.650Z",
+  "total": 20,
   "articles": [
     {
       "url": "/content/guide/nvidia",
       "title": "nvidia",
       "category": "guide",
       "author": "YuanQiiii",
+      "date": "2025-06-23",
+      "tags": [],
+      "description": "如何在启用 Secure Boot 的 Linux 系统上正确安装 NVIDIA 官方驱动 在许多现代 Linux 发行版中，UEFI 的安全启动（Secure Boot）功能默认是开启的。这项安全功能要求所有加载到内核中的模块都必须经过受信任的密钥签名。由于 NVIDIA 的官方驱动是闭源的专有驱...",
       "readingTime": 5,
       "wordCount": 1193,
       "frontmatter": {}
@@ -16,6 +19,9 @@
       "title": "prompt",
       "category": "guide",
       "author": "YuanQiiii",
+      "date": "2025-06-23",
+      "tags": [],
+      "description": "",
       "readingTime": 1,
       "wordCount": 0,
       "frontmatter": {}
@@ -25,6 +31,9 @@
       "title": "server",
       "category": "guide",
       "author": "YuanQiiii",
+      "date": "2025-06-23",
+      "tags": [],
+      "description": "如何从零开始，将一台旧笔记本变身为家庭服务器？ 动机 如果你想部署像 LobeChat 这样的自定义服务，搭建一个个人小网站，或者运行一些需要长时间在线的程序，你很可能会陷入一个两难的境地：云服务器性能羸弱，价格不菲；自己的主力笔记本又无法 24 小时不间断运转。 [!note] 归根结底，还是钞能...",
       "readingTime": 20,
       "wordCount": 5686,
       "frontmatter": {}
@@ -34,6 +43,9 @@
       "title": "love",
       "category": "idea",
       "author": "YuanQiiii",
+      "date": "2025-06-23",
+      "tags": [],
+      "description": "[!tip] 作者为 Das6fY5，转自 --- “求求你不要扔掉我。”少女走在他的背后。  “我可以端茶倒水，为你暖身子，我可以在白天给你打扫房间，到夜里把自己折进床底下……只要每两周充一次电就好，电费我会去兼职赚钱交给你，让我做什么都行，除了……”  他停住，站在一处高崖旁。面前是一个巨大的深...",
       "readingTime": 32,
       "wordCount": 9554,
       "frontmatter": {}
@@ -43,6 +55,9 @@
       "title": "年终总结",
       "category": "idea",
       "author": "YuanQiiii",
+      "date": "2025-06-23",
+      "tags": [],
+      "description": "2024-2025 [!note] 所谓的长大啊，到底是什么呢？ 一个男孩来到了这个世界，自此一个名为人生的游戏正式开服。 2024年，这个游戏已经运行了21年，虽然一度差点停服，仍是跌跌撞撞地进入了第22个年头，但我还是没有搞清楚这个游戏的逻辑，无法果决，无法自信。 我多么期待长大，直到能用双翼为...",
       "readingTime": 11,
       "wordCount": 3133,
       "frontmatter": {}
@@ -52,6 +67,9 @@
       "title": "网站设计思路",
       "category": "idea",
       "author": "YuanQiiii",
+      "date": "2025-06-23",
+      "tags": [],
+      "description": "使用桑吉图对网站的数据流动做出展示 还需要行为树形象展示网站的操作逻辑以减轻用户的操作负担，考虑使用路径规划的形式，需要在网站设计的使用考虑对应的逻辑和实现，这件事可能需要对每个页面的链接出现，以及此时使用的cookie，需要给出鉴权所在的位置 这同时也方便了对用户行为进行分析 既作为导航，又记录数...",
       "readingTime": 1,
       "wordCount": 224,
       "frontmatter": {}
@@ -61,6 +79,9 @@
       "title": "谈谈对于git设计的理解",
       "category": "idea",
       "author": "YuanQiiii",
+      "date": "2025-06-23",
+      "tags": [],
+      "description": "多人协作，如何高效同步“工程进度”？——用“建大楼”理解 Git 的协作模式 想象一下，我们要合力建造一栋宏伟的大楼。这是一个庞大而复杂的工程，就像我们参与的大型软件项目一样。如何确保每个人负责的部分能顺利推进，并且最终完美地组装在一起呢？这就涉及到了信息同步和进度管理的问题。 大楼建造中的“并行”...",
       "readingTime": 5,
       "wordCount": 1483,
       "frontmatter": {}
@@ -70,6 +91,9 @@
       "title": "随想01",
       "category": "idea",
       "author": "YuanQiiii",
+      "date": "2025-06-23",
+      "tags": [],
+      "description": ">[!note]突发奇想+ai润色 在信息时代的浪潮中，网站作为信息传递与服务交互的核心载体，其组织架构通常划分为前端与后端。两者各司其职，协同作用，共同响应并满足用户的访问请求。根据我的观察与实践，网站的构建模式可大致归为几类：一种是侧重前端体验的，另一种是侧重后端能力的，亦或是根据后端是否超越了...",
       "readingTime": 14,
       "wordCount": 3929,
       "frontmatter": {}
@@ -79,15 +103,46 @@
       "title": "随想02",
       "category": "idea",
       "author": "YuanQiiii",
+      "date": "2025-06-23",
+      "tags": [],
+      "description": "你说自我意识是不是因为记忆都是围绕自己而展开的从而导致的 如果训练的时候以情景的方式将自己放在训练的内容中 就是强调自我的概念 获得信息以自我为中心展开 所以自我其实是在记忆中不断连续的自己 一切记忆中的事件都由一个带有时间属性的自我因素 我在查询的时候就创造了自我 自我是可以对事件建立坐标系的 既...",
       "readingTime": 36,
       "wordCount": 10609,
       "frontmatter": {}
+    },
+    {
+      "url": "/content/markdown-demo",
+      "title": "Markdown 功能演示",
+      "category": "页面",
+      "author": "YuanQiiii",
+      "date": "2024-12-25T00:00:00.000Z",
+      "tags": [
+        "VitePress",
+        "Markdown",
+        "功能演示"
+      ],
+      "description": "展示VitePress支持的所有Markdown扩展功能",
+      "readingTime": 2,
+      "wordCount": 500,
+      "frontmatter": {
+        "title": "Markdown 功能演示",
+        "description": "展示VitePress支持的所有Markdown扩展功能",
+        "tags": [
+          "VitePress",
+          "Markdown",
+          "功能演示"
+        ],
+        "date": "2024-12-25T00:00:00.000Z"
+      }
     },
     {
       "url": "/content/note/day0",
       "title": "day0",
       "category": "note",
       "author": "YuanQiiii",
+      "date": "2025-06-23",
+      "tags": [],
+      "description": "教程：构建可扩展的实时系统——以  为例 我们以一个真实的高性能交易模拟系统  为例，详细探讨构建一个可扩展、高可用的系统所依赖的几大核心支柱：  微服务架构 (Microservice Architecture)  事件驱动架构 (Event-Driven Architecture - EDA) ...",
       "readingTime": 9,
       "wordCount": 2420,
       "frontmatter": {}
@@ -97,6 +152,9 @@
       "title": "docker",
       "category": "note",
       "author": "YuanQiiii",
+      "date": "2025-06-23",
+      "tags": [],
+      "description": "提升 Docker 镜像拉取效率：为 Linux 系统配置 Clash 代理\r \r 背景\r \r 在企业内网或特定的网络环境中，直接从 Docker Hub 等公共镜像仓库拉取镜像可能会遇到连接超时或速度缓慢的问题。这通常是由于网络策略或路由限制导致的。通过为 Docker 配置一个 HTTP 代理，...",
       "readingTime": 4,
       "wordCount": 939,
       "frontmatter": {}
@@ -106,6 +164,9 @@
       "title": "questions",
       "category": "note",
       "author": "YuanQiiii",
+      "date": "2025-06-23",
+      "tags": [],
+      "description": "问题解答 对于LLM来说，系统级提示词和用户级提示词有什么区别？ 系统提示词 vs. 用户提示词：为大型语言模型（LLM）设定舞台与指导表演 在与大型语言模型（LLM）的互动中，系统提示词（System Prompt） 和 用户提示词（User Prompt） 是两种关键的指令形式，它们共同塑造了模...",
       "readingTime": 5,
       "wordCount": 1405,
       "frontmatter": {}
@@ -115,6 +176,9 @@
       "title": "普通心理学",
       "category": "note",
       "author": "YuanQiiii",
+      "date": "2025-06-23",
+      "tags": [],
+      "description": "普通心理学 其他 1 现代心理学的发展 心理学史 - 柏拉图与亚里士多德的哲学思想之争 - 亚里士多德,约翰∙洛克:经验主义者 - 人们的心智生来是白板,通过在世界上的经验来获取信息 - 柏拉图,伊曼努尔∙ 康德:先天论者 - 人们生来便具有心理结构,对人们经验世界的方式产生了限制 - 实验心理学实...",
       "readingTime": 175,
       "wordCount": 52116,
       "frontmatter": {}
@@ -124,6 +188,9 @@
       "title": "模板",
       "category": "note",
       "author": "YuanQiiii",
+      "date": "2025-06-23",
+      "tags": [],
+      "description": "模板核心结构： 开头段 (Introduction): 引出话题 + 明确观点/立场 主体段1 (Body Paragraph 1): 第一个核心论点 + 论证/例证 主体段2 (Body Paragraph 2): 第二个核心论点 + 论证/例证 (或 反面论证/让步段) 结尾段 (Conclus...",
       "readingTime": 5,
       "wordCount": 1088,
       "frontmatter": {}
@@ -133,6 +200,9 @@
       "title": "基于邮件通信的AI伙伴",
       "category": "project",
       "author": "YuanQiiii",
+      "date": "2025-06-23",
+      "tags": [],
+      "description": "技术设计文档：基于推理增强型LLM的个性化记忆AI邮件伙伴系统 ----- 1.0 文档概述 (Document Overview) 1.1 目的 (Purpose) 本文档为“个性化记忆AI邮件伙伴系统V2”提供了详尽的逻辑设计、技术架构、数据模型、API规范和核心算法（提示词）设计。其目的是作为...",
       "readingTime": 8,
       "wordCount": 2241,
       "frontmatter": {}
@@ -142,6 +212,9 @@
       "title": "知识库",
       "category": "project",
       "author": "YuanQiiii",
+      "date": "2025-06-23",
+      "tags": [],
+      "description": "如何整合与ai对话的内容，创建一个可快速检索的问答知识库，支持模糊搜索，计划使用md作为基础，创建复杂的跨文件链接，建立自己的Wikipedia,生成交互式的概念连接图 或许这就是一个记忆库的雏形，高效搜索，高速渲染，文件自动管理，回收站设计 可视化逻辑？先考虑通过api的方式设计，可视化与后端完全...",
       "readingTime": 3,
       "wordCount": 699,
       "frontmatter": {}
@@ -151,9 +224,42 @@
       "title": "韭菜模拟器",
       "category": "project",
       "author": "YuanQiiii",
+      "date": "2025-06-23",
+      "tags": [],
+      "description": "准备和aq老师合作完成的开放复杂系统",
       "readingTime": 1,
       "wordCount": 17,
       "frontmatter": {}
+    },
+    {
+      "url": "/content/tags",
+      "title": "标签云",
+      "category": "页面",
+      "author": "YuanQiiii",
+      "date": "2025-06-25",
+      "tags": [],
+      "description": "文章标签分类",
+      "readingTime": 1,
+      "wordCount": 1,
+      "frontmatter": {
+        "title": "标签云",
+        "description": "文章标签分类"
+      }
+    },
+    {
+      "url": "/content/timeline",
+      "title": "博客时间线",
+      "category": "页面",
+      "author": "YuanQiiii",
+      "date": "2025-06-25",
+      "tags": [],
+      "description": "记录我的写作历程",
+      "readingTime": 1,
+      "wordCount": 37,
+      "frontmatter": {
+        "title": "博客时间线",
+        "description": "记录我的写作历程"
+      }
     }
   ]
 }

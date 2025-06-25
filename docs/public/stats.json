@@ -1,0 +1,61 @@
+{
+  "generated": "2025-06-25T01:42:03.651Z",
+  "overview": {
+    "totalArticles": 20,
+    "totalWords": 97274,
+    "totalReadingTime": 339,
+    "totalCategories": 5,
+    "totalTags": 3,
+    "averageWordsPerArticle": 4864,
+    "averageReadingTime": 17
+  },
+  "categories": [
+    {
+      "name": "guide",
+      "count": 3
+    },
+    {
+      "name": "idea",
+      "count": 6
+    },
+    {
+      "name": "页面",
+      "count": 3
+    },
+    {
+      "name": "note",
+      "count": 5
+    },
+    {
+      "name": "project",
+      "count": 3
+    }
+  ],
+  "monthlyStats": [
+    {
+      "month": "Wed Dec",
+      "count": 1,
+      "words": 500
+    },
+    {
+      "month": "2025-06",
+      "count": 19,
+      "words": 96774
+    }
+  ],
+  "topTags": [
+    {
+      "tag": "VitePress",
+      "count": 1
+    },
+    {
+      "tag": "Markdown",
+      "count": 1
+    },
+    {
+      "tag": "功能演示",
+      "count": 1
+    }
+  ],
+  "daysSinceStart": 541
+}

@@ -19,6 +19,28 @@ export default defineConfig({
         math: true,
         image: {
             lazyLoading: true
+        },
+        // 自定义容器标签
+        container: {
+            tipLabel: '💡 提示',
+            warningLabel: '⚠️ 警告',
+            dangerLabel: '🚨 危险',
+            infoLabel: 'ℹ️ 信息',
+            detailsLabel: '详细信息'
+        },
+        // 目录配置
+        toc: {
+            level: [1, 2, 3],
+            includeLevel: [2, 3]
+        },
+        // 代码高亮主题
+        theme: {
+            light: 'github-light',
+            dark: 'github-dark'
+        },
+        // 代码块配置
+        config: (md) => {
+            // 可以在这里添加更多 markdown-it 插件
         }
     },
 
@@ -44,14 +66,37 @@ export default defineConfig({
         // 导航配置
         nav: [
             { text: 'Home', link: '/' },
-            { text: 'List', link: '/content/list' },
+            {
+                text: '文章',
+                items: [
+                    { text: '文章列表', link: '/content/list' },
+                    { text: '时间线', link: '/content/timeline' },
+                    { text: '标签云', link: '/content/tags' }
+                ]
+            },
+            {
+                text: '分类',
+                items: [
+                    { text: '📝 技术笔记', link: '/note/' },
+                    { text: '💡 随想思考', link: '/idea/' },
+                    { text: '🚀 项目实践', link: '/project/' },
+                    { text: '📖 学习指南', link: '/guide/' }
+                ]
+            },
             { text: 'About', link: '/content/about' },
             { text: 'Friend', link: '/content/friend' }
         ],
 
         // 社交链接
         socialLinks: [
-            { icon: 'github', link: 'https://github.com/YuanQiiii' }
+            { icon: 'github', link: 'https://github.com/YuanQiiii' },
+            {
+                icon: {
+                    svg: '<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Email</title><path d="M24 5.457v13.086c0 .974-.791 1.764-1.765 1.764H1.765C.791 20.307 0 19.517 0 18.543V5.457c0-.974.791-1.764 1.765-1.764h20.47C23.209 3.693 24 4.483 24 5.457zM2.118 6.271L12 13.118l9.882-6.847H2.118zM1.412 18.543c0 .194.158.353.353.353h20.47c.194 0 .353-.158.353-.353V7.059L12 14.941 1.412 7.059v11.484z"/></svg>'
+                },
+                link: 'mailto:your-email@example.com',
+                ariaLabel: '发送邮件'
+            }
         ],
 
         // 搜索配置
@@ -76,6 +121,13 @@ export default defineConfig({
                             }
                         }
                     }
+                },
+                miniSearch: {
+                    searchOptions: {
+                        fuzzy: 0.2,
+                        prefix: true,
+                        boost: { title: 4, text: 2, titles: 1 }
+                    }
                 }
             }
         },
@@ -96,6 +148,12 @@ export default defineConfig({
         docFooter: {
             prev: false,
             next: false
+        },
+
+        // 页脚信息
+        footer: {
+            message: 'Released under the <a href="https://github.com/YuanQiiii/yuanqiiii.github.io/blob/main/LICENSE">MIT License</a>.',
+            copyright: 'Copyright © 2024-present YuanQiiii'
         },
 
         // 本地化文本
