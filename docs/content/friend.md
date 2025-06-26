@@ -1,8 +1,12 @@
 ---
 layout: home
 hero:
-  name: "Friend" 
-
+  name: "Friend"
+title: Friend
+description: "我的朋友们"
+date: 2025-06-26
+tags:
+  - Friend
 ---
 
 <script setup>

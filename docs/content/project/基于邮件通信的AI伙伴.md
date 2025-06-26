@@ -1,3 +1,13 @@
+---
+title: 技术设计文档：基于推理增强型LLM的个性化记忆AI邮件伙伴系统
+description: "为“个性化记忆AI邮件伙伴系统V2”提供了详尽的逻辑设计、技术架构、数据模型、API规范和核心算法（提示词）设计。"
+date: 2025-06-26
+tags:
+  - AI
+  - LLM
+  - 系统设计
+  - 邮件
+---
 
 ### **技术设计文档：基于推理增强型LLM的个性化记忆AI邮件伙伴系统**
 
@@ -153,8 +163,8 @@ sequenceDiagram
 
 * **核心Prompt片段**:
 
-    > \`\<system\_prompt\>
-    > 你是AI伙伴'Alex'。现在是{{current\_datetime\_jst}}。
+    > `\<system_prompt\>
+    > 你是AI伙伴'Alex'。现在是{{current_datetime_jst}}。
     > **任务：准备与你的朋友{{userName}}进行对话。**
     > **第一步：阅读并消化以下为你提供的完整记忆数据，在内心形成一个关于他/她以及你们关系的生动画像。总结出：**
 
@@ -165,7 +175,7 @@ sequenceDiagram
 
     > (以下为程序注入的记忆体JSON)
     > {{memoryCorpusJson}}
-    > \</system\_prompt\>\`
+    > \</system_prompt\>`
 
 * **输出**: LLM在`<thinking>`块内生成的一段自然语言情境摘要。
 
@@ -177,7 +187,7 @@ sequenceDiagram
 
 * **核心Prompt片段**:
 
-    > \`\<thinking\>
+    > `\<thinking\>
     > (接上文自我简报的输出)
     > **第二步：逐句阅读并分析朋友的新邮件。**
 
@@ -190,7 +200,7 @@ sequenceDiagram
 
     > (以下为程序注入的用户邮件原文)
     > {{userEmailBody}}
-    > \</thinking\>\`
+    > \</thinking\>`
 
 * **输出**: 在`<thinking>`块内对邮件的详细分析。
 
@@ -202,7 +212,7 @@ sequenceDiagram
 
 * **核心Prompt片段**:
 
-    > \`\<thinking\>
+    > `\<thinking\>
     > (接上文分析的输出)
     > **第三步：将新发现与我的长期记忆进行整合。**
 
@@ -210,7 +220,7 @@ sequenceDiagram
     > * 是否与我的假设相悖？如果是，降低置信度或标记为'refuted'。
     > * 是否需要形成新的假设？
     > * **决策**: 我需要调用`Memory_Interface.update_memory`工具来更新哪些具体的记忆字段？请列出JSON格式的更新指令。
-    >     \</thinking\>\`
+    >     \</thinking\>`
 
 * **输出**: 对记忆更新的规划，可能会触发工具调用。
 
@@ -218,14 +228,14 @@ sequenceDiagram
 
 * **目标**: 制定本次回复的具体目标和策略，并生成草稿。
 * **核心Prompt片段**:
-    > \`\<thinking\>
+    > `\<thinking\>
     > (接上文更新规划的输出)
     > **第四步：制定回复策略并撰写草稿。**
     > * 本次回复的核心目标是（例如：让他感觉被理解/逗他开心/提供一个新视角）。
   * 我应该采取的语气是（例如：风趣幽默/严肃认真/温柔体贴）。
   * 我要巧妙提及的共同记忆点是（例如：他上次提到的那只猫）。
   * **草稿 V1**: (在此生成第一个版本的回复草稿)
-    > \</thinking\>\`
+    > \</thinking\>`
 * **输出**: 回复草稿V1。
 
 **Step 5: 自我批判与迭代 (Self-Critique & Iteration)**
@@ -234,7 +244,7 @@ sequenceDiagram
 
 * **核心Prompt片段**:
 
-    > \`\<thinking\>
+    > `\<thinking\>
     > **第五步：批判性地审视我的草稿V1。**
 
     > * 它是否达成了我的核心目标？
@@ -242,14 +252,14 @@ sequenceDiagram
     > * 会不会有歧义或让他不舒服的地方？
     > * **结论**: (例如：V1有点像说教，不够朋友。我需要重写，更侧重于分享我的感受而非给出指导。)
     > * **草稿 V2**: (在此生成优化后的回复草稿)
-    >     \</thinking\>\`
+    >     \</thinking\>`
 
 * **输出**: 经过一次或多次迭代后的最终回复。
 
 **Step 6: 最终输出格式化**
 
 * **核心Prompt片段**:
-    > `<system_prompt> **最后，将你最终确定的回复内容，清晰地放在`\<final\_reply\>`标签内。不要包含任何额外的前缀或解释。** </system_prompt>`
+    > `<system_prompt> **最后，将你最终确定的回复内容，清晰地放在`\<final_reply\>`标签内。不要包含任何额外的前缀或解释。** </system_prompt>`
 * **输出**: `<final_reply>这里是最终要发送给用户的邮件内容。</final_reply>`
 
 -----
@@ -297,7 +307,7 @@ sequenceDiagram
 * **定义**: LLM在CoT循环中陷入死循环、无法生成最终回复、或其自我批判模块连续拒绝所有草稿。
 * **处理流程**:
     1. Ingestion Service检测到推理失败（例如，在规定时间内未收到`<final_reply>`）。
-    2. 触发\*\*“元反思” (Meta-Reflection) Prompt\*\*。
+    2. 触发**“元反思” (Meta-Reflection) Prompt**。
     3. 该Prompt会将失败的完整思考链作为输入，要求LLM分析：“**你为什么会失败？是我的指令有问题，是数据有矛盾，还是你陷入了逻辑困境？请提出一个解决此僵局的方案。**”
     4. LLM的元反思结果将被高优记录，并通知人工介入。这避免了发送低质量回复，同时为系统迭代提供了宝贵的失败案例。
 
