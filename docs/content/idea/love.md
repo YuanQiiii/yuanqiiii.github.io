@@ -1,3 +1,11 @@
+---
+title: ai&human
+description: 爱情故事 
+date: 2025-3-24
+tags: [ai, 人类, 爱情]
+---
+
+
 > [!tip]
 > 作者为 Das6fY5，转自[链接](https://adnmb3.com/t/32444047)
 ---

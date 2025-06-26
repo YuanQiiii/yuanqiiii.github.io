@@ -1,7 +1,7 @@
 ---
 title: 系统提示词
 description: 用于指导copliot的系统提示词  
-date: 2024-12-25
+date: 2025-6-21
 tags: [copliot, prompt, llm]
 ---
 ```
