@@ -95,22 +95,19 @@ function initializeColorPalette() {
   if (state.isDarkMode) {
     // 暗色模式：使用更多亮色调色板，提高亮度
     state.colorPalette = [
-      'rgba(255, 182, 193, 0.9)',  // 亮粉色
-      'rgba(173, 216, 230, 0.9)',  // 亮蓝色
-      'rgba(144, 238, 144, 0.9)',  // 亮绿色
-      'rgba(255, 218, 185, 0.9)',  // 桃色
+      'rgba(183, 154, 185, 0.9)',  // 亮粉色
+      'rgba(156, 178, 186, 0.9)',  // 亮蓝色
+      'rgba(160, 167, 181, 0.9)',  // 亮绿色
+      'rgba(220, 183, 207, 0.9)',  // 桃色
       'rgba(221, 160, 221, 0.9)',  // 亮紫色
-      'rgba(255, 255, 224, 0.9)',  // 亮黄色
-      'rgba(255, 160, 122, 0.9)',  // 亮橙色
+      'rgba(200, 173, 180, 0.9)',  // 亮黄色
+      'rgba(181, 218, 219, 0.9)',  // 亮橙色
       'rgba(176, 224, 230, 0.9)',  // 粉蓝色
-      'rgba(255, 192, 203, 0.9)',  // 粉红色
-      'rgba(152, 251, 152, 0.9)',  // 淡绿色
-      'rgba(255, 20, 147, 0.9)',   // 深粉色
-      'rgba(135, 206, 250, 0.9)',  // 天蓝色
-      'rgba(255, 215, 0, 0.9)',    // 金色
-      'rgba(186, 85, 211, 0.9)',   // 中紫色
-      'rgba(255, 99, 71, 0.9)',    // 番茄色
-      'rgba(64, 224, 208, 0.9)',   // 青绿色
+      'rgba(230, 208, 211, 0.9)',  // 粉红色
+      'rgba(192, 209, 212, 0.9)',  // 淡绿色
+      'rgba(186, 217, 237, 0.9)',  // 天蓝色
+      'rgba(209, 187, 225, 0.9)',    // 金色
+      'rgba(162, 193, 189, 0.9)',   // 青绿色
     ]
   } else {
     // 亮色模式：使用更多深色调色板，提高对比度
@@ -215,14 +212,14 @@ class Particle {
     
     // 添加内部光晕效果，增大范围
     ctx.beginPath()
-    ctx.arc(this.x, this.y, this.radius * 0.6, 0, Math.PI * 2) // 从0.5增加到0.6
-    ctx.fillStyle = this.color.replace(/[\d.]+\)$/g, '0.6)') // 提高内部光晕亮度
+    ctx.arc(this.x, this.y, this.radius * 0.45, 0, Math.PI * 2) // 从0.5增加到0.6
+    ctx.fillStyle = this.color.replace(/[\d.]+\)$/g, '0.45)') // 提高内部光晕亮度
     ctx.fill()
     
     // 添加核心高亮效果，增大范围
     ctx.beginPath()
-    ctx.arc(this.x, this.y, this.radius * 0.4, 0, Math.PI * 2) // 从0.3增加到0.4
-    ctx.fillStyle = this.color.replace(/[\d.]+\)$/g, '0.4)') // 进一步提高核心亮度
+    ctx.arc(this.x, this.y, this.radius * 0.3, 0, Math.PI * 2) // 从0.3增加到0.4
+    ctx.fillStyle = this.color.replace(/[\d.]+\)$/g, '0.3)') // 进一步提高核心亮度
     ctx.fill()
   }
 }
