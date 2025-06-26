@@ -1,19 +1,201 @@
 {
-  "generated": "2025-06-25T12:31:05.508Z",
-  "totalTags": 12,
-  "totalTaggedArticles": 4,
+  "generated": "2025-06-26T11:34:03.752Z",
+  "totalTags": 55,
+  "totalTaggedArticles": 22,
   "tags": [
     {
+      "name": "AI",
+      "count": 4,
+      "size": "small",
+      "articles": [
+        {
+          "title": "随想02",
+          "url": "/content/idea/随想02",
+          "date": "2025-06-26T00:00:00.000Z",
+          "category": "idea",
+          "description": "关于自我意识、记忆、AI训练和全局工作空间理论的思考"
+        },
+        {
+          "title": "问题解答",
+          "url": "/content/note/questions",
+          "date": "2025-06-26T00:00:00.000Z",
+          "category": "note",
+          "description": "关于LLM系统级提示词和用户级提示词区别的解答"
+        },
+        {
+          "title": "技术设计文档：基于推理增强型LLM的个性化记忆AI邮件伙伴系统",
+          "url": "/content/project/基于邮件通信的AI伙伴",
+          "date": "2025-06-26T00:00:00.000Z",
+          "category": "project",
+          "description": "为“个性化记忆AI邮件伙伴系统V2”提供了详尽的逻辑设计、技术架构、数据模型、API规范和核心算法（提示词）设计。"
+        },
+        {
+          "title": "知识库项目构想",
+          "url": "/content/project/知识库",
+          "date": "2025-06-26T00:00:00.000Z",
+          "category": "project",
+          "description": "关于构建个人知识库的一些想法和技术思考"
+        }
+      ]
+    },
+    {
+      "name": "系统设计",
+      "count": 3,
+      "size": "small",
+      "articles": [
+        {
+          "title": "构建可扩展的实时系统——以 `arbitrage-engine` 为例",
+          "url": "/content/note/day0",
+          "date": "2025-06-26T00:00:00.000Z",
+          "category": "note",
+          "description": "详细探讨构建一个可扩展、高可用的系统所依赖的几大核心支柱"
+        },
+        {
+          "title": "技术设计文档：基于推理增强型LLM的个性化记忆AI邮件伙伴系统",
+          "url": "/content/project/基于邮件通信的AI伙伴",
+          "date": "2025-06-26T00:00:00.000Z",
+          "category": "project",
+          "description": "为“个性化记忆AI邮件伙伴系统V2”提供了详尽的逻辑设计、技术架构、数据模型、API规范和核心算法（提示词）设计。"
+        },
+        {
+          "title": "知识库项目构想",
+          "url": "/content/project/知识库",
+          "date": "2025-06-26T00:00:00.000Z",
+          "category": "project",
+          "description": "关于构建个人知识库的一些想法和技术思考"
+        }
+      ]
+    },
+    {
       "name": "Linux",
+      "count": 2,
+      "size": "small",
+      "articles": [
+        {
+          "title": "提升 Docker 镜像拉取效率：为 Linux 系统配置 Clash 代理",
+          "url": "/content/note/docker",
+          "date": "2025-06-26T00:00:00.000Z",
+          "category": "note",
+          "description": "详细介绍如何在 Linux 系统上，为 Docker 服务配置 Clash 作为其网络代理。"
+        },
+        {
+          "title": "如何在启用 Secure Boot 的 Linux 系统上正确安装 NVIDIA 官方驱动",
+          "url": "/content/guide/nvidia",
+          "date": "2025-6-20",
+          "category": "guide",
+          "description": "文章描述"
+        }
+      ]
+    },
+    {
+      "name": "随想",
+      "count": 2,
+      "size": "small",
+      "articles": [
+        {
+          "title": "随想01",
+          "url": "/content/idea/随想01",
+          "date": "2025-06-26T00:00:00.000Z",
+          "category": "idea",
+          "description": "关于信息时代、学习、编程和人工智能的一些思考"
+        },
+        {
+          "title": "随想02",
+          "url": "/content/idea/随想02",
+          "date": "2025-06-26T00:00:00.000Z",
+          "category": "idea",
+          "description": "关于自我意识、记忆、AI训练和全局工作空间理论的思考"
+        }
+      ]
+    },
+    {
+      "name": "LLM",
+      "count": 2,
+      "size": "small",
+      "articles": [
+        {
+          "title": "问题解答",
+          "url": "/content/note/questions",
+          "date": "2025-06-26T00:00:00.000Z",
+          "category": "note",
+          "description": "关于LLM系统级提示词和用户级提示词区别的解答"
+        },
+        {
+          "title": "技术设计文档：基于推理增强型LLM的个性化记忆AI邮件伙伴系统",
+          "url": "/content/project/基于邮件通信的AI伙伴",
+          "date": "2025-06-26T00:00:00.000Z",
+          "category": "project",
+          "description": "为“个性化记忆AI邮件伙伴系统V2”提供了详尽的逻辑设计、技术架构、数据模型、API规范和核心算法（提示词）设计。"
+        }
+      ]
+    },
+    {
+      "name": "自动生成",
       "count": 1,
       "size": "small",
       "articles": [
         {
-          "title": "如何在启用 Secure Boot 的 Linux 系统上正确安装 NVIDIA 官方驱动",
-          "url": "/content/guide/nvidia",
-          "date": "2024-12-25T00:00:00.000Z",
+          "title": "自动生成功能说明",
+          "url": "/content/auto-generation",
+          "date": "2025-06-26T00:00:00.000Z",
+          "category": "页面",
+          "description": "博客支持的多种数据自动生成功能说明"
+        }
+      ]
+    },
+    {
+      "name": "功能说明",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "自动生成功能说明",
+          "url": "/content/auto-generation",
+          "date": "2025-06-26T00:00:00.000Z",
+          "category": "页面",
+          "description": "博客支持的多种数据自动生成功能说明"
+        }
+      ]
+    },
+    {
+      "name": "setting",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "如何使用 GitHub Gist 优雅地分发和同步配置文件？",
+          "url": "/content/guide/gist",
+          "date": "2025-6-26",
           "category": "guide",
-          "description": "文章描述"
+          "description": "各种配置文件的分发"
+        }
+      ]
+    },
+    {
+      "name": "Gist",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "如何使用 GitHub Gist 优雅地分发和同步配置文件？",
+          "url": "/content/guide/gist",
+          "date": "2025-6-26",
+          "category": "guide",
+          "description": "各种配置文件的分发"
+        }
+      ]
+    },
+    {
+      "name": "分享",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "如何使用 GitHub Gist 优雅地分发和同步配置文件？",
+          "url": "/content/guide/gist",
+          "date": "2025-6-26",
+          "category": "guide",
+          "description": "各种配置文件的分发"
         }
       ]
     },
@@ -25,7 +207,7 @@
         {
           "title": "如何在启用 Secure Boot 的 Linux 系统上正确安装 NVIDIA 官方驱动",
           "url": "/content/guide/nvidia",
-          "date": "2024-12-25T00:00:00.000Z",
+          "date": "2025-6-20",
           "category": "guide",
           "description": "文章描述"
         }
@@ -39,7 +221,7 @@
         {
           "title": "如何在启用 Secure Boot 的 Linux 系统上正确安装 NVIDIA 官方驱动",
           "url": "/content/guide/nvidia",
-          "date": "2024-12-25T00:00:00.000Z",
+          "date": "2025-6-20",
           "category": "guide",
           "description": "文章描述"
         }
@@ -53,7 +235,7 @@
         {
           "title": "系统提示词",
           "url": "/content/guide/prompt",
-          "date": "2024-12-25T00:00:00.000Z",
+          "date": "2025-6-21",
           "category": "guide",
           "description": "用于指导copliot的系统提示词"
         }
@@ -67,7 +249,7 @@
         {
           "title": "系统提示词",
           "url": "/content/guide/prompt",
-          "date": "2024-12-25T00:00:00.000Z",
+          "date": "2025-6-21",
           "category": "guide",
           "description": "用于指导copliot的系统提示词"
         }
@@ -81,7 +263,7 @@
         {
           "title": "系统提示词",
           "url": "/content/guide/prompt",
-          "date": "2024-12-25T00:00:00.000Z",
+          "date": "2025-6-21",
           "category": "guide",
           "description": "用于指导copliot的系统提示词"
         }
@@ -95,7 +277,7 @@
         {
           "title": "如何从零开始，将一台旧笔记本变身为家庭服务器？",
           "url": "/content/guide/server",
-          "date": "2024-12-25T00:00:00.000Z",
+          "date": "2025-6-19",
           "category": "guide",
           "description": "服务器搭建"
         }
@@ -109,7 +291,7 @@
         {
           "title": "如何从零开始，将一台旧笔记本变身为家庭服务器？",
           "url": "/content/guide/server",
-          "date": "2024-12-25T00:00:00.000Z",
+          "date": "2025-6-19",
           "category": "guide",
           "description": "服务器搭建"
         }
@@ -123,9 +305,219 @@
         {
           "title": "如何从零开始，将一台旧笔记本变身为家庭服务器？",
           "url": "/content/guide/server",
-          "date": "2024-12-25T00:00:00.000Z",
+          "date": "2025-6-19",
           "category": "guide",
           "description": "服务器搭建"
+        }
+      ]
+    },
+    {
+      "name": "ai",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "ai&human",
+          "url": "/content/idea/love",
+          "date": "2025-3-24",
+          "category": "idea",
+          "description": "爱情故事"
+        }
+      ]
+    },
+    {
+      "name": "人类",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "ai&human",
+          "url": "/content/idea/love",
+          "date": "2025-3-24",
+          "category": "idea",
+          "description": "爱情故事"
+        }
+      ]
+    },
+    {
+      "name": "爱情",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "ai&human",
+          "url": "/content/idea/love",
+          "date": "2025-3-24",
+          "category": "idea",
+          "description": "爱情故事"
+        }
+      ]
+    },
+    {
+      "name": "时间",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "2024-2025",
+          "url": "/content/idea/年终总结",
+          "date": "2024-12-29T00:00:00.000Z",
+          "category": "idea",
+          "description": "年终总结"
+        }
+      ]
+    },
+    {
+      "name": "未来",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "2024-2025",
+          "url": "/content/idea/年终总结",
+          "date": "2024-12-29T00:00:00.000Z",
+          "category": "idea",
+          "description": "年终总结"
+        }
+      ]
+    },
+    {
+      "name": "大学",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "2024-2025",
+          "url": "/content/idea/年终总结",
+          "date": "2024-12-29T00:00:00.000Z",
+          "category": "idea",
+          "description": "年终总结"
+        }
+      ]
+    },
+    {
+      "name": "网站设计",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "网站设计思路",
+          "url": "/content/idea/网站设计思路",
+          "date": "2025-06-26T00:00:00.000Z",
+          "category": "idea",
+          "description": "关于网站设计的一些想法"
+        }
+      ]
+    },
+    {
+      "name": "桑吉图",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "网站设计思路",
+          "url": "/content/idea/网站设计思路",
+          "date": "2025-06-26T00:00:00.000Z",
+          "category": "idea",
+          "description": "关于网站设计的一些想法"
+        }
+      ]
+    },
+    {
+      "name": "行为树",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "网站设计思路",
+          "url": "/content/idea/网站设计思路",
+          "date": "2025-06-26T00:00:00.000Z",
+          "category": "idea",
+          "description": "关于网站设计的一些想法"
+        }
+      ]
+    },
+    {
+      "name": "git",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "谈谈对于git设计的理解",
+          "url": "/content/idea/谈谈对于git设计的理解",
+          "date": "2025-06-26T00:00:00.000Z",
+          "category": "idea",
+          "description": "用“建大楼”理解 Git 的协作模式"
+        }
+      ]
+    },
+    {
+      "name": "协作",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "谈谈对于git设计的理解",
+          "url": "/content/idea/谈谈对于git设计的理解",
+          "date": "2025-06-26T00:00:00.000Z",
+          "category": "idea",
+          "description": "用“建大楼”理解 Git 的协作模式"
+        }
+      ]
+    },
+    {
+      "name": "设计",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "谈谈对于git设计的理解",
+          "url": "/content/idea/谈谈对于git设计的理解",
+          "date": "2025-06-26T00:00:00.000Z",
+          "category": "idea",
+          "description": "用“建大楼”理解 Git 的协作模式"
+        }
+      ]
+    },
+    {
+      "name": "人工智能",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "随想01",
+          "url": "/content/idea/随想01",
+          "date": "2025-06-26T00:00:00.000Z",
+          "category": "idea",
+          "description": "关于信息时代、学习、编程和人工智能的一些思考"
+        }
+      ]
+    },
+    {
+      "name": "学习",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "随想01",
+          "url": "/content/idea/随想01",
+          "date": "2025-06-26T00:00:00.000Z",
+          "category": "idea",
+          "description": "关于信息时代、学习、编程和人工智能的一些思考"
+        }
+      ]
+    },
+    {
+      "name": "自我意识",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "随想02",
+          "url": "/content/idea/随想02",
+          "date": "2025-06-26T00:00:00.000Z",
+          "category": "idea",
+          "description": "关于自我意识、记忆、AI训练和全局工作空间理论的思考"
         }
       ]
     },
@@ -168,6 +560,272 @@
           "date": "2024-12-25T00:00:00.000Z",
           "category": "页面",
           "description": "展示VitePress支持的所有Markdown扩展功能"
+        }
+      ]
+    },
+    {
+      "name": "微服务",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "构建可扩展的实时系统——以 `arbitrage-engine` 为例",
+          "url": "/content/note/day0",
+          "date": "2025-06-26T00:00:00.000Z",
+          "category": "note",
+          "description": "详细探讨构建一个可扩展、高可用的系统所依赖的几大核心支柱"
+        }
+      ]
+    },
+    {
+      "name": "事件驱动",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "构建可扩展的实时系统——以 `arbitrage-engine` 为例",
+          "url": "/content/note/day0",
+          "date": "2025-06-26T00:00:00.000Z",
+          "category": "note",
+          "description": "详细探讨构建一个可扩展、高可用的系统所依赖的几大核心支柱"
+        }
+      ]
+    },
+    {
+      "name": "Kafka",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "构建可扩展的实时系统——以 `arbitrage-engine` 为例",
+          "url": "/content/note/day0",
+          "date": "2025-06-26T00:00:00.000Z",
+          "category": "note",
+          "description": "详细探讨构建一个可扩展、高可用的系统所依赖的几大核心支柱"
+        }
+      ]
+    },
+    {
+      "name": "Docker",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "提升 Docker 镜像拉取效率：为 Linux 系统配置 Clash 代理",
+          "url": "/content/note/docker",
+          "date": "2025-06-26T00:00:00.000Z",
+          "category": "note",
+          "description": "详细介绍如何在 Linux 系统上，为 Docker 服务配置 Clash 作为其网络代理。"
+        }
+      ]
+    },
+    {
+      "name": "Clash",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "提升 Docker 镜像拉取效率：为 Linux 系统配置 Clash 代理",
+          "url": "/content/note/docker",
+          "date": "2025-06-26T00:00:00.000Z",
+          "category": "note",
+          "description": "详细介绍如何在 Linux 系统上，为 Docker 服务配置 Clash 作为其网络代理。"
+        }
+      ]
+    },
+    {
+      "name": "代理",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "提升 Docker 镜像拉取效率：为 Linux 系统配置 Clash 代理",
+          "url": "/content/note/docker",
+          "date": "2025-06-26T00:00:00.000Z",
+          "category": "note",
+          "description": "详细介绍如何在 Linux 系统上，为 Docker 服务配置 Clash 作为其网络代理。"
+        }
+      ]
+    },
+    {
+      "name": "Prompt",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "问题解答",
+          "url": "/content/note/questions",
+          "date": "2025-06-26T00:00:00.000Z",
+          "category": "note",
+          "description": "关于LLM系统级提示词和用户级提示词区别的解答"
+        }
+      ]
+    },
+    {
+      "name": "心理学",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "普通心理学",
+          "url": "/content/note/普通心理学",
+          "date": "2025-06-26T00:00:00.000Z",
+          "category": "note",
+          "description": "关于普通心理学的学习笔记"
+        }
+      ]
+    },
+    {
+      "name": "笔记",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "普通心理学",
+          "url": "/content/note/普通心理学",
+          "date": "2025-06-26T00:00:00.000Z",
+          "category": "note",
+          "description": "关于普通心理学的学习笔记"
+        }
+      ]
+    },
+    {
+      "name": "六级",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "六级作文模板",
+          "url": "/content/note/模板",
+          "date": "2025-06-26T00:00:00.000Z",
+          "category": "note",
+          "description": "六级作文模板范文，包含核心结构和关键提示"
+        }
+      ]
+    },
+    {
+      "name": "作文",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "六级作文模板",
+          "url": "/content/note/模板",
+          "date": "2025-06-26T00:00:00.000Z",
+          "category": "note",
+          "description": "六级作文模板范文，包含核心结构和关键提示"
+        }
+      ]
+    },
+    {
+      "name": "模板",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "六级作文模板",
+          "url": "/content/note/模板",
+          "date": "2025-06-26T00:00:00.000Z",
+          "category": "note",
+          "description": "六级作文模板范文，包含核心结构和关键提示"
+        }
+      ]
+    },
+    {
+      "name": "邮件",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "技术设计文档：基于推理增强型LLM的个性化记忆AI邮件伙伴系统",
+          "url": "/content/project/基于邮件通信的AI伙伴",
+          "date": "2025-06-26T00:00:00.000Z",
+          "category": "project",
+          "description": "为“个性化记忆AI邮件伙伴系统V2”提供了详尽的逻辑设计、技术架构、数据模型、API规范和核心算法（提示词）设计。"
+        }
+      ]
+    },
+    {
+      "name": "知识库",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "知识库项目构想",
+          "url": "/content/project/知识库",
+          "date": "2025-06-26T00:00:00.000Z",
+          "category": "project",
+          "description": "关于构建个人知识库的一些想法和技术思考"
+        }
+      ]
+    },
+    {
+      "name": "项目",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "韭菜模拟器",
+          "url": "/content/project/韭菜模拟器",
+          "date": "2025-06-26T00:00:00.000Z",
+          "category": "project",
+          "description": "与aq老师合作的开放复杂系统项目"
+        }
+      ]
+    },
+    {
+      "name": "合作",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "韭菜模拟器",
+          "url": "/content/project/韭菜模拟器",
+          "date": "2025-06-26T00:00:00.000Z",
+          "category": "project",
+          "description": "与aq老师合作的开放复杂系统项目"
+        }
+      ]
+    },
+    {
+      "name": "复杂系统",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "韭菜模拟器",
+          "url": "/content/project/韭菜模拟器",
+          "date": "2025-06-26T00:00:00.000Z",
+          "category": "project",
+          "description": "与aq老师合作的开放复杂系统项目"
+        }
+      ]
+    },
+    {
+      "name": "标签云",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "标签云",
+          "url": "/content/tags",
+          "date": "2025-06-26T00:00:00.000Z",
+          "category": "页面",
+          "description": "文章标签分类"
+        }
+      ]
+    },
+    {
+      "name": "时间线",
+      "count": 1,
+      "size": "small",
+      "articles": [
+        {
+          "title": "博客时间线",
+          "url": "/content/timeline",
+          "date": "2025-06-26T00:00:00.000Z",
+          "category": "页面",
+          "description": "记录我的写作历程"
         }
       ]
     }

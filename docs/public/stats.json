@@ -1,12 +1,12 @@
 {
-  "generated": "2025-06-25T12:31:05.509Z",
+  "generated": "2025-06-26T11:34:03.752Z",
   "overview": {
-    "totalArticles": 21,
-    "totalWords": 97550,
-    "totalReadingTime": 340,
+    "totalArticles": 22,
+    "totalWords": 98671,
+    "totalReadingTime": 344,
     "totalCategories": 5,
-    "totalTags": 12,
-    "averageWordsPerArticle": 4645,
+    "totalTags": 55,
+    "averageWordsPerArticle": 4485,
     "averageReadingTime": 16
   },
   "categories": [
@@ -16,7 +16,7 @@
     },
     {
       "name": "guide",
-      "count": 3
+      "count": 4
     },
     {
       "name": "idea",
@@ -34,56 +34,71 @@
   "monthlyStats": [
     {
       "month": "Wed Dec",
-      "count": 4,
-      "words": 7379
+      "count": 1,
+      "words": 500
     },
     {
-      "month": "2025-06",
-      "count": 17,
-      "words": 90171
+      "month": "Thu Jun",
+      "count": 15,
+      "words": 77482
+    },
+    {
+      "month": "Sun Dec",
+      "count": 1,
+      "words": 3133
+    },
+    {
+      "month": "2025-6-",
+      "count": 4,
+      "words": 8002
+    },
+    {
+      "month": "2025-3-",
+      "count": 1,
+      "words": 9554
     }
   ],
   "topTags": [
     {
+      "tag": "AI",
+      "count": 4
+    },
+    {
+      "tag": "系统设计",
+      "count": 3
+    },
+    {
       "tag": "Linux",
+      "count": 2
+    },
+    {
+      "tag": "随想",
+      "count": 2
+    },
+    {
+      "tag": "LLM",
+      "count": 2
+    },
+    {
+      "tag": "自动生成",
       "count": 1
     },
     {
-      "tag": "NVIDIA",
+      "tag": "功能说明",
       "count": 1
     },
     {
-      "tag": "Boot",
+      "tag": "setting",
       "count": 1
     },
     {
-      "tag": "copliot",
+      "tag": "Gist",
       "count": 1
     },
     {
-      "tag": "prompt",
-      "count": 1
-    },
-    {
-      "tag": "llm",
-      "count": 1
-    },
-    {
-      "tag": "server",
-      "count": 1
-    },
-    {
-      "tag": "linux",
-      "count": 1
-    },
-    {
-      "tag": "技术",
-      "count": 1
-    },
-    {
-      "tag": "VitePress",
+      "tag": "分享",
       "count": 1
     }
   ],
-  "daysSinceStart": 541
+  "daysSinceStart": 542
 }
