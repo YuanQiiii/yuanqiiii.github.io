@@ -24,11 +24,10 @@ tags: [Linux, NVIDIA, Boot]
 1. **确认 Secure Boot 已启用**
     打开终端，运行以下命令：
 
-    mokutil --sb-state
-
+    ```bash
+      mokutil --sb-state
+      # 如果输出为 `SecureBoot enabled`，您就需要遵循本指南。
     ```
-
-    如果输出为 `SecureBoot enabled`，您就需要遵循本指南。
 
 2. **确保系统已是最新状态**
 
