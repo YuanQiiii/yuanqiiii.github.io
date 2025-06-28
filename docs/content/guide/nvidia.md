@@ -24,8 +24,8 @@ tags: [Linux, NVIDIA, Boot]
 1. **确认 Secure Boot 已启用**
     打开终端，运行以下命令：
 
-    ```bash
     mokutil --sb-state
+
     ```
 
     如果输出为 `SecureBoot enabled`，您就需要遵循本指南。
@@ -265,14 +265,14 @@ tags: [Linux, NVIDIA, Boot]
 
   * **APT 安装的驱动：**
 
-        ```bash
+      ```bash
         # 这会彻底清除所有 NVIDIA 相关的包
         sudo apt autoremove --purge nvidia-*
-        ```
+      ```
 
   * **.run 脚本安装的驱动：**
 
-        ```bash
+      ```bash
         # 使用你安装时的同一个 .run 文件，加上 --uninstall 参数
         sudo ./NVIDIA-Linux-x86_64-*.run --uninstall
-        ```
+      ```
