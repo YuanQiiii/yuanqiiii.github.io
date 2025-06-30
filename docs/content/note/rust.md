@@ -1,6 +1,6 @@
 ---
 title:rust学习笔记
-description: 记录学习rust遇到的一些困惑
+description:记录学习rust遇到的一些困惑
 ---
 
 
