@@ -101,11 +101,17 @@
 }
 
 /* 在覆盖层中缩放的 SVG */
-.mermaid-overlay svg {
+.mermaid-overlay .mermaid-scaler {
   max-width: 95vw;
   max-height: 95vh;
-  width: auto;
-  height: auto;
   background: white;
+  padding: 2rem;
   border-radius: 8px;
+  overflow: auto; /* Add scrollbars if content overflows */
+}
+
+.mermaid-overlay .mermaid-scaler svg {
+  display: block;
+  width: 100%;
+  height: 100%;
 }

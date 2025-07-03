@@ -30,15 +30,21 @@ const setupMermaidZoom = () => {
       const overlay = document.createElement('div')
       overlay.className = 'mermaid-overlay'
       
+      // Create a dedicated scaler container
+      const scaler = document.createElement('div')
+      scaler.className = 'mermaid-scaler'
+
       // Clone SVG to not affect the original
       const clonedSvg = svg.cloneNode(true)
       
-      // IMPORTANT: Remove fixed dimensions to allow scaling
+      // Clean up attributes to allow CSS to control it
       clonedSvg.removeAttribute('height')
       clonedSvg.removeAttribute('width')
       clonedSvg.removeAttribute('style')
-
-      overlay.appendChild(clonedSvg)
+      
+      // Put the cleaned clone in the scaler, and the scaler in the overlay
+      scaler.appendChild(clonedSvg)
+      overlay.appendChild(scaler)
       
       // Add overlay to body
       document.body.appendChild(overlay)
