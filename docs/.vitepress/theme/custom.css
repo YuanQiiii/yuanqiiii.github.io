@@ -58,56 +58,43 @@
     justify-content: center;
 }
 
-/* Mermaid 图表样式 */
+/* Mermaid 图表基础样式 */
 .mermaid {
-  position: relative;
-  overflow: auto; /* 允许容器滚动 */
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 1rem;
   background-color: #f9f9f9;
-  margin-bottom: 20px;
+  border-radius: 8px;
+  cursor: zoom-in;
+  transition: all 0.3s ease;
 }
 
 .dark .mermaid {
-    background-color: #2d2d2d;
-    border-color: #444;
+  background-color: #2d2d2d;
 }
 
-.mermaid svg {
-  /* 移除 max-width 和 height: auto，让 SVG 使用其固有尺寸 */
-  display: block;
-  margin: 0 auto;
-  transition: transform 0.2s ease;
-}
-
-.zoom-controls {
-  position: sticky; /* 改为 sticky，使其在滚动时保持可见 */
-  top: 10px;
-  right: 10px;
-  float: right; /* 浮动到右侧 */
+/* 全屏预览样式 */
+.mermaid-fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
   display: flex;
-  gap: 5px;
-  background-color: rgba(255, 255, 255, 0.8);
-  padding: 5px;
-  border-radius: 5px;
-  z-index: 10;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  cursor: zoom-out;
+  padding: 2rem;
+  box-sizing: border-box;
+  border-radius: 0; /* 全屏时无圆角 */
 }
 
-.dark .zoom-controls {
-    background-color: rgba(45, 45, 45, 0.8);
-}
-
-.zoom-controls button {
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  cursor: pointer;
-  padding: 2px 8px;
-}
-
-.dark .zoom-controls button {
-    background-color: #333;
-    border-color: #555;
-    color: #fff;
+.mermaid-fullscreen svg {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
 }
