@@ -1,3 +1,108 @@
+<script setup>
+import { ref, onMounted, watch, nextTick } from 'vue'
+import { useRoute } from 'vitepress'
+import DefaultTheme from 'vitepress/theme'
+import ReadingProgress from './components/ReadingProgress.vue'
+import ImageLightbox from './components/ImageLightbox.vue'
+import Effect from './components/Effect.vue'
+
+const { Layout } = DefaultTheme
+const route = useRoute()
+const lightbox = ref(null)
+
+// --- Mermaid Zoom Logic ---
+let observer = null
+
+const setupMermaidZoom = () => {
+  // Disconnect previous observer if it exists
+  if (observer) {
+    observer.disconnect()
+  }
+
+  // Function to add click listener to a mermaid diagram
+  const makeMermaidClickable = (mermaidEl) => {
+    mermaidEl.style.cursor = 'zoom-in'
+    mermaidEl.addEventListener('click', () => {
+      const svg = mermaidEl.querySelector('svg')
+      if (!svg) return
+
+      // Create overlay
+      const overlay = document.createElement('div')
+      overlay.className = 'mermaid-overlay'
+      
+      // Clone SVG to not affect the original
+      const clonedSvg = svg.cloneNode(true)
+      overlay.appendChild(clonedSvg)
+      
+      // Add overlay to body
+      document.body.appendChild(overlay)
+      
+      // Click overlay to close
+      overlay.addEventListener('click', () => {
+        overlay.remove()
+      })
+    })
+  }
+
+  // Use MutationObserver to detect when mermaid diagrams are added to the DOM
+  observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      mutation.addedNodes.forEach((node) => {
+        if (node.nodeType === 1) { // Element node
+          // Check if the added node is a mermaid diagram
+          if (node.classList.contains('mermaid')) {
+            makeMermaidClickable(node)
+          }
+          // Check if the added node contains mermaid diagrams
+          node.querySelectorAll('.mermaid').forEach(makeMermaidClickable)
+        }
+      })
+    })
+  })
+
+  // Start observing the main content area
+  nextTick(() => {
+    const content = document.querySelector('.vp-doc')
+    if (content) {
+      observer.observe(content, {
+        childList: true,
+        subtree: true,
+      })
+      // Also process any diagrams already present
+      content.querySelectorAll('.mermaid').forEach(makeMermaidClickable)
+    }
+  })
+}
+
+// --- Image Lightbox Logic ---
+const setupImageClickEvents = () => {
+  nextTick(() => {
+    const images = document.querySelectorAll('.vp-doc img')
+    images.forEach((img, index) => {
+      img.style.cursor = 'pointer'
+      img.addEventListener('click', () => {
+        const imageList = Array.from(images).map(imgEl => ({
+          src: imgEl.src,
+          alt: imgEl.alt || ''
+        }))
+        lightbox.value?.open(imageList, index)
+      })
+    })
+  })
+}
+
+// --- Lifecycle Hooks ---
+onMounted(() => {
+  setupImageClickEvents()
+  setupMermaidZoom()
+})
+
+watch(() => route.path, () => {
+  setupImageClickEvents()
+  setupMermaidZoom()
+})
+</script>
+
 <template>
   <Layout>
     <!-- 阅读进度条 -->
@@ -17,85 +122,6 @@
     </template>
   </Layout>
 </template>
-
-<script setup>
-import { ref, computed, onMounted, nextTick, watch } from 'vue'
-import { useRoute } from 'vitepress'
-import DefaultTheme from 'vitepress/theme'
-import ReadingProgress from './components/ReadingProgress.vue'
-import ImageLightbox from './components/ImageLightbox.vue'
-import Effect from './components/Effect.vue'
-
-const { Layout } = DefaultTheme
-const route = useRoute()
-
-const lightbox = ref(null)
-
-// 设置图片点击事件
-const setupImageClickEvents = () => {
-  nextTick(() => {
-    const images = document.querySelectorAll('.vp-doc img')
-    images.forEach((img, index) => {
-      img.style.cursor = 'pointer'
-      img.addEventListener('click', () => {
-        const imageList = Array.from(images).map(imgEl => ({
-          src: imgEl.src,
-          alt: imgEl.alt || ''
-        }))
-        lightbox.value?.open(imageList, index)
-      })
-    })
-  })
-}
-
-onMounted(() => {
-  setupImageClickEvents()
-  initMermaid()
-})
-
-// 监听路由变化
-watch(() => route.path, () => {
-  setupImageClickEvents()
-  initMermaidZoom()
-})
-
-onMounted(() => {
-  initMermaidZoom()
-})
-
-// 初始化 Mermaid 图表缩放
-const initMermaidZoom = () => {
-  nextTick(() => {
-    const mermaidDoms = document.querySelectorAll('.mermaid')
-    mermaidDoms.forEach(dom => {
-      dom.style.cursor = 'zoom-in'
-      dom.removeEventListener('click', handleMermaidClick) // 确保只绑定一次
-      dom.addEventListener('click', handleMermaidClick)
-    })
-  })
-}
-
-const handleMermaidClick = (event) => {
-  const originalSvg = event.currentTarget.querySelector('svg')
-  if (!originalSvg) return
-
-  // 创建覆盖层
-  const overlay = document.createElement('div')
-  overlay.className = 'mermaid-zoom-overlay'
-  
-  // 克隆 SVG
-  const clonedSvg = originalSvg.cloneNode(true)
-  clonedSvg.classList.add('mermaid-clone')
-
-  overlay.appendChild(clonedSvg)
-  document.body.appendChild(overlay)
-
-  // 点击覆盖层关闭
-  overlay.addEventListener('click', () => {
-    overlay.remove()
-  })
-}
-</script>
 
 <style scoped>
 /* 移除了文章导航和相关文章的样式 */
