@@ -1,8 +1,12 @@
 ---
 title: 如何从零开始，将一台旧笔记本变身为家庭服务器？
-description: 服务器搭建 
+description: 服务器搭建
 date: 2025-6-19
-tags: [server, linux, 技术]
+tags:
+  - server
+  - linux
+  - 技术
+author: shihuaidexianyu
 ---
 # 如何从零开始，将一台旧笔记本变身为家庭服务器？
 

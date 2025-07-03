@@ -4,8 +4,9 @@
   "type": "module",
   "description": "YuanQiiii's personal blog built with VitePress - 记录学习，分享思考，记载生活",
   "scripts": {
-    "docs:dev": "npm run generate:articles && vitepress dev docs",
-    "docs:build": "npm run generate:articles && vitepress build docs",
+    "update:frontmatter": "node scripts/update-frontmatter.js",
+    "docs:dev": "npm run generate:articles && npm run update:frontmatter && vitepress dev docs",
+    "docs:build": "npm run generate:articles && npm run update:frontmatter && vitepress build docs",
     "docs:preview": "vitepress preview docs",
     "dev": "npm run docs:dev",
     "build": "npm run docs:build",

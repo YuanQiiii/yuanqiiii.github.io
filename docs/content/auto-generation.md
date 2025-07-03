@@ -1,6 +1,7 @@
 ---
 title: 自动生成功能说明
 description: "博客支持的多种数据自动生成功能说明"
+author: shihuaidexianyu
 date: 2025-06-26
 tags:
   - 自动生成

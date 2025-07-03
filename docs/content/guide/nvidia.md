@@ -1,8 +1,12 @@
 ---
 title: 如何在启用 Secure Boot 的 Linux 系统上正确安装 NVIDIA 官方驱动（推荐与进阶方法）
-description: 文章描述  
+description: 文章描述
 date: 2025-6-20
-tags: [Linux, NVIDIA, Boot]
+tags:
+  - Linux
+  - NVIDIA
+  - Boot
+author: shihuaidexianyu
 ---
 ### **如何在启用 Secure Boot 的 Linux 系统上正确安装 NVIDIA 官方驱动**
 

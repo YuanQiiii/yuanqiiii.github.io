@@ -2,6 +2,7 @@
 title: Markdown 功能演示
 description: 展示VitePress支持的所有Markdown扩展功能
 tags: [VitePress, Markdown, 功能演示]
+author: shihuaidexianyu
 date: 2024-12-25
 ---
 

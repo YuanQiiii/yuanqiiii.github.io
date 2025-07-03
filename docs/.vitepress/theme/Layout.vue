@@ -13,7 +13,7 @@
     <!-- 全局组件 -->
     <template #layout-bottom>
       <ImageLightbox ref="lightbox" />
-      <Effect />
+      <!-- <Effect /> -->
     </template>
   </Layout>
 </template>

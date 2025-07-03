@@ -1,12 +1,13 @@
 ---
 title: 提升 Docker 镜像拉取效率：为 Linux 系统配置 Clash 代理
-description: "详细介绍如何在 Linux 系统上，为 Docker 服务配置 Clash 作为其网络代理。"
-date: 2025-06-26
+description: 详细介绍如何在 Linux 系统上，为 Docker 服务配置 Clash 作为其网络代理。
+date: 2025-06-26T00:00:00.000Z
 tags:
   - Docker
   - Clash
   - 代理
   - Linux
+author: shihuaidexianyu
 ---
 ## 提升 Docker 镜像拉取效率：为 Linux 系统配置 Clash 代理
 

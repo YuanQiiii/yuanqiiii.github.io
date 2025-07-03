@@ -1,6 +1,7 @@
 ---
 title: 如何使用 GitHub Gist 优雅地分发和同步配置文件？
 description: 各种配置文件的分发 
+author: shihuaidexianyu
 date: 2025-6-26
 tags: [setting, Gist, 分享]
 ---

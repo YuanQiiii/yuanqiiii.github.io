@@ -1,3 +1,7 @@
+---
+author: shihuaidexianyu
+date: 2025-07-03
+---
 ## **V2RayA 全平台使用指南**
 
 V2RayA 是一款功能强大且界面友好的跨平台网络代理客户端。它通过一个直观的 Web UI 来管理复杂的代理规则和连接，支持 VMess, VLESS, Shadowsocks, Trojan 等多种主流协议。无论您是想在 Windows、macOS 还是 Linux 上实现代理，V2RayA 都是一个值得信赖的选择。

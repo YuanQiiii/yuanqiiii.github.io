@@ -1,12 +1,13 @@
 ---
 layout: home
 hero:
-  name: "List"
+  name: List
 title: List
-description: "文章列表"
-date: 2025-06-26
+description: 文章列表
+date: 2025-06-26T00:00:00.000Z
 tags:
   - List
+author: shihuaidexianyu
 ---
 
 <script setup>

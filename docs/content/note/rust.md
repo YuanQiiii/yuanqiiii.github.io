@@ -1,6 +1,8 @@
 ---
-title:rust学习笔记
-description:记录学习rust遇到的一些困惑
+title: rust学习笔记
+description: 记录学习rust遇到的一些困惑
+author: shihuaidexianyu
+date: 2025-07-03
 ---
 
 

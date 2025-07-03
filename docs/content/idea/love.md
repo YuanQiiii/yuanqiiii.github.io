@@ -1,8 +1,12 @@
 ---
 title: ai&human
-description: 爱情故事 
+description: 爱情故事
 date: 2025-3-24
-tags: [ai, 人类, 爱情]
+tags:
+  - ai
+  - 人类
+  - 爱情
+author: shihuaidexianyu
 ---
 
 

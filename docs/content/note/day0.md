@@ -1,12 +1,13 @@
 ---
 title: 构建可扩展的实时系统——以 `arbitrage-engine` 为例
-description: "详细探讨构建一个可扩展、高可用的系统所依赖的几大核心支柱"
-date: 2025-06-26
+description: 详细探讨构建一个可扩展、高可用的系统所依赖的几大核心支柱
+date: 2025-06-26T00:00:00.000Z
 tags:
   - 系统设计
   - 微服务
   - 事件驱动
   - Kafka
+author: shihuaidexianyu
 ---
 
 ### **教程：构建可扩展的实时系统——以 `arbitrage-engine` 为例**

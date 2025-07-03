@@ -1,8 +1,12 @@
 ---
 title: 系统提示词
-description: 用于指导copliot的系统提示词  
+description: 用于指导copliot的系统提示词
 date: 2025-6-21
-tags: [copliot, prompt, llm]
+tags:
+  - copliot
+  - prompt
+  - llm
+author: shihuaidexianyu
 ---
 ```
 ---

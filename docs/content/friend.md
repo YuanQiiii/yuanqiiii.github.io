@@ -4,6 +4,7 @@ hero:
   name: "Friend"
 title: Friend
 description: "我的朋友们"
+author: shihuaidexianyu
 date: 2025-06-26
 tags:
   - Friend

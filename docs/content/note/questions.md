@@ -1,11 +1,12 @@
 ---
 title: 问题解答
-description: "关于LLM系统级提示词和用户级提示词区别的解答"
-date: 2025-06-26
+description: 关于LLM系统级提示词和用户级提示词区别的解答
+date: 2025-06-26T00:00:00.000Z
 tags:
   - LLM
   - Prompt
   - AI
+author: shihuaidexianyu
 ---
 
 # 问题解答
