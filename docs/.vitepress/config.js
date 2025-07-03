@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitepress'
+import { withMermaid } from "vitepress-plugin-mermaid";
 
-export default defineConfig({
+export default withMermaid({
     // 基本配置
     title: "YuanQiiii's Blog",
     description: "愿美好的事情即将发生",

@@ -235,3 +235,15 @@ $$
 ---
 
 这个页面展示了VitePress的强大Markdown功能，你可以在自己的文章中使用这些特性来创建丰富的内容。
+
+## Mermaid 图表
+
+```mermaid
+graph TD
+    A[Start] --> B{Is it?};
+    B -->|Yes| C[OK];
+    B -->|No| D[Rethink];
+    C --> E[End];
+    D --> E[End];
+```
+
