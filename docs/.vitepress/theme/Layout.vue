@@ -56,25 +56,48 @@ onMounted(() => {
 // 监听路由变化
 watch(() => route.path, () => {
   setupImageClickEvents()
-  initMermaid()
+  initMermaidZoom()
 })
 
-// 初始化 Mermaid 图表
-const initMermaid = () => {
+onMounted(() => {
+  initMermaidZoom()
+})
+
+// 初始化 Mermaid 图表缩放
+const initMermaidZoom = () => {
   nextTick(() => {
     const mermaidDoms = document.querySelectorAll('.mermaid')
-    if (mermaidDoms.length > 0) {
-      mermaidDoms.forEach(dom => {
-        // 移除旧的事件监听器，防止重复绑定
-        dom.removeEventListener('click', toggleFullscreen)
-        dom.addEventListener('click', toggleFullscreen)
-      })
-    }
+    mermaidDoms.forEach(dom => {
+      dom.style.cursor = 'zoom-in'
+      dom.removeEventListener('click', handleMermaidClick) // 确保只绑定一次
+      dom.addEventListener('click', handleMermaidClick)
+    })
   })
 }
 
-const toggleFullscreen = (event) => {
-  const dom = event.currentTarget
-  dom.classList.toggle('mermaid-fullscreen')
+const handleMermaidClick = (event) => {
+  const originalSvg = event.currentTarget.querySelector('svg')
+  if (!originalSvg) return
+
+  // 创建覆盖层
+  const overlay = document.createElement('div')
+  overlay.className = 'mermaid-zoom-overlay'
+  
+  // 克隆 SVG
+  const clonedSvg = originalSvg.cloneNode(true)
+  clonedSvg.classList.add('mermaid-clone')
+
+  overlay.appendChild(clonedSvg)
+  document.body.appendChild(overlay)
+
+  // 点击覆盖层关闭
+  overlay.addEventListener('click', () => {
+    overlay.remove()
+  })
 }
 </script>
+
+<style scoped>
+/* 移除了文章导航和相关文章的样式 */
+</style>
+
