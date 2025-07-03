@@ -50,14 +50,94 @@ const setupImageClickEvents = () => {
 
 onMounted(() => {
   setupImageClickEvents()
+  initMermaid()
 })
 
 // 监听路由变化
 watch(() => route.path, () => {
   setupImageClickEvents()
+  initMermaid()
 })
-</script>
 
-<style scoped>
-/* 移除了文章导航和相关文章的样式 */
-</style>
+// 初始化 Mermaid 图表
+const initMermaid = () => {
+  nextTick(() => {
+    const mermaidDoms = document.querySelectorAll('.mermaid')
+    if (mermaidDoms.length > 0) {
+      mermaidDoms.forEach((dom, index) => {
+        // 防止重复初始化
+        if (dom.querySelector('.mermaid-zoom-container')) {
+          return
+        }
+
+        const zoomContainer = document.createElement('div')
+        zoomContainer.className = 'mermaid-zoom-container'
+        zoomContainer.innerHTML = `
+          <div class="zoom-controls">
+            <button class="zoom-in" title="放大">+</button>
+            <button class="zoom-out" title="缩小">-</button>
+            <button class="zoom-reset" title="重置">Reset</button>
+            <button class="zoom-fullscreen" title="全屏">Fullscreen</button>
+            <button class="zoom-download" title="下载">Download</button>
+          </div>
+        `
+        
+        const svg = dom.querySelector('svg')
+        if (!svg) return
+
+        // 将 SVG 包装起来
+        dom.appendChild(zoomContainer)
+        const parent = svg.parentNode
+        parent.insertBefore(zoomContainer, svg)
+        zoomContainer.appendChild(svg)
+
+        let scale = 1
+        const zoomFactor = 0.1
+
+        const updateTransform = () => {
+          svg.style.transformOrigin = 'center center'
+          svg.style.transform = `scale(${scale})`
+        }
+
+        zoomContainer.querySelector('.zoom-in').addEventListener('click', (e) => {
+          e.stopPropagation()
+          scale += zoomFactor
+          updateTransform()
+        })
+
+        zoomContainer.querySelector('.zoom-out').addEventListener('click', (e) => {
+          e.stopPropagation()
+          scale = Math.max(0.1, scale - zoomFactor)
+          updateTransform()
+        })
+
+        zoomContainer.querySelector('.zoom-reset').addEventListener('click', (e) => {
+          e.stopPropagation()
+          scale = 1
+          updateTransform()
+        })
+
+        zoomContainer.querySelector('.zoom-fullscreen').addEventListener('click', (e) => {
+          e.stopPropagation()
+          if (zoomContainer.requestFullscreen) {
+            zoomContainer.requestFullscreen()
+          }
+        })
+
+        zoomContainer.querySelector('.zoom-download').addEventListener('click', (e) => {
+          e.stopPropagation()
+          const serializer = new XMLSerializer()
+          const source = serializer.serializeToString(svg)
+          const blob = new Blob([source], { type: 'image/svg+xml;charset=utf-8' })
+          const url = URL.createObjectURL(blob)
+          const a = document.createElement('a')
+          a.href = url
+          a.download = `mermaid-chart-${index}.svg`
+          a.click()
+          URL.revokeObjectURL(url)
+        })
+      })
+    }
+  })
+}
+</script>
