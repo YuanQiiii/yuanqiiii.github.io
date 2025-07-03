@@ -32,6 +32,12 @@ const setupMermaidZoom = () => {
       
       // Clone SVG to not affect the original
       const clonedSvg = svg.cloneNode(true)
+      
+      // IMPORTANT: Remove fixed dimensions to allow scaling
+      clonedSvg.removeAttribute('height')
+      clonedSvg.removeAttribute('width')
+      clonedSvg.removeAttribute('style')
+
       overlay.appendChild(clonedSvg)
       
       // Add overlay to body
