@@ -1451,3 +1451,600 @@ Rust 对两种测试类型有明确的区分和存放规范，其核心区别在
 2.  `.is_ok()`：这是 `Result` 类型上的一个方法。如果 `Result` 的值是 `Ok(...)`，该方法返回 `true`；如果是 `Err(...)`，则返回 `false`。关键在于，`.is_ok()` 方法不关心 `Ok` 里面包裹的具体值是什么，只关心是否存在。
 
 因此，整行代码的逻辑就是：如果 `IGNORE_CASE` 环境变量存在，`ignore_case` 变量就为 `true`，否则为 `false`。这是一种简洁且地道的 Rust 写法，常用于根据环境变量的存在与否来开启或关闭程序中的某个功能开关。
+
+## 标准库
+
+Rust 标准库是 Rust 生态的基石，提供了构建可靠、高效应用程序所需的核心功能。它被设计为跨平台的，并强调安全性、性能和人体工程学。
+
+### 0\. 预导入模块 (`std::prelude`)
+
+Rust 会在每个模块中自动导入 `std::prelude::v1`。这个模块包含了最基本和通用的类型、trait 和宏，让你无需手动 `use` 即可使用它们。
+
+**常见预导入项：**
+
+  * **集合类型**：`Vec`, `String`, `str`
+  * **错误处理**：`Option<T>` (及其变体 `Some`, `None`), `Result<T, E>` (及其变体 `Ok`, `Err`)
+  * **智能指针**：`Box<T>`
+  * **核心 Trait**：
+      * `Clone`, `Copy`：用于复制数据。
+      * `Debug`, `Display`：用于格式化输出。
+      * `Default`：用于创建类型的默认值。
+      * `Eq`, `PartialEq`, `Ord`, `PartialOrd`：用于比较。
+      * `Iterator`, `IntoIterator`：用于循环和序列处理。
+      * `AsRef`, `AsMut`：用于泛型转换。
+  * **函数**：`drop` (用于手动销毁一个值)。
+
+-----
+
+### 1\. 核心数据结构 (`std::collections`)
+
+这个模块提供了最常用的集合类型。
+
+#### `Vec<T>` - 动态数组
+
+一个可增长的、存储在堆上的列表。
+
+```rust
+// 创建
+let mut v1: Vec<i32> = Vec::new();
+let v2 = Vec::with_capacity(10); // 预分配空间以提高性能
+let mut v3 = vec![1, 2, 3]; // 使用 vec! 宏创建
+
+// 添加和移除
+v1.push(5); // [5]
+v1.push(6); // [5, 6]
+v1.pop();   // 返回 Some(6), v1 变为 [5]
+v3.insert(1, 10); // 在索引 1 处插入 10，v3 变为 [1, 10, 2, 3]
+v3.remove(2);   // 移除索引 2 处的元素, v3 变为 [1, 10, 3]
+
+// 访问
+let first = &v3[0]; // 使用索引访问 (如果越界会 panic)
+println!("第一个元素是: {}", first);
+
+// 安全访问，返回 Option<&T>
+match v3.get(1) {
+    Some(value) => println!("第二个元素是: {}", value),
+    None => println!("索引 1 越界"),
+}
+
+// 迭代
+println!("遍历 v3:");
+for i in &v3 { // &v3 -> iter() -> 不可变引用
+    println!("  - {}", i);
+}
+
+for i in &mut v3 { // &mut v3 -> iter_mut() -> 可变引用
+    *i += 10;
+}
+println!("修改后的 v3: {:?}", v3); // [11, 20, 13]
+
+for i in v3 { // v3 -> into_iter() -> 获得所有权
+    // 在这里使用 i, v3 在循环后被消耗
+}
+```
+
+#### `String` - 可增长的 UTF-8 字符串
+
+与 `Vec<u8>` 类似，但专门用于处理 UTF-8 文本。
+
+```rust
+// 创建
+let mut s1 = String::new();
+let s2 = String::from("初始内容");
+let s3 = "初始内容".to_string();
+
+// 修改
+s1.push_str("你好"); // 添加 &str
+s1.push('!');      // 添加 char
+println!("{}", s1); // "你好!"
+
+// 拼接
+let s4 = String::from("Hello, ");
+let s5 = String::from("world!");
+// s4 的所有权被移动，s5 的引用被使用
+let s6 = s4 + &s5;
+println!("{}", s6);
+
+// 推荐使用 format! 宏，因为它不获取任何参数的所有权
+let tic = String::from("tic");
+let tac = String::from("tac");
+let toe = String::from("toe");
+let s = format!("{}-{}-{}", tic, tac, toe);
+println!("{}", s);
+
+// 字符串切片和字符迭代
+let hello = "Здравствуйте"; // 俄语 "Hello"
+// let slice = &hello[0..4]; // 错误！不能按字节索引 UTF-8 字符
+
+// 正确的方式是使用 .chars()
+println!("'Здравствуйте' 的字符:");
+for c in hello.chars() {
+    print!("{} ", c);
+}
+println!();
+```
+
+#### `HashMap<K, V>` - 哈希映射
+
+高效的键值对存储。
+
+```rust
+use std::collections::HashMap;
+
+let mut scores = HashMap::new();
+
+// 插入
+scores.insert(String::from("Blue"), 10);
+scores.insert(String::from("Yellow"), 50);
+
+// 访问
+let team_name = String::from("Blue");
+let score = scores.get(&team_name).copied().unwrap_or(0); // get返回Option<&V>
+println!("Blue 队的分数: {}", score);
+
+// 迭代
+for (key, value) in &scores {
+    println!("{}: {}", key, value);
+}
+
+// 更新或插入 (Entry API)
+// 如果键不存在，则插入一个新值
+scores.entry(String::from("Red")).or_insert(30);
+// 如果键存在，则对其值进行操作
+let blue_score = scores.entry(String::from("Blue")).or_insert(0);
+*blue_score += 15; // 分数变为 25
+
+println!("{:?}", scores);
+```
+
+#### 其他常用集合
+
+  * **`HashSet<T>`**: 存储唯一的元素集合，底层是 `HashMap<T, ()>`。适合用于去重或检查成员资格。
+  * **`VecDeque<T>`**: 双端队列，允许在头部和尾部进行高效的推入（push）和弹出（pop）操作。
+  * **`BTreeMap<K, V>` / `BTreeSet<T>`**: 基于 B-树的映射和集合。与 `HashMap` 不同，它们的键是有序的，但插入和查找速度稍慢（O(log n)）。
+
+<!-- end list -->
+
+```rust
+use std::collections::{HashSet, BTreeSet};
+
+// HashSet 示例
+let mut letters = HashSet::new();
+letters.insert('a');
+letters.insert('b');
+letters.insert('a'); // 重复的 'a' 不会被插入
+println!("HashSet: {:?}", letters); // {'a', 'b'}
+
+// BTreeSet 示例 (有序)
+let mut sorted_nums = BTreeSet::new();
+sorted_nums.insert(3);
+sorted_nums.insert(1);
+sorted_nums.insert(2);
+println!("BTreeSet: {:?}", sorted_nums); // {1, 2, 3}
+```
+
+-----
+
+### 2\. 错误处理：`Option<T>` 与 `Result<T, E>`
+
+这是 Rust 健壮性的核心。
+
+#### `Option<T>` - 表示一个值可能存在或不存在
+
+```rust
+fn find_division_result(numerator: f64, denominator: f64) -> Option<f64> {
+    if denominator == 0.0 {
+        None
+    } else {
+        Some(numerator / denominator)
+    }
+}
+
+let result = find_division_result(10.0, 2.0); // Some(5.0)
+let no_result = find_division_result(10.0, 0.0); // None
+
+// 常用方法
+// 1. match (最通用)
+match result {
+    Some(v) => println!("结果是: {}", v),
+    None => println!("除数为零"),
+}
+
+// 2. if let (当只关心 Some 时)
+if let Some(v) = result {
+    println!("使用 if let 得到结果: {}", v);
+}
+
+// 3. unwrap / expect (如果为 None 则 panic，用于你确定有值的场景)
+// let value = no_result.unwrap(); // 这行会 panic
+let value_with_msg = no_result.expect("除法失败，这不应该发生！"); // panic 并显示消息
+
+// 4. unwrap_or / unwrap_or_else (提供默认值)
+let safe_value1 = no_result.unwrap_or(0.0); // 如果是 None，使用 0.0
+let safe_value2 = no_result.unwrap_or_else(|| {
+    // 执行一些计算来生成默认值
+    eprintln!("警告: 正在使用默认值");
+    0.0
+});
+
+// 5. map / and_then (链式操作)
+let mapped = result.map(|v| v * 2.0); // Some(5.0) -> Some(10.0)
+println!("map 后的结果: {:?}", mapped);
+
+// and_then 用于返回 Option 的链式调用
+let chained = result.and_then(|v| find_division_result(v, 5.0)); // Some(5.0) -> Some(1.0)
+println!("and_then 后的结果: {:?}", chained);
+```
+
+#### `Result<T, E>` - 表示操作成功或失败
+
+```rust
+use std::fs;
+use std::num::ParseIntError;
+
+// ? 运算符: 如果是 Err，则立即从函数返回该 Err。如果是 Ok，则解包出值。
+fn multiply_from_file(path1: &str, path2: &str) -> Result<i32, String> {
+    let s1 = fs::read_to_string(path1).map_err(|e| e.to_string())?;
+    let n1 = s1.trim().parse::<i32>().map_err(|e| e.to_string())?;
+
+    let s2 = fs::read_to_string(path2).map_err(|e| e.to_string())?;
+    let n2 = s2.trim().parse::<i32>().map_err(|e| e.to_string())?;
+
+    Ok(n1 * n2)
+}
+
+// 使用 `fs::write` 创建示例文件
+// fs::write("num1.txt", "10").unwrap();
+// fs::write("num2.txt", "20").unwrap();
+
+match multiply_from_file("num1.txt", "num2.txt") {
+    Ok(v) => println!("乘法结果: {}", v),
+    Err(e) => println!("发生错误: {}", e),
+}
+```
+
+-----
+
+### 3\. 所有权与智能指针
+
+管理内存和资源的核心概念。
+
+#### `Box<T>` - 堆上分配
+
+用于在堆上存储数据。主要用途：
+
+1.  当有一个类型，在编译时无法知道其大小时（如递归类型）。
+2.  当有大量数据并希望转移所有权而不是复制它时。
+
+<!-- end list -->
+
+```rust
+// 递归类型示例：链表
+enum List {
+    Cons(i32, Box<List>), // 使用 Box 来包含下一个 List
+    Nil,
+}
+
+use List::{Cons, Nil};
+
+let list = Cons(1, Box::new(Cons(2, Box::new(Nil))));
+```
+
+#### `Rc<T>` 和 `Arc<T>` - 引用计数指针
+
+允许多个所有者共享数据。
+
+  * `Rc<T>` (Reference Counted): 用于**单线程**环境。
+  * `Arc<T>` (Atomically Reference Counted): 用于**多线程**环境，是线程安全的 `Rc`。
+
+<!-- end list -->
+
+```rust
+use std::rc::Rc;
+use std::sync::Arc;
+use std::thread;
+
+// Rc 示例 (单线程)
+let data = Rc::new(String::from("共享的数据"));
+let owner1 = Rc::clone(&data);
+let owner2 = Rc::clone(&data);
+println!("Rc 引用计数: {}", Rc::strong_count(&data)); // 输出 3
+
+// Arc 示例 (多线程)
+let arc_data = Arc::new(String::from("线程间共享"));
+let mut handles = vec![];
+
+for i in 0..3 {
+    let data_clone = Arc::clone(&arc_data);
+    let handle = thread::spawn(move || {
+        println!("线程 {} 读取数据: {}", i, data_clone);
+    });
+    handles.push(handle);
+}
+
+for handle in handles {
+    handle.join().unwrap();
+}
+```
+
+#### `Cell<T>` 和 `RefCell<T>` - 内部可变性
+
+允许你在持有不可变引用 `&T` 的情况下修改内部数据。
+
+  * `Cell<T>`: 用于 `Copy` 类型，通过 `get()` 和 `set()` 操作。
+  * `RefCell<T>`: 用于非 `Copy` 类型，在运行时检查借用规则，违反规则会 `panic`。
+
+<!-- end list -->
+
+```rust
+use std::cell::RefCell;
+
+let shared_list = RefCell::new(vec![1, 2, 3]);
+
+// 持有不可变引用，但可以修改内部数据
+let list_ref = &shared_list;
+list_ref.borrow_mut().push(4); // borrow_mut() 获取一个可变借用
+
+println!("{:?}", list_ref.borrow()); // borrow() 获取一个不可变借用
+```
+
+-----
+
+### 4\. 并发：线程与同步
+
+`std::thread` 用于创建线程，`std::sync` 用于线程间同步。
+
+#### `std::thread::spawn` - 创建线程
+
+```rust
+use std::thread;
+use std::time::Duration;
+
+let handle = thread::spawn(|| {
+    for i in 1..5 {
+        println!("派生线程: {}", i);
+        thread::sleep(Duration::from_millis(1));
+    }
+});
+
+// 主线程继续工作
+for i in 1..3 {
+    println!("主线程: {}", i);
+    thread::sleep(Duration::from_millis(1));
+}
+
+handle.join().unwrap(); // 等待派生线程结束
+```
+
+#### `std::sync::mpsc` - 消息传递通道
+
+用于线程间通信。`mpsc` 代表 "multiple producer, single consumer"。
+
+```rust
+use std::sync::mpsc;
+use std::thread;
+
+let (tx, rx) = mpsc::channel(); // tx: transmitter, rx: receiver
+
+let tx_clone = tx.clone();
+// 生产者线程 1
+thread::spawn(move || {
+    tx.send("来自线程1的消息").unwrap();
+});
+
+// 生产者线程 2
+thread::spawn(move || {
+    tx_clone.send("来自线程2的消息").unwrap();
+});
+
+// 消费者在主线程
+for received in rx {
+    println!("收到: {}", received);
+}
+```
+
+#### `std::sync::Mutex<T>` - 互斥锁
+
+用于保护共享数据，一次只允许一个线程访问。
+
+```rust
+use std::sync::{Mutex, Arc};
+use std::thread;
+
+// 使用 Arc<Mutex<T>> 在线程间安全地共享和修改数据
+let counter = Arc::new(Mutex::new(0));
+let mut handles = vec![];
+
+for _ in 0..10 {
+    let counter_clone = Arc::clone(&counter);
+    let handle = thread::spawn(move || {
+        let mut num = counter_clone.lock().unwrap(); // 获取锁，如果锁被占用则阻塞
+        *num += 1;
+    }); // 锁在这里自动释放
+    handles.push(handle);
+}
+
+for handle in handles {
+    handle.join().unwrap();
+}
+
+println!("最终结果: {}", *counter.lock().unwrap()); // 10
+```
+
+-----
+
+### 5\. 输入/输出 (`std::io`, `std::fs`, `std::path`)
+
+#### 文件系统 (`std::fs` 和 `std::path`)
+
+```rust
+use std::fs;
+use std::path::Path;
+
+let path = Path::new("./data");
+
+// 创建目录
+fs::create_dir_all(path).unwrap();
+
+// 路径操作
+let file_path = path.join("hello.txt");
+println!("文件路径: {:?}", file_path);
+
+// 写文件
+let content_to_write = "Hello from Rust!";
+fs::write(&file_path, content_to_write).unwrap();
+
+// 读文件
+let content_read = fs::read_to_string(&file_path).unwrap();
+println!("读取的内容: {}", content_read);
+
+// 清理
+fs::remove_file(&file_path).unwrap();
+fs::remove_dir(path).unwrap();
+```
+
+#### 缓冲读取 (`std::io::BufReader`)
+
+对于大文件，逐行读取比一次性读入整个文件更高效。
+
+```rust
+use std::fs::File;
+use std::io::{self, BufRead, BufReader};
+
+fn read_lines(filename: &str) -> io::Result<io::Lines<BufReader<File>>> {
+    let file = File::open(filename)?;
+    Ok(BufReader::new(file).lines())
+}
+
+// 假设存在文件 "lines.txt"
+// fs::write("lines.txt", "第一行\n第二行\n第三行").unwrap();
+
+if let Ok(lines) = read_lines("lines.txt") {
+    for line in lines {
+        if let Ok(ip) = line {
+            println!("{}", ip);
+        }
+    }
+}
+```
+
+-----
+
+### 6\. 格式化 (`std::fmt`)
+
+控制如何将类型转换为字符串。主要通过 `Debug` 和 `Display` trait 实现。
+
+  * `Debug` (`{:?}`): 用于开发者调试输出。通常可以用 `#[derive(Debug)]` 自动实现。
+  * `Display` (`{}`): 用于面向用户的、更友好的输出。需要手动实现。
+
+<!-- end list -->
+
+```rust
+use std::fmt;
+
+// 使用 derive 自动实现 Debug
+#[derive(Debug)]
+struct Point {
+    x: i32,
+    y: i32,
+}
+
+// 手动为 Point 实现 Display
+impl fmt::Display for Point {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        // 写入 "(x, y)" 格式的字符串
+        write!(f, "({}, {})", self.x, self.y)
+    }
+}
+
+let p = Point { x: 10, y: 20 };
+
+println!("Debug 输出: {:?}", p);        // 开发者看的
+println!("Pretty Debug: {:#?}", p);    // 格式化后的 Debug
+println!("Display 输出: {}", p);        // 用户看的
+```
+
+-----
+
+### 7\. 迭代器 (`std::iter`)
+
+Rust 的核心特性之一，提供了处理序列数据的强大、统一的接口。
+
+#### 迭代器适配器（链式调用）
+
+```rust
+let data = vec![1, 2, 3, 4, 5];
+
+let processed_data: Vec<i32> = data
+    .iter()                  // 创建一个迭代器，元素为 &i32
+    .map(|x| x * 2)          // 将每个元素乘以 2 -> [2, 4, 6, 8, 10]
+    .filter(|&x| x > 5)      // 筛选出大于 5 的元素 -> [6, 8, 10]
+    .collect();              // 将结果收集到一个新的 Vec<i32> 中
+
+println!("处理后的数据: {:?}", processed_data);
+
+// fold: 将迭代器元素聚合为单个值
+let sum = data.iter().fold(0, |acc, &x| acc + x); // 0是初始值
+println!("Fold 求和: {}", sum); // 15
+```
+
+#### 其他常用迭代器方法
+
+  * `enumerate()`: 将迭代器转换为 `(index, item)` 的元组。
+  * `zip()`: 将两个迭代器合并成一个元组的迭代器 `((item1, item2))`。
+  * `chain()`: 将两个迭代器连接成一个。
+  * `take(n)`: 只获取前 n 个元素。
+  * `skip(n)`: 跳过前 n 个元素。
+
+-----
+
+### 8\. 其他实用工具
+
+#### `std::time` - 时间处理
+
+```rust
+use std::time::{Instant, Duration};
+
+let start = Instant::now();
+// ... 执行一些耗时操作 ...
+thread::sleep(Duration::from_millis(50));
+let duration = start.elapsed();
+
+println!("操作耗时: {:?}", duration);
+```
+
+#### `std::env` - 环境变量与命令行参数
+
+```rust
+use std::env;
+
+// 获取命令行参数
+let args: Vec<String> = env::args().collect();
+println!("程序路径: {}", args[0]);
+
+// 获取环境变量
+match env::var("PATH") {
+    Ok(val) => println!("PATH 变量长度: {}", val.len()),
+    Err(e) => println!("无法获取 PATH 变量: {}", e),
+}
+```
+
+#### `std::process::Command` - 执行外部命令
+
+```rust
+use std::process::Command;
+
+let output = Command::new("ls")
+                     .arg("-l")
+                     .arg("-a")
+                     .output()
+                     .expect("执行 ls 命令失败");
+
+if output.status.success() {
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    println!("命令输出:\n{}", stdout);
+} else {
+    let stderr = String::from_utf8_lossy(&output.stderr);
+    println!("命令执行错误:\n{}", stderr);
+}
+```
