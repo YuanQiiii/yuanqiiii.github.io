@@ -55,11 +55,12 @@ render_emoji = false
 author = "shihuaidexianyu"
 toc = true
 use_cdn = false
-theme = "dark"              # light, dark, auto, toggle
+theme = "light"              # light, dark, auto, toggle
 fancy_code = true
 dynamic_note = true
 mathjax = true
 mathjax_dollar_inline_enable = true
+mermaid = true
 
 menu = [
     { name = "/posts", url = "/posts", weight = 1 },
