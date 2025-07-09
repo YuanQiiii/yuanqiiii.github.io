@@ -5,7 +5,6 @@ description = "关于LLM系统级提示词和用户级提示词区别的解答"
 author = "shihuaidexianyu"
 
 [taxonomies]
-categories = ["note"]
 +++
 
 # 问题解答

@@ -5,7 +5,7 @@ description = "为“个性化记忆AI邮件伙伴系统V2”提供了详尽的�
 author = "shihuaidexianyu"
 
 [taxonomies]
-categories = ["project"]
+tags = ["项目", "AI", "邮件"]
 +++
 
 ### **技术设计文档：基于推理增强型LLM的个性化记忆AI邮件伙伴系统**

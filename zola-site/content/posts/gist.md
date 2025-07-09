@@ -6,7 +6,6 @@ author = "shihuaidexianyu"
 
 [taxonomies]
 tags = ["setting", "Gist", "分享"]
-categories = ["guide"]
 +++
 
 ### **如何使用 GitHub Gist 优雅地分发和同步配置文件？(以 VS Code 设置为例)**

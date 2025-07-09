@@ -5,7 +5,6 @@ description = "用“建大楼”理解 Git 的协作模式"
 author = "shihuaidexianyu"
 
 [taxonomies]
-categories = ["idea"]
 +++
 
 **多人协作，如何高效同步“工程进度”？——用“建大楼”理解 Git 的协作模式**

@@ -5,7 +5,6 @@ description = "详细介绍如何在 Linux 系统上，为 Docker 服务配置 C
 author = "shihuaidexianyu"
 
 [taxonomies]
-categories = ["note"]
 +++
 
 ## 提升 Docker 镜像拉取效率：为 Linux 系统配置 Clash 代理

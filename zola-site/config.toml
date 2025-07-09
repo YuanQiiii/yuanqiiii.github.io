@@ -9,7 +9,7 @@ description = "记录学习，分享思考，记载生活"
 default_language = "zh"
 
 # The site theme to use
-theme = "hook"
+theme = "apollo"
 
 # Whether to automatically compile all Sass files in the sass directory
 compile_sass = true
@@ -23,13 +23,16 @@ generate_feeds = true
 # The taxonomies to be rendered for the site and their configuration.
 taxonomies = [
   {name = "tags", feed = true},
-  {name = "categories", feed = true},
 ]
 
 [markdown]
 # Whether to do syntax highlighting
 highlight_code = true
-highlight_theme = "gruvbox-dark"
+highlight_theme = "css"
+highlight_themes_css = [
+  { theme = "ayu-dark", filename = "syntax-theme-dark.css" },
+  { theme = "ayu-light", filename = "syntax-theme-light.css" },
+]
 
 # Whether external links are to be opened in a new tab
 # If this is true, a `rel="noopener"` will always automatically be added for security reasons
@@ -48,17 +51,24 @@ smart_punctuation = false
 render_emoji = false
 
 [extra]
-# Put all your custom variables here
+# Apollo theme settings
 author = "shihuaidexianyu"
+toc = true
+use_cdn = false
+theme = "dark"              # light, dark, auto, toggle
+fancy_code = true
+dynamic_note = true
+mathjax = true
+mathjax_dollar_inline_enable = true
 
-# Hook theme specific settings
-links = [
-    { title = "GitHub", href = "https://github.com/YuanQiiii", new_tab = true },
-    { title = "关于", href = "/about" }
+menu = [
+    { name = "/posts", url = "/posts", weight = 1 },
+    { name = "/projects", url = "/projects", weight = 2 },
+    { name = "/tags", url = "/tags", weight = 3 },
+    { name = "/about", url = "/about", weight = 4 },
 ]
 
-# Social links for the footer
-social_links = [
-    { name = "GitHub", url = "https://github.com/YuanQiiii" },
-    { name = "Email", url = "mailto:shihuaidexianyu@gmail.com" }
+socials = [
+    { name = "github", url = "https://github.com/YuanQiiii", icon = "github" },
+    { name = "email", url = "mailto:shihuaidexianyu@gmail.com", icon = "email" },
 ]

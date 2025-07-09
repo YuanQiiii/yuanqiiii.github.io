@@ -5,7 +5,6 @@ description = "详细探讨构建一个可扩展、高可用的系统所依赖�
 author = "shihuaidexianyu"
 
 [taxonomies]
-categories = ["note"]
 +++
 
 ### **教程：构建可扩展的实时系统——以 `arbitrage-engine` 为例**

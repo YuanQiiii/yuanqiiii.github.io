@@ -5,7 +5,6 @@ description = "爱情故事"
 author = "shihuaidexianyu"
 
 [taxonomies]
-categories = ["idea"]
 +++
 
 > [!tip]

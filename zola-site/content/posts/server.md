@@ -5,7 +5,6 @@ description = "服务器搭建"
 author = "shihuaidexianyu"
 
 [taxonomies]
-categories = ["guide"]
 +++
 
 # 如何从零开始，将一台旧笔记本变身为家庭服务器？

@@ -5,7 +5,6 @@ description = "V2RayA 全平台使用指南"
 author = "shihuaidexianyu"
 
 [taxonomies]
-categories = ["guide"]
 +++
 
 ## **V2RayA 全平台使用指南**

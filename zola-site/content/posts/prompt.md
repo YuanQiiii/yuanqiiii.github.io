@@ -5,7 +5,6 @@ description = "用于指导copliot的系统提示词"
 author = "shihuaidexianyu"
 
 [taxonomies]
-categories = ["guide"]
 +++
 
 ```

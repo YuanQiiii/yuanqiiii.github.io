@@ -5,7 +5,6 @@ description = "文章描述"
 author = "shihuaidexianyu"
 
 [taxonomies]
-categories = ["guide"]
 +++
 
 ### **如何在启用 Secure Boot 的 Linux 系统上正确安装 NVIDIA 官方驱动**
