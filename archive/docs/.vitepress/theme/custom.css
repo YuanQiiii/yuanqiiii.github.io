@@ -1,0 +1,70 @@
+/* VitePress 主题自定义样式 */
+
+/* 全局样式变量 */
+:root {
+    /* 主色调 */
+    --vp-c-brand: #a3a3c0;
+
+    --vp-c-brand-light: #434351;
+    --vp-c-brand-1: #a3a3c0;
+    --vp-c-brand-2: #e1d3bc;
+    --vp-c-brand-dark: #676767;
+    --vp-c-brand-darker: #969696;
+    --vp-button-brand-bg: #7c7c9b;
+    --vp-button-brand-hover-bg: #a3a3c0;
+    --vp-c-brand-dimm: rgba(100, 108, 255, 0.08);
+    --vp-home-hero-name-color: transparent;
+    --vp-home-hero-name-background: -webkit-linear-gradient(120deg,
+            #6b6b6b 20%,
+            /* #696969 10%, */
+            #a2a2a2 45%,
+            #c5c5c5 60%,
+            #efefef 68%,
+            #8a8a8a 80%);
+    /* 自定义颜色 */
+    --custom-reading-progress: var(--vp-c-brand);
+    --custom-shadow: rgba(0, 0, 0, 0.1);
+    --custom-border-radius: 8px;
+}
+
+/* 暗色主题 */
+.dark {
+    --custom-shadow: rgba(255, 255, 255, 0.1);
+}
+
+/* 阅读进度条样式 */
+.reading-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--custom-reading-progress);
+    z-index: 1000;
+    transition: width 0.2s ease;
+}
+
+/* 图片灯箱样式 */
+.image-lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Mermaid 图表容器样式 */
+.mermaid {
+    display: flex;
+    justify-content: center;
+    overflow: auto; /* Add scrollbars for overflow */
+}
+
+.mermaid svg {
+    max-width: 100%; /* Ensure SVG does not overflow its container */
+}

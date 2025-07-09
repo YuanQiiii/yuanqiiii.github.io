@@ -1,0 +1,49 @@
+# The URL the site will be built for
+base_url = "https://yuanqiiii.github.io"
+
+# The site title and description; used in feeds by default.
+title = "YuanQiiii's Blog"
+description = "记录学习，分享思考，记载生活"
+
+# The default language; used in feeds.
+default_language = "zh"
+
+# Whether to automatically compile all Sass files in the sass directory
+compile_sass = true
+
+# Whether to build a search index to be used later on by a JavaScript library
+build_search_index = false
+
+# Whether to generate a feed
+generate_feeds = true
+
+# The taxonomies to be rendered for the site and their configuration.
+taxonomies = [
+  {name = "tags", feed = true},
+  {name = "categories", feed = true},
+]
+
+[markdown]
+# Whether to do syntax highlighting
+highlight_code = true
+highlight_theme = "gruvbox-dark"
+
+# Whether external links are to be opened in a new tab
+# If this is true, a `rel="noopener"` will always automatically be added for security reasons
+external_links_target_blank = true
+
+# Whether to set rel="nofollow" for all external links
+external_links_no_follow = false
+
+# Whether to set rel="noreferrer" for all external links
+external_links_no_referrer = false
+
+# Whether smart punctuation is enabled (changing quotes, dashes, dots in their typographic form)
+smart_punctuation = false
+
+# Whether to render emoji aliases (e.g. :smile: => 😊)
+render_emoji = false
+
+[extra]
+# Put all your custom variables here
+author = "shihuaidexianyu"

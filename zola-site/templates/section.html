@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ section.title }}</h1>
+
+<ul class="article-list">
+    {% for page in section.pages %}
+    <li>
+        <h2><a href="{{ page.permalink }}">{{ page.title }}</a></h2>
+        <div class="meta">
+            {{ page.date | date(format="%Y-%m-%d") }}
+            {% if page.taxonomies.tags %}
+                | 标签: {{ page.taxonomies.tags | join(sep=", ") }}
+            {% endif %}
+        </div>
+        {% if page.summary %}
+        <div class="summary">{{ page.summary | safe }}</div>
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

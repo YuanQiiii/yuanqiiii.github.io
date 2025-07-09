@@ -1,8 +1,8 @@
-name: Deploy VitePress site to Pages
+name: Deploy Zola site to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: ["main"]
   workflow_dispatch:
 
 permissions:
@@ -11,7 +11,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
+  group: "pages"
   cancel-in-progress: false
 
 jobs:
@@ -20,47 +20,32 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-
+        
       - name: Setup Pages
         uses: actions/configure-pages@v4
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build site with article generation
-        run: npm run build:full
-
-      - name: Verify build output
+        
+      - name: Install Zola
         run: |
-          echo "Checking if articles.json exists..."
-          ls -la docs/.vitepress/dist/
-          if [ -f "docs/.vitepress/dist/articles.json" ]; then
-            echo "✅ articles.json found in build output"
-            echo "Article count: $(cat docs/.vitepress/dist/articles.json | grep -o '"total":[0-9]*' | cut -d':' -f2)"
-          else
-            echo "❌ articles.json not found in build output"
-            exit 1
-          fi
-
+          wget -q -O - "https://github.com/getzola/zola/releases/download/v0.19.2/zola-v0.19.2-x86_64-unknown-linux-gnu.tar.gz" | tar xzf -
+          sudo mv zola /usr/local/bin
+          zola --version
+          
+      - name: Build with Zola
+        run: |
+          cd zola-site
+          zola build
+          
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: docs/.vitepress/dist
+          path: ./zola-site/public
 
   deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    needs: build
     runs-on: ubuntu-latest
+    needs: build
     steps:
       - name: Deploy to GitHub Pages
         id: deployment

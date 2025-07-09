@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="hero">
+    <h2>{{ config.description }}</h2>
+</div>
+
+<h2 style="margin: 40px 0 20px;">最新文章</h2>
+
+<ul class="article-list">
+    {% for page in section.pages | slice(end=10) %}
+    <li>
+        <h2><a href="{{ page.permalink }}">{{ page.title }}</a></h2>
+        <div class="meta">
+            {{ page.date | date(format="%Y-%m-%d") }}
+            {% if page.taxonomies.categories %}
+                | {{ page.taxonomies.categories | join(sep=", ") }}
+            {% endif %}
+        </div>
+        {% if page.summary %}
+        <div class="summary">{{ page.summary | safe }}</div>
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+
+<style>
+.hero {
+    margin: 40px 0;
+    padding: 40px 0;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+}
+
+.hero h2 {
+    font-size: 1.2rem;
+    font-weight: 400;
+    opacity: 0.9;
+}
+</style>
+{% endblock %}
