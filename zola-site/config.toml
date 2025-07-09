@@ -9,7 +9,7 @@ description = "记录学习，分享思考，记载生活"
 default_language = "zh"
 
 # The site theme to use
-theme = "apollo"
+# theme = "apollo" # Theme integrated into project
 
 # Whether to automatically compile all Sass files in the sass directory
 compile_sass = true
