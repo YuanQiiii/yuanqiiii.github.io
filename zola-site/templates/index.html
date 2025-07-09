@@ -8,19 +8,39 @@
 <h2 style="margin: 40px 0 20px;">最新文章</h2>
 
 <ul class="article-list">
-    {% for page in section.pages | slice(end=10) %}
+    {# In Zola, section variable is automatically available in index.html #}
+    {% for page in section.pages | sort(attribute="date") | reverse %}
     <li>
-        <h2><a href="{{ page.permalink }}">{{ page.title }}</a></h2>
+        <h2><a href="{{ page.permalink | safe }}">{{ page.title }}</a></h2>
         <div class="meta">
             {{ page.date | date(format="%Y-%m-%d") }}
             {% if page.taxonomies.categories %}
                 | {{ page.taxonomies.categories | join(sep=", ") }}
             {% endif %}
         </div>
-        {% if page.summary %}
-        <div class="summary">{{ page.summary | safe }}</div>
+        {% if page.description %}
+        <div class="summary">{{ page.description }}</div>
         {% endif %}
     </li>
+    {% endfor %}
+    
+    {# Also show pages from subsections #}
+    {% for subsection_path in section.subsections %}
+        {% set subsection = get_section(path=subsection_path) %}
+        {% for page in subsection.pages | sort(attribute="date") | reverse %}
+        <li>
+            <h2><a href="{{ page.permalink | safe }}">{{ page.title }}</a></h2>
+            <div class="meta">
+                {{ page.date | date(format="%Y-%m-%d") }}
+                {% if page.taxonomies.categories %}
+                    | {{ page.taxonomies.categories | join(sep=", ") }}
+                {% endif %}
+            </div>
+            {% if page.description %}
+            <div class="summary">{{ page.description }}</div>
+            {% endif %}
+        </li>
+        {% endfor %}
     {% endfor %}
 </ul>
 
@@ -36,6 +56,33 @@
     font-size: 1.2rem;
     font-weight: 400;
     opacity: 0.9;
+}
+
+.article-list {
+    list-style: none;
+    padding: 0;
+}
+
+.article-list li {
+    margin-bottom: 30px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid var(--border);
+}
+
+.article-list h2 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+}
+
+.article-list .meta {
+    font-size: 0.9rem;
+    opacity: 0.7;
+    margin-bottom: 10px;
+}
+
+.article-list .summary {
+    font-size: 0.95rem;
+    opacity: 0.8;
 }
 </style>
 {% endblock %}
