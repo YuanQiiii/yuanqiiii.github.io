@@ -5,13 +5,6 @@ Cargo.lock
 
 # Build output
 zola-site/public/
-api/target/
-frontend/dist/
-frontend/build/
-
-# VitePress (archived)
-archive/docs/.vitepress/dist/
-archive/docs/.vitepress/cache/
 
 # Editor
 .vscode/
