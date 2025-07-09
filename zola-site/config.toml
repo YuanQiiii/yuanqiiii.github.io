@@ -8,6 +8,9 @@ description = "记录学习，分享思考，记载生活"
 # The default language; used in feeds.
 default_language = "zh"
 
+# The site theme to use
+theme = "hook"
+
 # Whether to automatically compile all Sass files in the sass directory
 compile_sass = true
 
@@ -47,3 +50,15 @@ render_emoji = false
 [extra]
 # Put all your custom variables here
 author = "shihuaidexianyu"
+
+# Hook theme specific settings
+links = [
+    { title = "GitHub", href = "https://github.com/YuanQiiii", new_tab = true },
+    { title = "关于", href = "/about" }
+]
+
+# Social links for the footer
+social_links = [
+    { name = "GitHub", url = "https://github.com/YuanQiiii" },
+    { name = "Email", url = "mailto:shihuaidexianyu@gmail.com" }
+]
