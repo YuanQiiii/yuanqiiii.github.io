@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // TOC折叠功能
+  // TOC主折叠功能
   const tocToggle = document.querySelector(".toc-toggle");
   const toc = document.querySelector(".toc");
   
@@ -10,6 +10,36 @@ document.addEventListener("DOMContentLoaded", () => {
       tocToggle.setAttribute("aria-expanded", isCollapsed ? "true" : "false");
     });
   }
+
+  // 每个标题项的折叠功能
+  const tocItemToggles = document.querySelectorAll(".toc-item-toggle");
+  tocItemToggles.forEach(toggle => {
+    toggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const tocItem = toggle.closest(".toc-item");
+      const isCollapsed = tocItem.classList.contains("collapsed");
+      tocItem.classList.toggle("collapsed");
+      toggle.setAttribute("aria-expanded", isCollapsed ? "true" : "false");
+    });
+  });
+
+  // 默认展开所有一级标题
+  document.querySelectorAll(".toc-list > .toc-item.collapsible").forEach(item => {
+    item.classList.remove("collapsed");
+    const toggle = item.querySelector(".toc-item-toggle");
+    if (toggle) {
+      toggle.setAttribute("aria-expanded", "true");
+    }
+  });
+
+  // 默认折叠所有二级标题
+  document.querySelectorAll(".toc-children .toc-item.collapsible").forEach(item => {
+    item.classList.add("collapsed");
+    const toggle = item.querySelector(".toc-item-toggle");
+    if (toggle) {
+      toggle.setAttribute("aria-expanded", "false");
+    }
+  });
 
   // 原有的目录高亮功能
   let observer = new IntersectionObserver(handler, {
@@ -41,22 +71,32 @@ document.addEventListener("DOMContentLoaded", () => {
       s.isIntersecting ||
         paragraphMenuMap[
           s.target.previousHeader
-        ]?.parentElement.classList.remove("selected", "parent");
+        ]?.closest(".toc-item").classList.remove("selected", "parent");
     for (s of selection)
       if (s.isIntersecting) {
-        let e = paragraphMenuMap[s.target.previousHeader]?.closest("li");
+        let e = paragraphMenuMap[s.target.previousHeader]?.closest(".toc-item");
         if ((e?.classList.add("selected"), e === void 0)) continue;
-        let t = e.firstChild;
-        for (
-          console.log(e, t),
-            t.scrollIntoView({
-              block: "nearest",
-              inline: "nearest",
-            });
-          e;
-
-        )
-          e?.classList.add("parent"), (e = e.parentElement.closest("li"));
+        
+        // 展开包含当前选中项的所有父级
+        let parent = e.parentElement.closest(".toc-item");
+        while (parent) {
+          parent.classList.remove("collapsed");
+          const toggle = parent.querySelector(":scope > .toc-item-toggle");
+          if (toggle) {
+            toggle.setAttribute("aria-expanded", "true");
+          }
+          parent.classList.add("parent");
+          parent = parent.parentElement.closest(".toc-item");
+        }
+        
+        // 滚动到视图中
+        const link = e.querySelector("a");
+        if (link) {
+          link.scrollIntoView({
+            block: "nearest",
+            inline: "nearest",
+          });
+        }
       }
   }
 });

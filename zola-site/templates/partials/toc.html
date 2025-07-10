@@ -6,27 +6,35 @@
     <div class="toc-content">
         <ul class="toc-list">
             {% for h1 in page.toc %}
-                <li class="parent">
-                    {% set h1_index = loop.index %}
+                <li class="toc-item collapsible {% if h1.children %}has-children{% endif %}">
+                    {% if h1.children %}
+                        <button class="toc-item-toggle" aria-expanded="false" aria-label="Toggle section">
+                            <span class="toc-item-icon">▶</span>
+                        </button>
+                    {% endif %}
                     <a href="{{ h1.permalink | safe }}">{{ h1.title }}</a>
 
                     {% if h1.children %}
-                        <ul>
+                        <ul class="toc-children">
                         {% for h2 in h1.children %}
-                            {% set h2_index = loop.index %}
-                            <li>
+                            <li class="toc-item collapsible {% if h2.children %}has-children{% endif %}">
+                                {% if h2.children %}
+                                    <button class="toc-item-toggle" aria-expanded="false" aria-label="Toggle subsection">
+                                        <span class="toc-item-icon">▶</span>
+                                    </button>
+                                {% endif %}
                                 <a href="{{ h2.permalink | safe }}">{{ h2.title }}</a>
-                            </li>
 
-                            {% if h2.children %}
-                                <ul>
-                                    {% for h3 in h2.children %}
-                                        <li>
-                                            <a href="{{ h3.permalink | safe }}">{{ h3.title }}</a>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                            {% endif %}
+                                {% if h2.children %}
+                                    <ul class="toc-children">
+                                        {% for h3 in h2.children %}
+                                            <li class="toc-item">
+                                                <a href="{{ h3.permalink | safe }}">{{ h3.title }}</a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </li>
                         {% endfor %}
                         </ul>
                     {% endif %}
