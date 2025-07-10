@@ -6,6 +6,18 @@
     {% include "partials/header.html" %}
 
     <body>
+        {% if page and page.toc %}
+        <!-- 阅读进度环 -->
+        <div class="reading-progress-indicator">
+            <svg width="50" height="50" viewBox="0 0 50 50">
+                <circle cx="25" cy="25" r="20" stroke="var(--bg-2)" stroke-width="3" fill="none"/>
+                <circle class="progress-circle" cx="25" cy="25" r="20" stroke="var(--primary-color)" stroke-width="3" fill="none"
+                        stroke-dasharray="125.66" stroke-dashoffset="125.66"/>
+            </svg>
+            <span class="progress-text">0%</span>
+        </div>
+        {% endif %}
+        
         <div class="left-content">
             {% block left_content %}
             {% endblock left_content %}
