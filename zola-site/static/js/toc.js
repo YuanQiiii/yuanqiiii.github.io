@@ -1,4 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // TOC折叠功能
+  const tocToggle = document.querySelector(".toc-toggle");
+  const toc = document.querySelector(".toc");
+  
+  if (tocToggle && toc) {
+    tocToggle.addEventListener("click", () => {
+      const isCollapsed = toc.classList.contains("collapsed");
+      toc.classList.toggle("collapsed");
+      tocToggle.setAttribute("aria-expanded", isCollapsed ? "true" : "false");
+    });
+  }
+
+  // 原有的目录高亮功能
   let observer = new IntersectionObserver(handler, {
     threshold: [0],
   });
