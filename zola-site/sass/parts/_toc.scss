@@ -57,34 +57,6 @@
         color: var(--text-1);
     }
 
-    // Reading progress ring
-    .reading-progress-ring {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        pointer-events: none; // 不阻挡按钮点击
-        margin-right: 0.5rem; // 与文字保持间距
-        
-        svg {
-            width: 24px;
-            height: 24px;
-            transform: rotate(-90deg); // 从顶部开始
-        }
-        
-        .progress-circle {
-            transition: stroke-dashoffset 0.3s ease;
-            stroke-linecap: round;
-        }
-        
-        .progress-text {
-            position: absolute;
-            font-size: 0.65rem;
-            font-weight: 600;
-            color: var(--text-0);
-            transform: rotate(90deg); // 抵消SVG的旋转
-        }
-    }
-
     .toc-content {
         max-height: 60vh;
         overflow-y: auto;
@@ -204,6 +176,44 @@
     }
 
     .parent > a {
+        color: var(--text-0);
+    }
+}
+
+// 独立的阅读进度指示器
+.reading-progress-indicator {
+    position: fixed;
+    left: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+    
+    @media only screen and (max-width: 1365px) {
+        left: 1rem;
+    }
+    
+    @media only screen and (max-width: 992px) {
+        display: none; // 在小屏幕上隐藏
+    }
+    
+    svg {
+        width: 50px;
+        height: 50px;
+        transform: rotate(-90deg); // 从顶部开始
+    }
+    
+    .progress-circle {
+        transition: stroke-dashoffset 0.3s ease;
+        stroke-linecap: round;
+    }
+    
+    .progress-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 0.75rem;
+        font-weight: 600;
         color: var(--text-0);
     }
 }

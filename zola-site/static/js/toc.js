@@ -21,15 +21,18 @@ document.addEventListener("DOMContentLoaded", () => {
       progress = Math.min(100, Math.max(0, (scrollDistance / totalDistance) * 100));
     }
     
-    // 更新进度圈
-    const progressCircle = document.querySelector(".progress-circle");
-    const progressText = document.querySelector(".progress-text");
-    
-    if (progressCircle && progressText) {
-      const circumference = 2 * Math.PI * 10; // radius = 10
-      const offset = circumference - (progress / 100) * circumference;
-      progressCircle.style.strokeDashoffset = offset + "";
-      progressText.textContent = Math.round(progress) + "%";
+    // 更新独立的进度环
+    const progressIndicator = document.querySelector('.reading-progress-indicator');
+    if (progressIndicator) {
+      const progressCircle = progressIndicator.querySelector('.progress-circle');
+      const progressText = progressIndicator.querySelector('.progress-text');
+      
+      if (progressCircle && progressText) {
+        const circumference = 2 * Math.PI * 20; // radius = 20
+        const offset = circumference - (progress / 100) * circumference;
+        progressCircle.style.strokeDashoffset = offset + "";
+        progressText.textContent = Math.round(progress) + "%";
+      }
     }
   };
   
