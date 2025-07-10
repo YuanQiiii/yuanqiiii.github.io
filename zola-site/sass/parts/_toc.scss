@@ -59,14 +59,11 @@
 
     // Reading progress ring
     .reading-progress-ring {
-        position: absolute;
-        right: 1rem;
-        top: 50%;
-        transform: translateY(-50%);
         display: flex;
         align-items: center;
         justify-content: center;
         pointer-events: none; // 不阻挡按钮点击
+        margin-right: 0.5rem; // 与文字保持间距
         
         svg {
             width: 24px;
