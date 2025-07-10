@@ -3,9 +3,6 @@ title = "rust学习笔记"
 date = "2025-07-09"
 description = "记录学习rust遇到的一些困惑"
 author = "shihuaidexianyu"
-
-[taxonomies]
-tags = ["rust", "programming", "learning"]
 +++
 
 ## day0

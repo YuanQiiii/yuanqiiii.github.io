@@ -21,7 +21,7 @@ build_search_index = false
 generate_feeds = true
 
 # The taxonomies to be rendered for the site and their configuration.
-taxonomies = [{ name = "tags", feed = true }]
+taxonomies = []
 
 [markdown]
 # Whether to do syntax highlighting
@@ -62,7 +62,6 @@ mermaid = true
 
 menu = [
   { name = "/posts", url = "/posts", weight = 1 },
-  { name = "/tags", url = "/tags", weight = 3 },
   { name = "/about", url = "/about", weight = 4 },
 ]
 
