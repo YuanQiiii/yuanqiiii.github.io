@@ -1,4 +1,36 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // 阅读进度计算
+  const updateReadingProgress = () => {
+    const article = document.querySelector("article");
+    if (!article) return;
+    
+    const articleRect = article.getBoundingClientRect();
+    const articleHeight = article.offsetHeight;
+    const windowHeight = window.innerHeight;
+    const scrolled = window.scrollY - article.offsetTop + windowHeight;
+    
+    let progress = 0;
+    if (scrolled > 0) {
+      progress = Math.min(100, Math.max(0, (scrolled / articleHeight) * 100));
+    }
+    
+    // 更新进度圈
+    const progressCircle = document.querySelector(".progress-circle");
+    const progressText = document.querySelector(".progress-text");
+    
+    if (progressCircle && progressText) {
+      const circumference = 2 * Math.PI * 10; // radius = 10
+      const offset = circumference - (progress / 100) * circumference;
+      progressCircle.style.strokeDashoffset = offset;
+      progressText.textContent = Math.round(progress) + "%";
+    }
+  };
+  
+  // 监听滚动事件
+  window.addEventListener("scroll", updateReadingProgress);
+  window.addEventListener("resize", updateReadingProgress);
+  updateReadingProgress(); // 初始化
+
   // TOC主折叠功能
   const tocToggle = document.querySelector(".toc-toggle");
   const toc = document.querySelector(".toc");

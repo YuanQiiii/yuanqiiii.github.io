@@ -57,6 +57,33 @@
         color: var(--text-1);
     }
 
+    // Reading progress ring
+    .reading-progress-ring {
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        svg {
+            width: 24px;
+            height: 24px;
+        }
+        
+        .progress-circle {
+            transition: stroke-dashoffset 0.3s ease;
+        }
+        
+        .progress-text {
+            position: absolute;
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: var(--text-0);
+        }
+    }
+
     .toc-content {
         max-height: 60vh;
         overflow-y: auto;
