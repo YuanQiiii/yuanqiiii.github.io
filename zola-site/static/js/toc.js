@@ -4,14 +4,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const article = document.querySelector("article");
     if (!article) return;
     
-    const articleRect = article.getBoundingClientRect();
-    const articleHeight = article.offsetHeight;
-    const windowHeight = window.innerHeight;
-    const scrolled = window.scrollY - article.offsetTop + windowHeight;
+    // 获取文章的位置信息
+    const articleTop = article.offsetTop;
+    const articleHeight = article.scrollHeight;
+    const viewportHeight = window.innerHeight;
+    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
     
+    // 计算已滚动的距离
+    const scrollDistance = scrollPosition + viewportHeight - articleTop;
+    // 计算总的可滚动距离
+    const totalDistance = articleHeight;
+    
+    // 计算进度百分比
     let progress = 0;
-    if (scrolled > 0) {
-      progress = Math.min(100, Math.max(0, (scrolled / articleHeight) * 100));
+    if (scrollDistance > 0 && totalDistance > 0) {
+      progress = Math.min(100, Math.max(0, (scrollDistance / totalDistance) * 100));
     }
     
     // 更新进度圈
@@ -21,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (progressCircle && progressText) {
       const circumference = 2 * Math.PI * 10; // radius = 10
       const offset = circumference - (progress / 100) * circumference;
-      progressCircle.style.strokeDashoffset = offset;
+      progressCircle.style.strokeDashoffset = offset + "";
       progressText.textContent = Math.round(progress) + "%";
     }
   };
@@ -29,7 +36,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // 监听滚动事件
   window.addEventListener("scroll", updateReadingProgress);
   window.addEventListener("resize", updateReadingProgress);
-  updateReadingProgress(); // 初始化
+  // 延迟初始化，确保页面完全加载
+  setTimeout(updateReadingProgress, 100);
 
   // TOC主折叠功能
   const tocToggle = document.querySelector(".toc-toggle");

@@ -66,14 +66,17 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        pointer-events: none; // 不阻挡按钮点击
         
         svg {
             width: 24px;
             height: 24px;
+            transform: rotate(-90deg); // 从顶部开始
         }
         
         .progress-circle {
             transition: stroke-dashoffset 0.3s ease;
+            stroke-linecap: round;
         }
         
         .progress-text {
@@ -81,6 +84,7 @@
             font-size: 0.65rem;
             font-weight: 600;
             color: var(--text-0);
+            transform: rotate(90deg); // 抵消SVG的旋转
         }
     }
 
