@@ -60,12 +60,9 @@ mathjax = true
 mathjax_dollar_inline_enable = true
 mermaid = true
 
-menu = [
-  { name = "/posts", url = "/posts", weight = 1 },
-  { name = "/about", url = "/about", weight = 4 },
-]
+menu = [{ name = "/posts", url = "/posts", weight = 1 }]
 
 socials = [
-  { name = "github", url = "https://github.com/YuanQiiii", icon = "github" },
+  { name = "github", url = "https://github.com/shihuaidexianyu", icon = "github" },
   { name = "email", url = "mailto:shihuaidexianyu@gmail.com", icon = "email" },
 ]
