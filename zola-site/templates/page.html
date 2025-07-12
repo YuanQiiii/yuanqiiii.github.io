@@ -76,8 +76,5 @@
 {% endblock main_content %}
 
 {% block right_content %}
-    {# Optional table of contents #}
-    {% if config.extra.toc | default(value=false) and page.toc %}
-        {% include "partials/toc.html" %}
-    {% endif %}
+    {# Table of contents removed #}
 {% endblock right_content %}
