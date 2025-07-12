@@ -5,6 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="base" content="{{ config.base_url }}">
+    
+    <!-- Prevent layout shift by setting theme class immediately -->
+    <script>
+        (function() {
+            var theme = localStorage.getItem('theme');
+            if (theme) {
+                document.documentElement.className = theme;
+            } else {
+                document.documentElement.className = 'dark';
+            }
+        })();
+    </script>>
 
     {% if page.extra.meta %}
         <!-- the meta data config goes here  -->

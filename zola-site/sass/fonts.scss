@@ -3,7 +3,7 @@
   font-style: normal;
   font-weight: 400;
   src: url("fonts/JetbrainsMono/JetBrainsMono-Regular.ttf"), local("ttf");
-  font-display: swap;
+  font-display: optional;
 }
 
 @font-face {
@@ -11,7 +11,7 @@
   font-style: normal;
   font-weight: 700;
   src: url("fonts/JetbrainsMono/JetBrainsMono-Bold.ttf"), local("ttf");
-  font-display: swap;
+  font-display: optional;
 }
 
 @font-face {
@@ -19,7 +19,7 @@
   font-style: normal;
   font-weight: 400;
   src: url("fonts/SpaceGrotesk/SpaceGrotesk-Regular.ttf"), local("ttf");
-  font-display: swap;
+  font-display: optional;
 }
 
 @font-face {
@@ -27,7 +27,7 @@
   font-style: normal;
   font-weight: 700;
   src: url("fonts/SpaceGrotesk/SpaceGrotesk-Bold.ttf"), local("ttf");
-  font-display: swap;
+  font-display: optional;
 }
 
 //
@@ -38,7 +38,7 @@
     src: url(fonts/zed-fonts/ZedTextL-Regular.woff2) format("woff2");
     font-weight: 400;
     font-style: normal;
-    font-display: swap;
+    font-display: optional;
 }
 
 @font-face {
@@ -46,7 +46,7 @@
     src: url(fonts/zed-fonts/ZedTextL-Bold.woff2) format("woff2");
     font-weight: 700;
     font-style: normal;
-    font-display: swap;
+    font-display: optional;
 }
 
 @font-face {
@@ -54,5 +54,5 @@
     src: url(fonts/zed-fonts/ZedDisplayL-Heavy.woff2) format("woff2");
     font-weight: 400;
     font-style: normal;
-    font-display: swap;
+    font-display: optional;
 }

@@ -30,6 +30,9 @@ html {
   color: var(--text-0);
   font-family: var(--text-font);
   line-height: var(--line-height);
+  /* Prevent layout shift during font loading */
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
 
   @media (max-width: 992px) {
     font-size: calc(var(--font-size-base) * 0.97);
@@ -92,5 +95,27 @@ body {
     }
 
 
+  }
+}
+
+/* Prevent layout shift in articles */
+article {
+  contain: layout style;
+  min-height: 50vh;
+  
+  .title {
+    /* Reserve space for title to prevent jumping */
+    min-height: 3em;
+  }
+  
+  .meta {
+    /* Reserve space for metadata */
+    min-height: 1.5em;
+    margin-bottom: 1rem;
+  }
+  
+  .body {
+    /* Stabilize body content */
+    min-height: 20vh;
   }
 }
