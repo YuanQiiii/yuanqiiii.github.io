@@ -10,6 +10,11 @@
 @import "parts/_search.scss";
 @import "parts/_talks.scss";
 
+/* Global box-sizing reset to prevent layout shifts */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 :root {
   /* Used for: block comment, hr, ... */
   --border-color: var(--border-color);
@@ -33,6 +38,9 @@ html {
   /* Prevent layout shift during font loading */
   font-synthesis: none;
   text-rendering: optimizeLegibility;
+  /* Prevent scrollbar layout shift */
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
 
   @media (max-width: 992px) {
     font-size: calc(var(--font-size-base) * 0.97);
@@ -45,13 +53,23 @@ html {
   }
 }
 
+/* Fallback for browsers without scrollbar-gutter support */
+@supports not (scrollbar-gutter: stable) {
+  html {
+    width: 100vw;
+    overflow-x: hidden;
+  }
+}
+
 body {
   display: flex;
   flex-grow: 1;
+  margin: 0; /* Reset default margin */
   padding: 0.9rem;
   padding-bottom: 1.5rem;
   margin-bottom: 1.5rem;
   min-height: calc(100vh - 150px);
+  overflow-x: hidden; /* Prevent horizontal scroll */
 
   @media (min-width: 992px) {
     flex-direction: row;
@@ -66,6 +84,8 @@ body {
     padding-bottom: 1.5rem;
     margin-bottom: 1.5rem;
     word-wrap: break-word;
+    box-sizing: border-box;
+    overflow-x: hidden;
   }
 
   .left-content {
@@ -102,6 +122,9 @@ body {
 article {
   contain: layout style;
   min-height: 50vh;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
   
   .title {
     /* Reserve space for title to prevent jumping */
