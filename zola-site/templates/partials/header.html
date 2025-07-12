@@ -21,6 +21,37 @@
     <!-- Preload critical fonts to reduce layout shift -->
     <link rel="preload" href="{{ get_url(path="fonts/zed-fonts/ZedTextL-Regular.woff2") }}" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="{{ get_url(path="fonts/zed-fonts/ZedDisplayL-Heavy.woff2") }}" as="font" type="font/woff2" crossorigin>
+    
+    <!-- Critical CSS inline to prevent layout shift -->
+    <style>
+        /* Critical layout styles to prevent CLS */
+        * {
+            box-sizing: border-box;
+        }
+        html {
+            overflow-y: scroll;
+            scrollbar-gutter: stable;
+        }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        .content {
+            min-height: calc(100vh - 100px);
+            max-width: 920px;
+            width: 100%;
+        }
+        .left-content, .right-content {
+            width: 100%;
+        }
+        nav {
+            min-height: 40px;
+        }
+        main {
+            min-height: 50vh;
+        }
+    </style>
 
     {% if page.extra.meta %}
         <!-- the meta data config goes here  -->
