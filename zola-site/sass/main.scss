@@ -86,6 +86,10 @@ body {
     word-wrap: break-word;
     box-sizing: border-box;
     overflow-x: hidden;
+    /* Add containment to prevent layout shifts */
+    contain: layout;
+    /* Ensure stable positioning */
+    position: relative;
   }
 
   .left-content {
@@ -141,4 +145,10 @@ article {
     /* Stabilize body content */
     min-height: 20vh;
   }
+}
+
+/* Main content wrapper to prevent shifts */
+main {
+  min-height: 50vh;
+  contain: layout;
 }

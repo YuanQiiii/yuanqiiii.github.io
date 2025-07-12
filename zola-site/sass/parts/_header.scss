@@ -22,6 +22,9 @@ nav {
     flex-wrap: wrap;
     justify-content: space-between;
     padding: 0;
+    /* Reserve space to prevent layout shift */
+    min-height: 40px;
+    contain: layout style;
 
     /* Mobile-specific adjustments */
     @media (max-width: 600px) {

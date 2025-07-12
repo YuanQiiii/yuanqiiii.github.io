@@ -100,11 +100,15 @@ time {
     .list-item {
         margin-bottom: 0.5rem;
         list-style-type: none;
+        /* Prevent layout shift in list items */
+        contain: layout style;
     }
 
     .post-header {
       display: grid;
       align-items: center;
+      /* Reserve minimum height to prevent shift */
+      min-height: 2.5rem;
 
       @media all and (max-width: 640px) {
           grid-template-rows: auto 1fr;

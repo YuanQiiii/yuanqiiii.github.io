@@ -1,6 +1,9 @@
 img {
   max-width: 100%;
   border-radius: 0.5rem;
+  /* Prevent layout shift by ensuring proper rendering */
+  height: auto;
+  display: block;
 }
 
 figure {

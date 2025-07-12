@@ -17,6 +17,10 @@
             }
         })();
     </script>
+    
+    <!-- Preload critical fonts to reduce layout shift -->
+    <link rel="preload" href="{{ get_url(path="fonts/zed-fonts/ZedTextL-Regular.woff2") }}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{{ get_url(path="fonts/zed-fonts/ZedDisplayL-Heavy.woff2") }}" as="font" type="font/woff2" crossorigin>
 
     {% if page.extra.meta %}
         <!-- the meta data config goes here  -->
