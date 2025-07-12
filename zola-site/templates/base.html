@@ -6,11 +6,6 @@
     {% include "partials/header.html" %}
 
     <body>
-        <div class="left-content">
-            {% block left_content %}
-            {% endblock left_content %}
-        </div>
-
         <div class="content">
             {% include "partials/nav.html" %}
 
@@ -29,11 +24,6 @@
                 <div class="giscus"></div>
                 {% include "_giscus_script.html" %}
             {% endif %}
-        </div>
-
-        <div class="right-content">
-            {% block right_content %}
-            {% endblock right_content %}
         </div>
     </body>
 
