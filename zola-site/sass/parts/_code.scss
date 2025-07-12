@@ -167,6 +167,10 @@ pre {
   overflow-x: auto;
   padding: 1em;
   position: relative;
+  /* Prevent layout shift by reserving minimum space */
+  min-height: 3.5em;
+  /* Add contain to limit reflow */
+  contain: layout style;
 
   mark {
     background-color: var(

@@ -22,6 +22,11 @@
     <link rel="preload" href="{{ get_url(path="fonts/zed-fonts/ZedTextL-Regular.woff2") }}" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="{{ get_url(path="fonts/zed-fonts/ZedDisplayL-Heavy.woff2") }}" as="font" type="font/woff2" crossorigin>
     
+    {% if config.markdown.highlight_code %}
+    <!-- Preload syntax highlighting CSS for code-heavy pages -->
+    <link rel="preload" href="/syntax-theme-dark.css" as="style">
+    {% endif %}
+    
     <!-- Critical CSS inline to prevent layout shift -->
     <style>
         /* Critical layout styles to prevent CLS */
@@ -50,6 +55,15 @@
         }
         main {
             min-height: 50vh;
+        }
+        /* Pre-allocate space for code blocks to prevent CLS */
+        pre {
+            min-height: 3.5em;
+        }
+        /* Stabilize inline code */
+        code {
+            display: inline-block;
+            min-height: 1.2em;
         }
     </style>
 
