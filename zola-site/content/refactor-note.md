@@ -461,3 +461,100 @@ Handler（处理器）是 `axum` 里的一个核心概念。
     - ✅ 编译成功，仅有预期的未使用代码警告
     - ✅ 服务器稳定运行在 5000端口
     - ✅ 自动生成的 API 文档结构化、完整、准确
+  
+## 修改意见
+### **主题一：提升命名语义的精确性 (Reflect vs. Schema)**
+
+**问题诊断**
+我们最初将用于获取类型信息的 trait 和方法命名为 `Reflect` 和 `reflect()`。这个命名的主要问题在于语义不够精确：
+
+  * **动词 vs. 名词**: `reflect` 是一个动词，通常暗示着一个在**运行时**进行的主动“反射”或“探索”行为，这在 Java 或 C\# 等语言中很常见。
+  * **实际行为**: 我们的实现并非在运行时动态探索，而是在**编译时**通过过程宏生成了一个静态的、描述类型结构的数据（`TypeDescriptor`）。因此，`User::reflect()` 的实际作用是“获取一个预先定义好的静态说明书”，而不是“去反射 User 这个类型”。
+
+**重构方案**
+为了让命名更精确地反映其“静态描述”的本质，并遵循 Rust 的社区惯例，我们进行了以下修改：
+
+1.  **重命名 Trait**: `trait Reflect` -\> `trait Schema`。这把概念从一个“动作”转变为一种“能力”或“契约”，即“一个类型拥有提供其结构图（Schema）的能力”。
+2.  **重命名方法**: `fn reflect()` -\> `fn schema()`。这使得调用 `User::schema()` 的语义变为“获取 User 的结构图”，一个名词性的获取操作，更加贴切。
+3.  **重命名派生宏**: `#[derive(Reflect)]` -\> `#[derive(Schema)]`。
+
+**结论**
+这次重构遵循了 Rust 的标准惯例（如 `trait Clone` 提供 `.clone()` 方法），使得 API 更加可预测和一致。新的命名 `Schema`/`schema` 在语义上更精确，虽然看起来有些重复，但这在 Rust 中是一种被广泛推崇的、用以消除歧义的设计模式。
+
+-----
+
+### **主题二：消除逻辑耦合，强化封装 (`AnnotatedRouter` 的重构)**
+
+**问题诊断**
+最初的 `AnnotatedRouter` 设计存在明显的“逻辑耦合”：
+
+  * **责任泄漏**: 它将“如何创建 `ApiEndpoint`”这个本应属于它内部的职责，泄漏给了外部调用者。
+  * **信息重复**: 调用者在注册 API 时，需要在 `ApiEndpoint::new()` 和 `route_with_annotation()` 中重复提供路径字符串，增加了代码不一致的风险。
+  * **流程繁琐**: API 注册被割裂成“创建 Endpoint”和“注册 Endpoint”两步，不够流畅。
+
+**重构方案**
+解决方案的核心是**封装创建过程，简化外部接口**。
+
+1.  **提供新方法**: 在 `AnnotatedRouter` 上创建了一个新的、更高层次的方法（如 `add`）。
+2.  **封装内部逻辑**: 这个新的 `add` 方法接收最原始的信息（路径、方法、描述等），然后在**其内部自己负责创建和配置 `ApiEndpoint` 对象**。
+3.  **移除旧方法**: 废弃了原有的 `route_with_annotation` 方法，强制所有开发者使用新的、更健壮的接口。
+
+**修改后的调用代码对比**
+
+```rust
+// --- 修改前 ---
+let endpoint = ApiEndpoint::new(...)
+    .with_response_type::<...>();
+router.route_with_annotation("/path", get(handler), endpoint);
+
+// --- 修改后 ---
+router.add::<ResponseType>("/path", get(handler), Method::GET, "Description");
+```
+
+**结论**
+这次重构极大地提升了 `AnnotatedRouter` 的封装性，调用接口变得极其简洁。通过消除信息重复，代码的健壮性得到增强，业务代码与元数据系统之间的耦合度也显著降低。
+
+-----
+
+### **主题三：利用类型系统防止无效配置 (`ApiEndpoint` 参数的重构)**
+
+**问题诊断**
+`ApiEndpoint` 最初使用两个独立的 `Option` 字段 (`query_type` 和 `body_type`) 来描述请求参数。这个设计存在严重缺陷：
+
+  * **无效状态可表示**: 它允许构建出不符合 HTTP 规范的配置，例如为一个 `GET` 请求同时设置 `body_type`，而编译器对此无能为力。
+  * **语义模糊**: 对于 `POST` 请求，开发者需要自己去判断应该使用 `query_type` 还是 `body_type`，类型系统没有提供任何引导。
+
+**重构方案**
+我们利用 Rust 强大的 `enum` 来精确地建模业务领域中的**有效状态集**。
+
+1.  **创建新枚举**: 定义了一个新的 `enum RequestParams`。
+    ```rust
+    pub enum RequestParams {
+        Query(TypeDescriptor), // 用于 GET 等请求
+        Body(TypeDescriptor),  // 用于 POST, PUT 等请求
+        None,                  // 用于无参数请求
+    }
+    ```
+2.  **改造 `ApiEndpoint`**: 用一个新的字段 `params: RequestParams` 替换掉原来两个模糊的 `Option` 字段。
+
+**结论**
+这次重构是“利用类型系统驱动设计”的绝佳范例。新的设计使得**无效的 API 配置在类型层面就变得无法表示**，例如你无法再为一个 `GET` 请求提供 `RequestParams::Body`。这从根本上消除了整整一类潜在的逻辑 bug，并让代码的意图变得极其清晰，开发者不再需要猜测，而是被类型系统引导着做出正确的设计。
+
+-----
+
+### **主题四：提升错误处理的明确性 (`unwrap` vs. `expect`)**
+
+**问题诊断**
+代码中多处使用了 `.unwrap()` 来处理 `Result` 和 `Option`，例如在绑定端口、启动服务器和过程宏内部。`.unwrap()` 在失败时只会产生一个通用的 `panic` 信息，缺乏上下文，不利于快速定位问题。
+
+**重构方案**
+将项目中所有关键的、失败即代表程序无法继续运行的 `.unwrap()` 调用，替换为 `.expect("...")`。
+
+1.  **服务器启动**:
+      * `TcpListener::bind(...).await.unwrap()` -\> `.await.expect("Failed to bind to address...")`
+      * `axum::serve(...).await.unwrap()` -\> `.await.expect("Axum server failed...")`
+2.  **过程宏内部**:
+      * `field.ident.as_ref().unwrap()` -\> `.as_ref().expect("Fields in a named struct must have an identifier")`
+
+**结论**
+`.expect()` 的核心作用是在程序 `panic` 时，提供一段由开发者**自定义的、富有上下文的错误信息**。这是一种非常专业和健壮的编程习惯，它相当于在代码中留下了清晰的“调试便签”，极大地提升了程序在失败时的可诊断性。
